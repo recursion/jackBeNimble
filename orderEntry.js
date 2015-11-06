@@ -1,201 +1,247 @@
-var LOTSIZES = [0.1, 0.25, 0.5, 0.75, 1];
-var INCREMENTS = [0.01, 0.1, 0.25, 0.5, 0.75, 1];
+var DEBUG = false;
+var plugin = {};
 
-var INCR = 0.1;
-var LOTSIZE = .5;
+plugin.LOTSIZES = [0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 10];
+plugin.INCREMENTS = [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2, 5, 10];
 
-var KEYS = {
+plugin.settings = {};
+plugin.settings.INCR = 0.1;
+plugin.settings.LOTSIZE = .5;
+
+plugin.KEYS = {
+  CANCEL_ALL: 89, // y
+  CANCEL_LAST: 84, // t
+
   TOGGLE_LOTSIZE_UP: 220,
   TOGGLE_LOTSIZE_DOWN: 222,
   TOGGLE_INCR_UP: 189,
   TOGGLE_INCR_DOWN: 187,
-  INCR_BID: 68,
-  INCR_OFFER: 75,
-  OFFER_WITH_BEST_ASK: 76,
-  BID_WITH_BEST_BID: 83,
-  OFFER_ABOVE_BEST: 186,
-  BID_BELOW_BEST: 65,
-  MARKET_BUY: 71,
-  MARKET_SELL: 72
+
+  BID_BETTER: 70, // f
+  BID_WITH_BEST_BID: 68, //d
+  BID_BELOW_BEST: 83, //s
+  BID_DOUBLE_BELOW_BEST: 65, // a
+
+  OFFER_BETTER: 74, // j
+  OFFER_WITH_BEST_ASK: 75, // k
+  OFFER_ABOVE_BEST: 76, // l
+  OFFER_DOUBLE_ABOVE_BEST: 186, // ;
+
+  MARKET_BUY: 71, // g
+  MARKET_SELL: 72 // h
 };
 
 $( document ).ready(function(){
   window.addEventListener('keydown', onKeydown, false);
   window.addEventListener('keypress', onKeypress, false);
   window.addEventListener('keyup', onKeyup, false);
-  setLotSize(LOTSIZE);
-  displayIncr(INCR);
+  setLotSize(plugin.settings.LOTSIZE);
+  displayIncr(plugin.settings.INCR);
 });
 
+/*****************************************
+ *            KEYBOARD HANDLERS
+ ****************************************/
 function onKeydown(e){
-  //console.log('Keypress', e);
+  if(DEBUG){
+    console.log('Keypress', e.keyCode);
+  }
 }
 
 function onKeypress(e){
   //console.log('Keyup', e);
 }
 
-function setLotSize(v){
-  v = v || LOTSIZE;
-  console.log('Setting lot size to:', v);
-  var amount = document.getElementById('amount');
-  LOTSIZE = v;
-  amount.value = v;
-}
-
-function displayIncr(v){
-  var homeDiv = $('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
-
-  var target = $('#INCRVAL');
-  if(!target.length){
-    homeDiv.append('<span id="INCRVAL">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increment: '+ v +'</span>');
-  } else {
-    target[0].innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increment: ' + v;
-  }
-}
-
 function onKeyup(e){
   switch(e.keyCode){
-    case KEYS.TOGGLE_LOTSIZE_UP:
-      console.log('bing')
-      var idx = LOTSIZES.indexOf(LOTSIZE);
-      if (++idx >= LOTSIZES.length){
+    /**************************************
+     *            TOGGLE KEYS
+     *************************************/
+
+    // LOTSIZE UP
+    case plugin.KEYS.TOGGLE_LOTSIZE_UP:
+      var idx = plugin.LOTSIZES.indexOf(plugin.settings.LOTSIZE);
+      if (++idx >= plugin.LOTSIZES.length){
         idx = 0;
       }
-      var lotsize = LOTSIZES[idx];
+      var lotsize = plugin.LOTSIZES[idx];
       setLotSize(lotsize);
       break;
 
-    case KEYS.TOGGLE_LOTSIZE_DOWN:
-      var idx = LOTSIZES.indexOf(LOTSIZE);
+      // LOTSIZE DOWN
+    case plugin.KEYS.TOGGLE_LOTSIZE_DOWN:
+      var idx = plugin.LOTSIZES.indexOf(plugin.settings.LOTSIZE);
       if (--idx < 0){
-        idx = LOTSIZES.length - 1;
+        idx = plugin.LOTSIZES.length - 1;
       }
-      var lotsize = LOTSIZES[idx];
+      var lotsize = plugin.LOTSIZES[idx];
       setLotSize(lotsize);
       break;
 
-    case KEYS.TOGGLE_INCR_UP:
-      var idx = INCREMENTS.indexOf(INCR);
-      if (++idx >= INCREMENTS.length){
+      // INCREMENT UP
+    case plugin.KEYS.TOGGLE_INCR_UP:
+      var idx = plugin.INCREMENTS.indexOf(plugin.settings.INCR);
+      if (++idx >= plugin.INCREMENTS.length){
         idx = 0;
       }
-      INCR = INCREMENTS[idx];
-      displayIncr(INCR);
-      console.log('Setting increment to: ', INCR);
+      plugin.settings.INCR = plugin.INCREMENTS[idx];
+      displayIncr(plugin.settings.INCR);
       break;
 
-    case KEYS.TOGGLE_INCR_DOWN:
-      var idx = INCREMENTS.indexOf(INCR);
+      // INCREMENT DOWN
+    case plugin.KEYS.TOGGLE_INCR_DOWN:
+      var idx = plugin.INCREMENTS.indexOf(plugin.settings.INCR);
       if (--idx < 0){
-        idx = INCREMENTS.length - 1;
+        idx = plugin.INCREMENTS.length - 1;
       }
-      INCR = INCREMENTS[idx];
-      displayIncr(INCR);
-      console.log('Setting increment to: ', INCR);
+      plugin.settings.INCR = plugin.INCREMENTS[idx];
+      displayIncr(plugin.settings.INCR);
       break;
 
+
+
+    /********************************
+     *          BUY ORDER KEYS
+     ********************************/
     // place best limit bid order on the market
-    case KEYS.INCR_BID:
+    case plugin.KEYS.BID_BETTER:
       var bestBid = getBestBid();
-      var newBid = +bestBid + INCR;
+      var newBid = +bestBid + 0.01;
       setBid(newBid.toFixed(2));
       placeBuyOrder();
       break;
 
     // place bid at current best bid
-    case KEYS.BID_WITH_BEST_BID:
+    case plugin.KEYS.BID_WITH_BEST_BID:
       var bestBid = getBestBid();
       setBid(bestBid);
       placeBuyOrder();
       break;
 
     // Place bid at (INCR) below the current best bid
-    case KEYS.BID_BELOW_BEST:
+    case plugin.KEYS.BID_BELOW_BEST:
       var bestBid = getBestBid();
-      var newBid = +bestBid - INCR;
+      var newBid = +bestBid - plugin.settings.INCR;
+      setBid(newBid.toFixed(2));
+      placeBuyOrder();
+      break;
+
+    // Place bid at (INCR) below the current best bid
+    case plugin.KEYS.BID_DOUBLE_BELOW_BEST:
+      var bestBid = getBestBid();
+      var newBid = +bestBid - (plugin.settings.INCR * 2);
       setBid(newBid.toFixed(2));
       placeBuyOrder();
       break;
 
     // place market buy
-    case KEYS.MARKET_BUY:
+    case plugin.KEYS.MARKET_BUY:
       $('#buy_type').val('MARKET');
       placeBuyOrder();
       $('#buy_type').val('LIMIT');
       break;
 
-    /****************************
-     *   SELL ORDERS
-     ********************************/
 
+
+    /********************************
+     *           SELL ORDER KEYS
+     ********************************/
     // place the best limit sell on the market
-    case KEYS.INCR_OFFER:
+    case plugin.KEYS.OFFER_BETTER:
       var bestOffer = getBestOffer();
-      var newOffer = +bestOffer - INCR;
+      var newOffer = +bestOffer - 0.01;
       setAsk(newOffer.toFixed(2));
       placeSellOrder();
       break;
 
     // place offer at current best ask
-    case KEYS.OFFER_WITH_BEST_ASK:
+    case plugin.KEYS.OFFER_WITH_BEST_ASK:
       var bestOffer = getBestOffer();
       setAsk(bestOffer);
       placeSellOrder();
       break;
 
     // place offer at current best ask
-    case KEYS.OFFER_ABOVE_BEST:
+    case plugin.KEYS.OFFER_ABOVE_BEST:
       var bestOffer = getBestOffer();
-      var newOffer = +bestOffer + INCR;
+      var newOffer = +bestOffer + plugin.settings.INCR;
+      setAsk(newOffer.toFixed(2));
+      placeSellOrder();
+      break;
+
+    // place offer at current best ask
+    case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
+      var bestOffer = getBestOffer();
+      var newOffer = +bestOffer + (plugin.settings.INCR * 2);
       setAsk(newOffer.toFixed(2));
       placeSellOrder();
       break;
 
     // place market sell
-    case KEYS.MARKET_SELL:
+    case plugin.KEYS.MARKET_SELL:
       $('#sell_type').val('MARKET');
       placeSellOrder();
       $('#sell_type').val('LIMIT');
       break;
 
-    // increase lot size
-
-    // decrease lot size
 
     // cancel last order
+    case plugin.KEYS.CANCEL_LAST:
+      $('');
+      break;
 
     // cancel all order
+    case plugin.KEYS.CANCEL_ALL:
+      eventFire(document.getElementById('submit'), 'click');
+      break;
 
     default:
-      console.log('Keyup', e);
+      console.log('Key: ', e.keyCode);
       break
   }
 }
 
-function setOrderType(){
-}
+
+
+/**********************************
+ *             HELPERS
+ **********************************/
 /**
- * Simulate an event being fired.
- * Used for 'clicking' the buy/sell buttons.
+ * @param {Number} v - the new lotsize value
  */
-function eventFire(el, etype){
-  if (el.fireEvent) {
-    el.fireEvent('on' + etype);
+function setLotSize(v){
+  v = v || plugin.settings.LOTSIZE;
+  var amount = document.getElementById('amount');
+  amount.value = v;
+  plugin.settings.LOTSIZE = v;
+}
+
+/**
+ * @param {Number} v - the new increment value
+ */
+function displayIncr(v){
+  var homeDiv = $('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
+
+  var target = $('#INCRVAL');
+  if(!target.length){
+    homeDiv.append('<span id="INCRVAL">Increment: '+ v +'</span>');
   } else {
-    var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
-    el.dispatchEvent(evObj);
+    target[0].innerHTML = 'Increment: ' + v;
   }
 }
+
 function placeBuyOrder(){
-  eventFire(document.getElementById('buy-button'), 'click');
-  //$('#buy_button').click();
+  if(!DEBUG){
+    eventFire(document.getElementById('buy-button'), 'click');
+  }
 }
+
 function placeSellOrder(){
-  eventFire(document.getElementById('sell-button'), 'click');
-  //$('#sell_button').click();
+  if (!DEBUG){
+    eventFire(document.getElementById('sell-button'), 'click');
+  }
 }
+
 function setBid(p){
   if(typeof p !== 'string'){
     p = '' + p;
@@ -219,5 +265,19 @@ function getBestOffer(){
   var bestAsk = $('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
 
   return bestAsk.text();
+}
+
+/**
+ * Simulate an event being fired.
+ * Used for 'clicking' the buy/sell buttons.
+ */
+function eventFire(el, etype){
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
 }
 
