@@ -70,3 +70,5 @@ It is however, highly usable.
 | Offer `<INCREMENT * 2>` above best offer| ; |
 | Market sell: | h |
 
+##### If you use this and like it, feel free to send some satoshi love my way!
+37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9
