@@ -192,7 +192,14 @@ function onKeyup(e){
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      eventFire(document.getElementById('submit'), 'click');
+      $.ajax({
+        url: '/orders/cancel_all',
+        done: function(){
+          console.log('Done');
+        }
+      });
+      //eventFire(document.querySelector('#orderstable > thead > tr > th.col-info.hide-on-small-and-down.sortable.tablesorter-header.sorter-false.tablesorter-headerUnSorted > div > a'), 'click');
+      //eventFire(document.getElementById('submit'), 'click');
       break;
 
     default:
