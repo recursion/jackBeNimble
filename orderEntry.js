@@ -46,18 +46,17 @@ setTimeout(function(){
   window.addEventListener('keydown', onKeydown, false);
   window.addEventListener('keypress', onKeypress, false);
   window.addEventListener('keyup', onKeyup, false);
-  setLotSize(plugin.settings.LOTSIZE);
-  displayIncr(plugin.settings.INCR);
 
   setTimeout(function(){
-    if (checkLocation() === 'coinbase'){
+    if (currentLocation() === 'coinbase'){
       var limitScreen = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
       eventFire(limitScreen, 'click');
     }
-    //console.log(getBestBid());
-    //console.log(getBestOffer());
-  }, 2000);
-}, 200);
+    setLotSize(plugin.settings.LOTSIZE);
+    displayIncr(plugin.settings.INCR);
+  }, 1000);
+
+}, 2000);
 
 
 
@@ -131,14 +130,14 @@ function onKeyup(e){
     case plugin.KEYS.BID_BETTER:
       var bestBid = getBestBid();
       var newBid = +bestBid + 0.01;
-      setBid(newBid.toFixed(2));
+      setPrice(newBid.toFixed(2));
       placeBuyOrder();
       break;
 
     // place bid at current best bid
     case plugin.KEYS.BID_WITH_BEST_BID:
       var bestBid = getBestBid();
-      setBid(bestBid);
+      setPrice(bestBid);
       placeBuyOrder();
       break;
 
@@ -146,7 +145,7 @@ function onKeyup(e){
     case plugin.KEYS.BID_BELOW_BEST:
       var bestBid = getBestBid();
       var newBid = +bestBid - plugin.settings.INCR;
-      setBid(newBid.toFixed(2));
+      setPrice(newBid.toFixed(2));
       placeBuyOrder();
       break;
 
@@ -154,15 +153,19 @@ function onKeyup(e){
     case plugin.KEYS.BID_DOUBLE_BELOW_BEST:
       var bestBid = getBestBid();
       var newBid = +bestBid - (plugin.settings.INCR * 2);
-      setBid(newBid.toFixed(2));
+      setPrice(newBid.toFixed(2));
       placeBuyOrder();
       break;
 
     // place market buy
     case plugin.KEYS.MARKET_BUY:
-      $('#buy_type').val('MARKET');
-      placeBuyOrder();
-      $('#buy_type').val('LIMIT');
+      if (currentLocation() === 'coinbase'){
+
+      } else {
+        $('#buy_type').val('MARKET');
+        placeBuyOrder();
+        $('#buy_type').val('LIMIT');
+      }
       break;
 
 
@@ -174,14 +177,14 @@ function onKeyup(e){
     case plugin.KEYS.OFFER_BETTER:
       var bestOffer = getBestOffer();
       var newOffer = +bestOffer - 0.01;
-      setAsk(newOffer.toFixed(2));
+      setPrice(newOffer.toFixed(2));
       placeSellOrder();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_WITH_BEST_ASK:
       var bestOffer = getBestOffer();
-      setAsk(bestOffer);
+      setPrice(bestOffer);
       placeSellOrder();
       break;
 
@@ -189,7 +192,7 @@ function onKeyup(e){
     case plugin.KEYS.OFFER_ABOVE_BEST:
       var bestOffer = getBestOffer();
       var newOffer = +bestOffer + plugin.settings.INCR;
-      setAsk(newOffer.toFixed(2));
+      setPrice(newOffer.toFixed(2));
       placeSellOrder();
       break;
 
@@ -197,15 +200,19 @@ function onKeyup(e){
     case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
       var bestOffer = getBestOffer();
       var newOffer = +bestOffer + (plugin.settings.INCR * 2);
-      setAsk(newOffer.toFixed(2));
+      setPrice(newOffer.toFixed(2));
       placeSellOrder();
       break;
 
     // place market sell
     case plugin.KEYS.MARKET_SELL:
-      $('#sell_type').val('MARKET');
-      placeSellOrder();
-      $('#sell_type').val('LIMIT');
+      if (currentLocation() === 'coinbase'){
+
+      } else {
+        $('#sell_type').val('MARKET');
+        placeSellOrder();
+        $('#sell_type').val('LIMIT');
+      }
       break;
 
 
@@ -216,14 +223,17 @@ function onKeyup(e){
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      $.ajax({
-        url: '/orders/cancel_all',
-        done: function(){
-          console.log('Done');
-        }
-      });
-      //eventFire(document.querySelector('#orderstable > thead > tr > th.col-info.hide-on-small-and-down.sortable.tablesorter-header.sorter-false.tablesorter-headerUnSorted > div > a'), 'click');
-      //eventFire(document.getElementById('submit'), 'click');
+      if (currentLocation() === 'coinbase'){
+        var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
+        eventFire(cancelButton, 'click');
+      } else {
+        $.ajax({
+          url: '/orders/cancel_all',
+          done: function(){
+            console.log('Done');
+          }
+        });
+      }
       break;
 
     default:
@@ -243,8 +253,7 @@ function onKeyup(e){
 function setLotSize(v){
   var amount;
   if (window.location.hostname.indexOf('coinbase') !== -1){
-    amount = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
-    console.log(amount);
+    amount = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
   } else if (window.location.hostname.indexOf('bitfinex') !== -1){
     amount = document.getElementById('amount');
   }
@@ -257,44 +266,71 @@ function setLotSize(v){
  * @param {Number} v - the new increment value
  */
 function displayIncr(v){
-  var homeDiv = $('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
+  if (currentLocation() === 'coinbase'){
+    var homeDiv = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix');
+    var target = document.getElementById('CB_INCRVAL');
+    if(!target){
+      var listItem = document.createElement('li');
+      var newEl = document.createElement('span');
+      newEl.id = 'CB_INCRVAL';
+      newEl.innerHTML = 'Increment: ' + v;
+      listItem.appendChild(newEl);
+      homeDiv.appendChild(listItem);
+    } else {
+      target.innerHTML = 'Increment: ' + v;
+    }
 
-  var target = $('#INCRVAL');
-  if(!target.length){
-    homeDiv.append('<span id="INCRVAL">Increment: '+ v +'</span>');
   } else {
-    target[0].innerHTML = 'Increment: ' + v;
+    var homeDiv = $('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
+
+    var target = $('#INCRVAL');
+    if(!target.length){
+      homeDiv.append('<span id="INCRVAL">Increment: '+ v +'</span>');
+    } else {
+      target[0].innerHTML = 'Increment: ' + v;
+    }
   }
 }
 
 function placeBuyOrder(){
   if(!DEBUG){
-    eventFire(document.getElementById('buy-button'), 'click');
+    if(currentLocation() === 'coinbase'){
+      eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
+    } else {
+      eventFire(document.getElementById('buy-button'), 'click');
+    }
   }
 }
 
 function placeSellOrder(){
   if (!DEBUG){
-    eventFire(document.getElementById('sell-button'), 'click');
+    if(currentLocation() === 'coinbase'){
+      eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
+    } else {
+      eventFire(document.getElementById('sell-button'), 'click');
+    }
   }
 }
 
-function setBid(p){
+function setPrice(p){
+
+  // make sure the bid is in a string format
   if(typeof p !== 'string'){
     p = '' + p;
   }
-  $('#buy_price').val(p);
-}
 
-function setAsk(p){
-  if(typeof p !== 'string'){
-    p = '' + p;
+  if(currentLocation() === 'coinbase'){
+    $('#inputusd').val(p);
+  } else {
+    $('#buy_price').val(p);
   }
-  $('#sell_price').val(p);
 }
 
-function checkLocation(){
-
+/**
+ * find the current web location
+ * @returns {String} - name of current website
+ */
+function currentLocation(){
   if (window.location.hostname.indexOf('coinbase') !== -1){
     return 'coinbase';
   } else if (window.location.hostname.indexOf('bitfinex') !== -1){
@@ -306,7 +342,7 @@ function checkLocation(){
 
 function getBestBid(){
   var bestBid;
-  var location = checkLocation();
+  var location = currentLocation();
   var actionsByLocation = {
     'coinbase': function(){
       var wholeNum = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.whole');
