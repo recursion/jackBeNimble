@@ -14,13 +14,16 @@
 
       "matches": [
         "https://www.bitfinex.com/trading",
-        "https://beta.bitfinex.com/trading"
+        "https://beta.bitfinex.com/trading",
+        "https://exchange.coinbase.com/trade/BTC-USD",
+        "https://exchange.coinbase.com/trade?product_id=BTC-USD&"
       ],
 
       "css": ["main.css"],
 
-      "js": ["jquery.js", "orderEntry.js"]
+      "js": ["jquery.js", "orderEntry.js"],
 
+      "run_at": "document_end"
     }
   ]
 }

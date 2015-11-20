@@ -1,12 +1,15 @@
 var DEBUG = false;
 var plugin = {};
 
+/******************************************
+ *          SETUP/CONFIG
+ ****************************************/
 plugin.LOTSIZES = [0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 10];
 plugin.INCREMENTS = [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2, 5, 10];
 
 plugin.settings = {};
 plugin.settings.INCR = 0.1;
-plugin.settings.LOTSIZE = .5;
+plugin.settings.LOTSIZE = .1;
 
 plugin.KEYS = {
   CANCEL_ALL: 89, // y
@@ -31,13 +34,34 @@ plugin.KEYS = {
   MARKET_SELL: 72 // h
 };
 
-$( document ).ready(function(){
+
+
+
+
+
+/******************************************
+ *          INIT
+ ****************************************/
+setTimeout(function(){
   window.addEventListener('keydown', onKeydown, false);
   window.addEventListener('keypress', onKeypress, false);
   window.addEventListener('keyup', onKeyup, false);
   setLotSize(plugin.settings.LOTSIZE);
   displayIncr(plugin.settings.INCR);
-});
+
+  setTimeout(function(){
+    if (checkLocation() === 'coinbase'){
+      var limitScreen = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+      eventFire(limitScreen, 'click');
+    }
+    //console.log(getBestBid());
+    //console.log(getBestOffer());
+  }, 2000);
+}, 200);
+
+
+
+
 
 /*****************************************
  *            KEYBOARD HANDLERS
@@ -217,8 +241,14 @@ function onKeyup(e){
  * @param {Number} v - the new lotsize value
  */
 function setLotSize(v){
+  var amount;
+  if (window.location.hostname.indexOf('coinbase') !== -1){
+    amount = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
+    console.log(amount);
+  } else if (window.location.hostname.indexOf('bitfinex') !== -1){
+    amount = document.getElementById('amount');
+  }
   v = v || plugin.settings.LOTSIZE;
-  var amount = document.getElementById('amount');
   amount.value = v;
   plugin.settings.LOTSIZE = v;
 }
@@ -263,15 +293,68 @@ function setAsk(p){
   $('#sell_price').val(p);
 }
 
+function checkLocation(){
+
+  if (window.location.hostname.indexOf('coinbase') !== -1){
+    return 'coinbase';
+  } else if (window.location.hostname.indexOf('bitfinex') !== -1){
+    return 'bitfinex'
+  } else {
+    return 'unknown';
+  }
+}
+
 function getBestBid(){
-  var bestBid = $('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
-  return bestBid.text();
+  var bestBid;
+  var location = checkLocation();
+  var actionsByLocation = {
+    'coinbase': function(){
+      var wholeNum = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.whole');
+      wholeNum = wholeNum.innerHTML;
+      var decimal1 = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.part');
+      decimal1 = decimal1.innerHTML;
+
+      var decimal2 = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.part-2');
+      decimal2 = decimal2.innerHTML;
+
+      var bb = wholeNum + '.' + decimal1 + decimal2;
+      return bb;
+    },
+    'bitfinex': function(){
+      bestBid = $('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
+      return bestBid.text();
+    }
+  };
+
+  if (actionsByLocation[location]){
+    return actionsByLocation[location]();
+  } else {
+    return null;
+  }
 }
 
 function getBestOffer(){
-  var bestAsk = $('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
 
-  return bestAsk.text();
+  var bestOffer;
+  if (window.location.hostname.indexOf('coinbase') !== -1){
+    var wholeNum = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.whole');
+    wholeNum = wholeNum.innerHTML;
+    var decimal1 = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.part');
+    decimal1 = decimal1.innerHTML;
+
+    var decimal2 = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.part-2');
+    decimal2 = decimal2.innerHTML;
+
+    var bo = wholeNum + '.' + decimal1 + decimal2;
+    return bo;
+
+  } else if (window.location.hostname.indexOf('bitfinex') !== -1){
+    var bestAsk = $('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
+    return bestAsk.text();
+
+  } else {
+    throw new Error('Invalid location');
+  }
 }
 
 /**
