@@ -8,11 +8,6 @@ Technically it adds listeners to the exchange's trading page that allows placing
 
 This tool does not require any access to api keys, nor does it send any data anywhere. It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.
 
-- The concept is that you have lot size, and an increment for placing orders. 
-- Increment is the value used to determine how far from the best bid or best off you want your order to be. 
-- Use hotkeys to change lot size and increment value.
-- Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
-
 *Disclaimer: Trading is risky and can ruin you. Do not trade. If you do trade, you are doing so at your own risk, and neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*
 
 ### Development
@@ -43,6 +38,12 @@ It is however, highly usable.
 - Build as standalone node service for faster/cleaner api integration.
 
 ### Usage
+
+- The concept is that you have lot size, and an increment for placing orders. 
+- Increment is the value used to determine how far from the best bid or best off you want your order to be. 
+- Use hotkeys to change lot size and increment value.
+- Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
+
 
 - Add plugin (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
 - Login to exchange.coinbase.com, beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
