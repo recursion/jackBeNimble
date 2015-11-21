@@ -1,23 +1,14 @@
 /**********************************
- *          UTILITY FUNCTIONS
+ *          Controller Functions
  **********************************/
 var plugin = plugin || {};
 
 
 
+/********************************************
+ *      DISPLAY INCREMENT VALUE
+ ********************************************/
 /**
- *     Set the desired lot size
- * @param {Number} v - the new lotsize value
- */
-plugin.setLotSize = function(v){
-  var amount = plugin.strategy.getLotSizeInputElement(v);
-  v = v || plugin.settings.LOTSIZE;
-  amount.value = v;
-  plugin.settings.LOTSIZE = v;
-}
-
-/**
- * Display the increment value
  * @param {Number} v - the new increment value
  */
 plugin.displayIncr = function(v){
@@ -38,6 +29,22 @@ plugin.placeSellOrder = function(){
   plugin.strategy.placeSellOrder();
 }
 
+
+
+
+/**********************************************
+ *            SET LOT SIZE
+**********************************************/
+/**
+ *
+ * @param {Number} v - the new lotsize value
+ **********************************************/
+plugin.setLotSize = function(v){
+  var amount = plugin.strategy.getLotSizeInputElement(v);
+  v = v || plugin.settings.LOTSIZE;
+  amount.value = v;
+  plugin.settings.LOTSIZE = v;
+}
 
 
 
@@ -64,7 +71,7 @@ plugin.setSellPrice = function(p){
 
 
 /****************************************
- * Get Best Bid/ Best Offer data
+ *      GET BEST BID / BEST OFFER
  ***************************************/
 plugin.getBestBid = function(){
   return plugin.strategy.getBestBid();
@@ -124,8 +131,11 @@ plugin.toggleIncrement = function(direction){
   plugin.displayIncr(plugin.settings.INCR);
 }
 
+
+
+
 /*******************************************
- *          BUY ORDERS
+ *              BUY ORDERS
  ******************************************/
 
 /* Bid just above the best bid */
@@ -162,7 +172,7 @@ plugin.bidDoubleBelowBest = function(){
 
 
 /********************************
- *           SELL ORDER KEYS
+ *           SELL ORDERS
  ********************************/
 
 /* Offer just below best offer */
