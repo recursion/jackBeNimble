@@ -16,10 +16,9 @@ interfaces.cbex = {
    *    - display offset
    */
   init: function(){
-    var limitButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
 
-    if (limitButtonElement){
-      initialize(limitButtonElement, plugin);
+    if (switchToLimitOrder()){
+      initialize(plugin);
     } else {
       setTimeout(function(){
         interfaces.cbex.init();
@@ -31,14 +30,27 @@ interfaces.cbex = {
 
   /*  MARKET BUY  */
   market_buy: function(){
-
+    switchToMarketOrder();
+    setTimeout(function(){
+      setMarketOrderLotSize();
+      plugin.placeBuyOrder();
+    }, 100);
+    setTimeout(function(){
+      switchToLimitOrder();
+    }, 200);
   },
 
 
   /*  MARKET SELL */
   market_sell: function(){
-
-
+    switchToMarketOrder();
+    setTimeout(function(){
+      setMarketOrderLotSize();
+      plugin.placeSellOrder();
+    }, 100);
+    setTimeout(function(){
+      switchToLimitOrder();
+    }, 200);
   },
 
 
@@ -53,6 +65,8 @@ interfaces.cbex = {
   getLotSizeInputElement: function(v){
     return document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
   },
+
+
 
 
   /**
@@ -158,8 +172,36 @@ interfaces.cbex = {
  * @param {PluginObject} - plugin - the plugin object
  */
 
-function initialize(limitButtonElement, plugin){
-  plugin.eventFire(limitButtonElement, 'click');
+function initialize(plugin){
   plugin.setLotSize(plugin.settings.LOTSIZE);
   plugin.displayOffset(plugin.settings.OFFSET);
 }
+
+
+function switchToMarketOrder(){
+    var marketButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)');
+    if (marketButtonElement){
+      plugin.eventFire(marketButtonElement, 'click');
+      return true;
+    } else {
+      return false;
+    }
+}
+
+function switchToLimitOrder(){
+    var limitButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+    if (limitButtonElement){
+      plugin.eventFire(limitButtonElement, 'click');
+      return true;
+    } else {
+      return false;
+    }
+}
+
+/* set the lot size on the market order screen */
+function setMarketOrderLotSize(){
+    var lotSize = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
+
+    lotSize.value = plugin.settings.LOTSIZE;
+
+};
