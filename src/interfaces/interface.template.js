@@ -3,37 +3,44 @@ var plugin = plugin || {};
 
 interfaces.EXCHANGE = {
 
+
+  /**
+   *              INIT
+   *
+   * set lot size and display offset
+   */
   init: function(){
     // Any site specific setup goes here
   },
 
-  /**
-   * buy at market
-   */
+
+  /*  MARKET BUY  */
   market_buy: function(){
 
   },
 
-  /**
-   * sell at market
-   */
+
+  /*  MARKET SELL */
   market_sell: function(){
 
 
   },
 
-  /**
-   * cancel all orders
-   */
+
+  /*  CANCEL ALL ORDERS */
   cancel_all: function(){
   },
 
+
   /* return the lot size input element */
-  getLotSizeInputElement: function(v){
+  getLotSizeInputElement: function(){
   },
+
 
   /**
    * display the offset value
+   *
+   * @param {Number} v - the offset value to display
    */
   displayOffset: function(v){
   },
@@ -45,6 +52,7 @@ interfaces.EXCHANGE = {
   placeBuyOrder: function(){
   },
 
+
   /**
    * click the sell order button
    */
@@ -53,11 +61,24 @@ interfaces.EXCHANGE = {
     }
   },
 
+
   /**
-   * set the price field on the exchange order form
+   *        SET THE BUY PRICE
+   *
+   * @param {Number} p - the price to set
    */
-  setPrice: function(p){
+  setBuyPrice: function(p){
   },
+
+
+  /**
+   *        SET THE SELL PRICE
+   *
+   * @param {Number} p - the price to set
+   */
+  setSellPrice: function(p){
+  },
+
 
   /**
    * @returns {String} bestBid in 123.80 format
@@ -66,6 +87,8 @@ interfaces.EXCHANGE = {
   },
 
   /**
+   *     GET BEST OFFER
+   *
    * @returns {String} bestOffer in 123.80 format
    */
   getBestOffer: function(){

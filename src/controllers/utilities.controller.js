@@ -94,6 +94,7 @@ plugin.toggleLotSize = function(direction){
 
 /**
  *      Toggle the offset value up or down
+ *
  * @param {String} direction - can be 'up' or 'down'
  * determines which way to toggle the offset
  */
