@@ -162,9 +162,9 @@ function onKeyup(e){
       if (currentLocation() === 'coinbase'){
 
       } else {
-        $('#buy_type').val('MARKET');
+        document.getElementById('buy_type').value = 'MARKET';
         placeBuyOrder();
-        $('#buy_type').val('LIMIT');
+        document.getElementById('buy_type').value = 'LIMIT';
       }
       break;
 
@@ -209,16 +209,16 @@ function onKeyup(e){
       if (currentLocation() === 'coinbase'){
 
       } else {
-        $('#sell_type').val('MARKET');
+        document.getElementById('sell_type').value = 'MARKET';
         placeSellOrder();
-        $('#sell_type').val('LIMIT');
+        document.getElementById('sell_type').value = 'LIMIT';
       }
       break;
 
 
     // cancel last order
     case plugin.KEYS.CANCEL_LAST:
-      $('');
+      //do something
       break;
 
     // cancel all order
@@ -227,12 +227,9 @@ function onKeyup(e){
         var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
         eventFire(cancelButton, 'click');
       } else {
-        $.ajax({
-          url: '/orders/cancel_all',
-          done: function(){
-            console.log('Done');
-          }
-        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', encodeURI('/orders/cancel_all'));
+        xhr.send();
       }
       break;
 
@@ -281,13 +278,16 @@ function displayIncr(v){
     }
 
   } else {
-    var homeDiv = $('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
+    var homeDiv = document.querySelector('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
 
-    var target = $('#INCRVAL');
-    if(!target.length){
-      homeDiv.append('<span id="INCRVAL">Increment: '+ v +'</span>');
+    var target = document.getElementById('INCRVAL');
+    if(!target){
+      var span = document.createElement('span');
+      span.id = 'INCRVAL';
+      span.innerHTML = 'Increment: ' + v;
+      homeDiv.appendChild(span);
     } else {
-      target[0].innerHTML = 'Increment: ' + v;
+      target.innerHTML = 'Increment: ' + v;
     }
   }
 }
@@ -320,9 +320,9 @@ function setPrice(p){
   }
 
   if(currentLocation() === 'coinbase'){
-    $('#inputusd').val(p);
+    document.getElementById('inputusd').value = p;
   } else {
-    $('#buy_price').val(p);
+    document.getElementById('buy_price').value = p;
   }
 }
 
@@ -357,8 +357,8 @@ function getBestBid(){
       return bb;
     },
     'bitfinex': function(){
-      bestBid = $('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
-      return bestBid.text();
+      bestBid = document.querySelector('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
+      return bestBid.innerHTML;
     }
   };
 
@@ -385,8 +385,8 @@ function getBestOffer(){
     return bo;
 
   } else if (window.location.hostname.indexOf('bitfinex') !== -1){
-    var bestAsk = $('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
-    return bestAsk.text();
+    var bestAsk = document.querySelector('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
+    return bestAsk.innerHTML;
 
   } else {
     throw new Error('Invalid location');
