@@ -1,15 +1,25 @@
 /******************************************
  *          SETUP/CONFIG
  ****************************************/
-var plugin = plugin || {};
+var DEBUG = false;
 
+var plugin = plugin || {};
+plugin.settings = {};
+
+// LOT SIZE VALUES
 plugin.LOTSIZES = [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 10];
+
+// INCREMENT VALUES
 plugin.INCREMENTS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.5, 0.75, 1, 2, 5, 10];
 
-plugin.settings = {};
+
+// Set default increment
 plugin.settings.INCR = 0.1;
+
+// Set default lotsize
 plugin.settings.LOTSIZE = .1;
 
+// Default key bindings
 plugin.KEYS = {
   CANCEL_ALL: 89, // y
   CANCEL_LAST: 84, // t

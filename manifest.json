@@ -21,7 +21,7 @@
 
       "css": ["main.css"],
 
-      "js": ["config.js", "keyboardHandlers.js", "orderEntry.js"],
+      "js": ["config.js", "utils.js", "keyboardHandlers.js", "orderEntry.js"],
 
       "run_at": "document_idle"
     }

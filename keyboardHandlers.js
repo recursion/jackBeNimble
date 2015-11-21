@@ -1,4 +1,6 @@
 var plugin = plugin || {};
+var utils = utils || {};
+
 /*****************************************
  *            KEYBOARD HANDLERS
  ****************************************/
@@ -27,7 +29,7 @@ keyboardHandlers.onKeyup = function(e){
         idx = 0;
       }
       var lotsize = plugin.LOTSIZES[idx];
-      setLotSize(lotsize);
+      utils.setLotSize(lotsize);
       break;
 
       // LOTSIZE DOWN
@@ -37,7 +39,7 @@ keyboardHandlers.onKeyup = function(e){
         idx = plugin.LOTSIZES.length - 1;
       }
       var lotsize = plugin.LOTSIZES[idx];
-      setLotSize(lotsize);
+      utils.setLotSize(lotsize);
       break;
 
       // INCREMENT UP
@@ -47,7 +49,7 @@ keyboardHandlers.onKeyup = function(e){
         idx = 0;
       }
       plugin.settings.INCR = plugin.INCREMENTS[idx];
-      displayIncr(plugin.settings.INCR);
+      utils.displayIncr(plugin.settings.INCR);
       break;
 
       // INCREMENT DOWN
@@ -57,7 +59,7 @@ keyboardHandlers.onKeyup = function(e){
         idx = plugin.INCREMENTS.length - 1;
       }
       plugin.settings.INCR = plugin.INCREMENTS[idx];
-      displayIncr(plugin.settings.INCR);
+      utils.displayIncr(plugin.settings.INCR);
       break;
 
 
@@ -67,42 +69,42 @@ keyboardHandlers.onKeyup = function(e){
      ********************************/
     // place best limit bid order on the market
     case plugin.KEYS.BID_BETTER:
-      var bestBid = getBestBid();
+      var bestBid = utils.getBestBid();
       var newBid = +bestBid + 0.01;
-      setPrice(newBid.toFixed(2));
-      placeBuyOrder();
+      utils.setPrice(newBid.toFixed(2));
+      utils.placeBuyOrder();
       break;
 
     // place bid at current best bid
     case plugin.KEYS.BID_WITH_BEST_BID:
-      var bestBid = getBestBid();
-      setPrice(bestBid);
-      placeBuyOrder();
+      var bestBid = utils.getBestBid();
+      utils.setPrice(bestBid);
+      utils.placeBuyOrder();
       break;
 
     // Place bid at (INCR) below the current best bid
     case plugin.KEYS.BID_BELOW_BEST:
-      var bestBid = getBestBid();
+      var bestBid = utils.getBestBid();
       var newBid = +bestBid - plugin.settings.INCR;
-      setPrice(newBid.toFixed(2));
-      placeBuyOrder();
+      utils.setPrice(newBid.toFixed(2));
+      utils.placeBuyOrder();
       break;
 
     // Place bid at (INCR) below the current best bid
     case plugin.KEYS.BID_DOUBLE_BELOW_BEST:
-      var bestBid = getBestBid();
+      var bestBid = utils.getBestBid();
       var newBid = +bestBid - (plugin.settings.INCR * 2);
-      setPrice(newBid.toFixed(2));
-      placeBuyOrder();
+      utils.setPrice(newBid.toFixed(2));
+      utils.placeBuyOrder();
       break;
 
     // place market buy
     case plugin.KEYS.MARKET_BUY:
-      if (currentLocation() === 'coinbase'){
+      if (utils.currentLocation() === 'coinbase'){
 
       } else {
         document.getElementById('buy_type').value = 'MARKET';
-        placeBuyOrder();
+        utils.placeBuyOrder();
         document.getElementById('buy_type').value = 'LIMIT';
       }
       break;
@@ -114,42 +116,42 @@ keyboardHandlers.onKeyup = function(e){
      ********************************/
     // place the best limit sell on the market
     case plugin.KEYS.OFFER_BETTER:
-      var bestOffer = getBestOffer();
+      var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer - 0.01;
-      setPrice(newOffer.toFixed(2));
-      placeSellOrder();
+      utils.setPrice(newOffer.toFixed(2));
+      utils.placeSellOrder();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_WITH_BEST_ASK:
-      var bestOffer = getBestOffer();
-      setPrice(bestOffer);
-      placeSellOrder();
+      var bestOffer = utils.getBestOffer();
+      utils.setPrice(bestOffer);
+      utils.placeSellOrder();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_ABOVE_BEST:
-      var bestOffer = getBestOffer();
+      var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer + plugin.settings.INCR;
-      setPrice(newOffer.toFixed(2));
-      placeSellOrder();
+      utils.setPrice(newOffer.toFixed(2));
+      utils.placeSellOrder();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-      var bestOffer = getBestOffer();
+      var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer + (plugin.settings.INCR * 2);
-      setPrice(newOffer.toFixed(2));
-      placeSellOrder();
+      utils.setPrice(newOffer.toFixed(2));
+      utils.placeSellOrder();
       break;
 
     // place market sell
     case plugin.KEYS.MARKET_SELL:
-      if (currentLocation() === 'coinbase'){
+      if (utils.currentLocation() === 'coinbase'){
 
       } else {
         document.getElementById('sell_type').value = 'MARKET';
-        placeSellOrder();
+        utils.placeSellOrder();
         document.getElementById('sell_type').value = 'LIMIT';
       }
       break;
@@ -162,9 +164,9 @@ keyboardHandlers.onKeyup = function(e){
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      if (currentLocation() === 'coinbase'){
+      if (utils.currentLocation() === 'coinbase'){
         var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
-        eventFire(cancelButton, 'click');
+        utils.eventFire(cancelButton, 'click');
       } else {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', encodeURI('/orders/cancel_all'));
@@ -177,4 +179,3 @@ keyboardHandlers.onKeyup = function(e){
       break
   }
 }
-
