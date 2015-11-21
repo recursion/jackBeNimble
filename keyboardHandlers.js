@@ -71,14 +71,14 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.BID_BETTER:
       var bestBid = utils.getBestBid();
       var newBid = +bestBid + 0.01;
-      utils.setPrice(newBid.toFixed(2));
+      utils.setBuyPrice(newBid.toFixed(2));
       utils.placeBuyOrder();
       break;
 
     // place bid at current best bid
     case plugin.KEYS.BID_WITH_BEST_BID:
       var bestBid = utils.getBestBid();
-      utils.setPrice(bestBid);
+      utils.setBuyPrice(bestBid);
       utils.placeBuyOrder();
       break;
 
@@ -86,7 +86,7 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.BID_BELOW_BEST:
       var bestBid = utils.getBestBid();
       var newBid = +bestBid - plugin.settings.INCR;
-      utils.setPrice(newBid.toFixed(2));
+      utils.setBuyPrice(newBid.toFixed(2));
       utils.placeBuyOrder();
       break;
 
@@ -94,7 +94,7 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.BID_DOUBLE_BELOW_BEST:
       var bestBid = utils.getBestBid();
       var newBid = +bestBid - (plugin.settings.INCR * 2);
-      utils.setPrice(newBid.toFixed(2));
+      utils.setBuyPrice(newBid.toFixed(2));
       utils.placeBuyOrder();
       break;
 
@@ -112,14 +112,14 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.OFFER_BETTER:
       var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer - 0.01;
-      utils.setPrice(newOffer.toFixed(2));
+      utils.setSellPrice(newOffer.toFixed(2));
       utils.placeSellOrder();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_WITH_BEST_ASK:
       var bestOffer = utils.getBestOffer();
-      utils.setPrice(bestOffer);
+      utils.setSellPrice(bestOffer);
       utils.placeSellOrder();
       break;
 
@@ -127,7 +127,7 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.OFFER_ABOVE_BEST:
       var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer + plugin.settings.INCR;
-      utils.setPrice(newOffer.toFixed(2));
+      utils.setSellPrice(newOffer.toFixed(2));
       utils.placeSellOrder();
       break;
 
@@ -135,7 +135,7 @@ keyboardHandlers.onKeyup = function(e){
     case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
       var bestOffer = utils.getBestOffer();
       var newOffer = +bestOffer + (plugin.settings.INCR * 2);
-      utils.setPrice(newOffer.toFixed(2));
+      utils.setSellPrice(newOffer.toFixed(2));
       utils.placeSellOrder();
       break;
 

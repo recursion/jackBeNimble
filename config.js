@@ -1,7 +1,7 @@
 /******************************************
  *          SETUP/CONFIG
  ****************************************/
-var DEBUG = false;
+var DEBUG = true;
 
 var plugin = plugin || {};
 plugin.settings = {};
@@ -17,7 +17,7 @@ plugin.INCREMENTS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.5, 0.75, 1, 2, 5,
 plugin.settings.INCR = 0.1;
 
 // Set default lotsize
-plugin.settings.LOTSIZE = .1;
+plugin.settings.LOTSIZE = 0.1;
 
 // Default key bindings
 plugin.KEYS = {

@@ -67,7 +67,11 @@ strategies.cbex = {
     }
   },
 
-  setPrice: function(p){
+  setBuyPrice: function(p){
+    document.getElementById('inputusd').value = p;
+  },
+
+  setSellPrice: function(p){
     document.getElementById('inputusd').value = p;
   },
 

@@ -58,17 +58,23 @@ strategies.bfx = {
     }
   },
 
-  setPrice: function(p){
+  setBuyPrice: function(p){
     document.getElementById('buy_price').value = p;
+  },
+
+  setSellPrice: function(p){
+    document.getElementById('sell_price').value = p;
   },
 
   getBestBid: function(){
     var bestBid = document.querySelector('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
+    console.log(bestBid.innerHTML);
     return bestBid.innerHTML;
   },
 
   getBestOffer: function(){
     var bestAsk = document.querySelector('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
+    console.log(bestAsk.innerHTML);
     return bestAsk.innerHTML;
   }
 
