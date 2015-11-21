@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
 
-  "name": "Bitfinex Hotkeys",
-  "description": "This extension gives hotkey order entry for the bitfinex platform.",
+  "name": "jackBeNimble",
+  "description": "This extension gives hotkey order entry for the bitfinex and coinbase exchange platforms.",
   "version": "0.0.1",
   "browser_action": {
     "default_popup": "config.html",
-    "default_title": "Bitfinex Hotkeys"
+    "default_title": "jackBeNimble"
   },
 
   "content_scripts": [
