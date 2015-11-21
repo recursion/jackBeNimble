@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "jackBeNimble",
-  "description": "This extension gives hotkey order entry for the bitfinex and coinbase exchange platforms.",
+  "description": "Adds order entry hotkeys for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
   "version": "0.0.2",
   "browser_action": {
     "default_popup": "config.html",
