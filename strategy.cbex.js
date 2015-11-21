@@ -10,7 +10,7 @@ strategies.cbex = {
       utils.eventFire(limitScreen, 'click');
       utils.setLotSize(plugin.settings.LOTSIZE);
       utils.displayIncr(plugin.settings.INCR);
-    }, 1000);
+    }, 2000);
 
   },
 
@@ -50,12 +50,20 @@ strategies.cbex = {
   },
 
   placeBuyOrder: function(){
-    utils.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
+    if (!DEBUG){
+      utils.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
+      setTimeout(function(){
+        utils.setLotSize(plugin.settings.LOTSIZE);
+      }, 250);
+    }
   },
 
   placeSellOrder: function(){
     if (!DEBUG){
       utils.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
+      setTimeout(function(){
+        utils.setLotSize(plugin.settings.LOTSIZE);
+      }, 250);
     }
   },
 
