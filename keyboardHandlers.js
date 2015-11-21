@@ -1,11 +1,11 @@
 var plugin = plugin || {};
 var utils = utils || {};
+var keyboardHandlers = {};
+
 
 /*****************************************
  *            KEYBOARD HANDLERS
  ****************************************/
-var keyboardHandlers = {};
-
 keyboardHandlers.onKeydown = function(e){
   if(DEBUG){
     console.log('Keypress', e.keyCode);
@@ -32,7 +32,7 @@ keyboardHandlers.onKeyup = function(e){
       utils.setLotSize(lotsize);
       break;
 
-      // LOTSIZE DOWN
+    // LOTSIZE DOWN
     case plugin.KEYS.TOGGLE_LOTSIZE_DOWN:
       var idx = plugin.LOTSIZES.indexOf(plugin.settings.LOTSIZE);
       if (--idx < 0){
@@ -100,13 +100,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // place market buy
     case plugin.KEYS.MARKET_BUY:
-      if (utils.currentLocation() === 'coinbase'){
-
-      } else {
-        document.getElementById('buy_type').value = 'MARKET';
-        utils.placeBuyOrder();
-        document.getElementById('buy_type').value = 'LIMIT';
-      }
+      plugin.strategy.market_buy();
       break;
 
 
@@ -147,13 +141,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // place market sell
     case plugin.KEYS.MARKET_SELL:
-      if (utils.currentLocation() === 'coinbase'){
-
-      } else {
-        document.getElementById('sell_type').value = 'MARKET';
-        utils.placeSellOrder();
-        document.getElementById('sell_type').value = 'LIMIT';
-      }
+      plugin.strategy.market_sell();
       break;
 
 
@@ -164,14 +152,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      if (utils.currentLocation() === 'coinbase'){
-        var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
-        utils.eventFire(cancelButton, 'click');
-      } else {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', encodeURI('/orders/cancel_all'));
-        xhr.send();
-      }
+      plugin.strategy.cancel_all();
       break;
 
     default:

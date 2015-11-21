@@ -1,6 +1,7 @@
 var plugin = plugin || {};
 var keyboardHandlers = keyboardHandlers || {};
 var utils = utils || {};
+var strategies = strategies || {};
 
 /******************************************
  *          INIT
@@ -17,12 +18,26 @@ setTimeout(function(){
   window.addEventListener('keyup', keyboardHandlers.onKeyup, false);
 
   setTimeout(function(){
-    if (utils.currentLocation() === 'coinbase'){
-      var limitScreen = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
-      utils.eventFire(limitScreen, 'click');
-    }
-    utils.setLotSize(plugin.settings.LOTSIZE);
-    utils.displayIncr(plugin.settings.INCR);
+    setStrategy();
+    plugin.strategy.init();
   }, 1000);
 
 }, 2000);
+
+/**
+ *          HELPERS
+ */
+
+/**
+ * find and set the current web location
+ * @returns {String} - name of current website
+ */
+function setStrategy(){
+  if (window.location.hostname.indexOf('coinbase') !== -1){
+    plugin.strategy = strategies.cbex;
+  } else if (window.location.hostname.indexOf('bitfinex') !== -1){
+    plugin.strategy = strategies.bfx;
+  } else {
+    plugin.strategy = 'unknown';
+  }
+}

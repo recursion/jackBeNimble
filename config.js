@@ -42,3 +42,4 @@ plugin.KEYS = {
   MARKET_BUY: 71, // g
   MARKET_SELL: 72 // h
 };
+
