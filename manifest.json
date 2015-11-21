@@ -21,7 +21,7 @@
 
       "css": ["main.css"],
 
-      "js": ["orderEntry.js"],
+      "js": ["config.js", "orderEntry.js"],
 
       "run_at": "document_idle"
     }
