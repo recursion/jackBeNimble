@@ -21,7 +21,7 @@
 
       "css": ["main.css"],
 
-      "js": ["config.js", "strategy.bfx.js", "strategy.cbex.js", "jackBeNimble.controller.js", "keyboardHandlers.js", "jackBeNimble.js"],
+      "js": ["src/config.js", "src/strategies/strategy.bfx.js", "src/strategies/strategy.cbex.js", "src/controllers/utilities.controller.js",  "src/controllers/sell.order.controller.js",  "src/controllers/buy.order.controller.js", "src/keyboardHandlers.js", "src/jackBeNimble.js"],
 
       "run_at": "document_idle"
     }

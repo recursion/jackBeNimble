@@ -4,7 +4,6 @@
 var plugin = plugin || {};
 
 
-
 /********************************************
  *      DISPLAY INCREMENT VALUE
  ********************************************/
@@ -16,27 +15,10 @@ plugin.displayIncr = function(v){
 }
 
 
-
-
-/********************************************
- *           PLACE ORDER
- *******************************************/
-plugin.placeBuyOrder = function(){
-  plugin.strategy.placeBuyOrder();
-}
-
-plugin.placeSellOrder = function(){
-  plugin.strategy.placeSellOrder();
-}
-
-
-
-
 /**********************************************
  *            SET LOT SIZE
 **********************************************/
 /**
- *
  * @param {Number} v - the new lotsize value
  **********************************************/
 plugin.setLotSize = function(v){
@@ -45,28 +27,6 @@ plugin.setLotSize = function(v){
   amount.value = v;
   plugin.settings.LOTSIZE = v;
 }
-
-
-
-/********************************************
- *          SET ORDER PRICE
- *******************************************/
-plugin.setBuyPrice = function(p){
-  // make sure the bid is in a string format
-  if(typeof p !== 'string'){
-    p = '' + p;
-  }
-  plugin.strategy.setBuyPrice(p);
-}
-
-plugin.setSellPrice = function(p){
-  // make sure the bid is in a string format
-  if(typeof p !== 'string'){
-    p = '' + p;
-  }
-  plugin.strategy.setSellPrice(p);
-}
-
 
 
 
@@ -133,78 +93,6 @@ plugin.toggleIncrement = function(direction){
 
 
 
-
-/*******************************************
- *              BUY ORDERS
- ******************************************/
-
-/* Bid just above the best bid */
-plugin.bidBetter = function() {
-  var bestBid = plugin.getBestBid();
-  var newBid = +bestBid + 0.01;
-  plugin.setBuyPrice(newBid.toFixed(2));
-  plugin.placeBuyOrder();
-}
-
-/* bid with the best current bid */
-plugin.bidWithBest = function() {
-  var bestBid = plugin.getBestBid();
-  plugin.setBuyPrice(bestBid);
-  plugin.placeBuyOrder();
-}
-
-/* bid 1 increment level below the best bid */
-plugin.bidBelowBest = function(){
-  var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - plugin.settings.INCR;
-  plugin.setBuyPrice(newBid.toFixed(2));
-  plugin.placeBuyOrder();
-}
-
-/* bid 2 increment levels below best bid */
-plugin.bidDoubleBelowBest = function(){
-  var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - (plugin.settings.INCR * 2);
-  plugin.setBuyPrice(newBid.toFixed(2));
-  plugin.placeBuyOrder();
-}
-
-
-
-/********************************
- *           SELL ORDERS
- ********************************/
-
-/* Offer just below best offer */
-plugin.offerBetter = function(){
-  var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer - 0.01;
-  plugin.setSellPrice(newOffer.toFixed(2));
-  plugin.placeSellOrder();
-}
-
-/* Offer with the best current offer */
-plugin.offerWithBest = function(){
-  var bestOffer = plugin.getBestOffer();
-  plugin.setSellPrice(bestOffer);
-  plugin.placeSellOrder();
-}
-
-/* Offer 1 increment level above the best offer */
-plugin.offerAboveBest = function(){
-  var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + plugin.settings.INCR;
-  plugin.setSellPrice(newOffer.toFixed(2));
-  plugin.placeSellOrder();
-}
-
-/* Offer 2 increment levels above the best offer */
-plugin.offerDoubleAboveBest = function() {
-  var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + (plugin.settings.INCR * 2);
-  plugin.setSellPrice(newOffer.toFixed(2));
-  plugin.placeSellOrder();
-}
 /**
  * Simulate an event being fired.
  * Used for 'clicking' the buy/sell buttons.
