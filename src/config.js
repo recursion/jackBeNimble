@@ -9,12 +9,12 @@ plugin.settings = {};
 // LOT SIZE VALUES
 plugin.LOTSIZES = [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 10];
 
-// INCREMENT VALUES
-plugin.INCREMENTS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.5, 0.75, 1, 2, 5, 10];
+// OFFSET VALUES
+plugin.OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.5, 0.75, 1, 2, 5, 10];
 
 
-// Set default increment
-plugin.settings.INCR = 0.1;
+// Set default OFFSET
+plugin.settings.OFFSET = 0.1;
 
 // Set default lotsize
 plugin.settings.LOTSIZE = 0.1;
@@ -26,8 +26,8 @@ plugin.KEYS = {
 
   TOGGLE_LOTSIZE_UP: 220,
   TOGGLE_LOTSIZE_DOWN: 222,
-  TOGGLE_INCR_UP: 189,
-  TOGGLE_INCR_DOWN: 187,
+  TOGGLE_OFFSET_UP: 189,
+  TOGGLE_OFFSET_DOWN: 187,
 
   BID_BETTER: 70, // f
   BID_WITH_BEST_BID: 68, //d

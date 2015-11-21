@@ -22,18 +22,18 @@ plugin.bidWithBest = function() {
   plugin.placeBuyOrder();
 }
 
-/* bid 1 increment level below the best bid */
+/* bid 1 offset level below the best bid */
 plugin.bidBelowBest = function(){
   var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - plugin.settings.INCR;
+  var newBid = +bestBid - plugin.settings.OFFSET;
   plugin.setBuyPrice(newBid.toFixed(2));
   plugin.placeBuyOrder();
 }
 
-/* bid 2 increment levels below best bid */
+/* bid 2 offset levels below best bid */
 plugin.bidDoubleBelowBest = function(){
   var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - (plugin.settings.INCR * 2);
+  var newBid = +bestBid - (plugin.settings.OFFSET * 2);
   plugin.setBuyPrice(newBid.toFixed(2));
   plugin.placeBuyOrder();
 }

@@ -32,14 +32,14 @@ keyboardHandlers.onKeyup = function(e){
       plugin.toggleLotSize('down');
       break;
 
-      // INCREMENT UP
-    case plugin.KEYS.TOGGLE_INCR_UP:
-      plugin.toggleIncrement('up');
+      // OFFSET UP
+    case plugin.KEYS.TOGGLE_OFFSET_UP:
+      plugin.toggleOffset('up');
       break;
 
-      // INCREMENT DOWN
-    case plugin.KEYS.TOGGLE_INCR_DOWN:
-      plugin.toggleIncrement('down');
+      // OFFSET DOWN
+    case plugin.KEYS.TOGGLE_OFFSET_DOWN:
+      plugin.toggleOffset('down');
       break;
 
 

@@ -10,8 +10,8 @@ var plugin = plugin || {};
 /**
  * @param {Number} v - the new increment value
  */
-plugin.displayIncr = function(v){
-  plugin.strategy.displayIncr(v);
+plugin.displayOffset = function(v){
+  plugin.strategy.displayOffset(v);
 }
 
 
@@ -70,25 +70,25 @@ plugin.toggleLotSize = function(direction){
 }
 
 /**
- *      Toggle the increment value up or down
+ *      Toggle the offset value up or down
  * @param {String} direction - can be 'up' or 'down'
- * determines which way to toggle the increment
+ * determines which way to toggle the offset
  */
-plugin.toggleIncrement = function(direction){
-  var idx = plugin.INCREMENTS.indexOf(plugin.settings.INCR);
+plugin.toggleOffset = function(direction){
+  var idx = plugin.OFFSETS.indexOf(plugin.settings.OFFSET);
   if (direction === 'up'){
-    if (++idx >= plugin.INCREMENTS.length){
+    if (++idx >= plugin.OFFSETS.length){
       idx = 0;
     }
   } else if (direction === 'down'){
     if (--idx < 0){
-      idx = plugin.INCREMENTS.length - 1;
+      idx = plugin.OFFSETS.length - 1;
     }
   } else {
-    console.error('Unknown toggle increment direction: ', direction);
+    console.error('Unknown toggle offset direction: ', direction);
   }
-  plugin.settings.INCR = plugin.INCREMENTS[idx];
-  plugin.displayIncr(plugin.settings.INCR);
+  plugin.settings.OFFSET = plugin.OFFSETS[idx];
+  plugin.displayOffset(plugin.settings.OFFSET);
 }
 
 

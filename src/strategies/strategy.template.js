@@ -33,9 +33,9 @@ strategies.EXCHANGE = {
   },
 
   /**
-   * display the increment value
+   * display the offset value
    */
-  displayIncr: function(v){
+  displayOffset: function(v){
   },
 
 

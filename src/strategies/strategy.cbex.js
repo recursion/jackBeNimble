@@ -9,7 +9,7 @@ strategies.cbex = {
     setTimeout(function(){
       plugin.eventFire(limitScreen, 'click');
       plugin.setLotSize(plugin.settings.LOTSIZE);
-      plugin.displayIncr(plugin.settings.INCR);
+      plugin.displayOffset(plugin.settings.OFFSET);
     }, 2000);
 
   },
@@ -33,18 +33,18 @@ strategies.cbex = {
     return document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
   },
 
-  displayIncr: function(v){
+  displayOffset: function(v){
     var homeDiv = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix');
-    var target = document.getElementById('CB_INCRVAL');
+    var target = document.getElementById('CBEX_OFFSET_VALUE');
     if(!target){
       var listItem = document.createElement('li');
       var newEl = document.createElement('span');
-      newEl.id = 'CB_INCRVAL';
-      newEl.innerHTML = 'Increment: ' + v;
+      newEl.id = 'CBEX_OFFSET_VALUE';
+      newEl.innerHTML = 'Offset: ' + v;
       listItem.appendChild(newEl);
       homeDiv.appendChild(listItem);
     } else {
-      target.innerHTML = 'Increment: ' + v;
+      target.innerHTML = 'Offset: ' + v;
     }
 
   },

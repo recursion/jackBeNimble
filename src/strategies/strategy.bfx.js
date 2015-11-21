@@ -5,7 +5,7 @@ strategies.bfx = {
 
   init: function(){
     plugin.setLotSize(plugin.settings.LOTSIZE);
-    plugin.displayIncr(plugin.settings.INCR);
+    plugin.displayOffset(plugin.settings.OFFSET);
   },
 
   market_buy: function(){
@@ -31,17 +31,17 @@ strategies.bfx = {
     return document.getElementById('amount');
   },
 
-  displayIncr: function(v){
+  displayOffset: function(v){
     var homeDiv = document.querySelector('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
 
-    var target = document.getElementById('INCRVAL');
+    var target = document.getElementById('BFX_OFFSET_VALUE');
     if(!target){
       var span = document.createElement('span');
-      span.id = 'INCRVAL';
-      span.innerHTML = 'Increment: ' + v;
+      span.id = 'BFX_OFFSET_VALUE';
+      span.innerHTML = 'Offset: ' + v;
       homeDiv.appendChild(span);
     } else {
-      target.innerHTML = 'Increment: ' + v;
+      target.innerHTML = 'Offset: ' + v;
     }
   },
 

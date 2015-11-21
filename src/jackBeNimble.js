@@ -8,7 +8,7 @@ var strategies = strategies || {};
  * - gives the page time to load data
  * - adds our keyboard event listeners
  * - sets a default lotsize
- * - adds the increment value to the display
+ * - adds the offset value to the display
  *
  ****************************************/
 setTimeout(function(){

@@ -18,18 +18,18 @@ plugin.offerWithBest = function(){
   plugin.placeSellOrder();
 }
 
-/* Offer 1 increment level above the best offer */
+/* Offer 1 offset level above the best offer */
 plugin.offerAboveBest = function(){
   var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + plugin.settings.INCR;
+  var newOffer = +bestOffer + plugin.settings.OFFSET;
   plugin.setSellPrice(newOffer.toFixed(2));
   plugin.placeSellOrder();
 }
 
-/* Offer 2 increment levels above the best offer */
+/* Offer 2 offset levels above the best offer */
 plugin.offerDoubleAboveBest = function() {
   var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + (plugin.settings.INCR * 2);
+  var newOffer = +bestOffer + (plugin.settings.OFFSET * 2);
   plugin.setSellPrice(newOffer.toFixed(2));
   plugin.placeSellOrder();
 }

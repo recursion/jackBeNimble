@@ -1,4 +1,4 @@
-#INCRVAL {
+#BFX_OFFSET_VALUE{
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -7,7 +7,7 @@
   text-shadow: 1px 1px 1px black;
 }
 
-#CB_INCRVAL {
+#CBEX_OFFSET_VALUE{
   font-size: 2em;
   font-weight: bold;
 }
