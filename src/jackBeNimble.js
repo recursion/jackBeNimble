@@ -11,17 +11,13 @@ var strategies = strategies || {};
  * - adds the offset value to the display
  *
  ****************************************/
-setTimeout(function(){
-  window.addEventListener('keydown', keyboardHandlers.onKeydown, false);
-  window.addEventListener('keypress', keyboardHandlers.onKeypress, false);
-  window.addEventListener('keyup', keyboardHandlers.onKeyup, false);
+window.addEventListener('keydown', keyboardHandlers.onKeydown, false);
+window.addEventListener('keypress', keyboardHandlers.onKeypress, false);
+window.addEventListener('keyup', keyboardHandlers.onKeyup, false);
 
-  setTimeout(function(){
-    setStrategy();
-    plugin.strategy.init();
-  }, 1000);
+setStrategy();
+plugin.strategy.init();
 
-}, 2000);
 
 /**
  *          HELPERS

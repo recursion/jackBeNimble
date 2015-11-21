@@ -3,14 +3,20 @@ var plugin = plugin || {};
 
 strategies.cbex = {
 
+  /**
+   * Try to get the dom object we need,
+   * if it exists, init, otherwise try later.
+   */
   init: function(){
-    var limitScreen = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+    var limitButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
 
-    setTimeout(function(){
-      plugin.eventFire(limitScreen, 'click');
-      plugin.setLotSize(plugin.settings.LOTSIZE);
-      plugin.displayOffset(plugin.settings.OFFSET);
-    }, 2000);
+    if (limitButtonElement){
+      initialize(limitButtonElement, plugin);
+    } else {
+      setTimeout(function(){
+        strategies.cbex.init();
+      }, 250);
+    }
 
   },
 
@@ -103,3 +109,8 @@ strategies.cbex = {
 
 };
 
+function initialize(limitButtonElement, plugin){
+  plugin.eventFire(limitButtonElement, 'click');
+  plugin.setLotSize(plugin.settings.LOTSIZE);
+  plugin.displayOffset(plugin.settings.OFFSET);
+}
