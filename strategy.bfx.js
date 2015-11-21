@@ -1,22 +1,22 @@
 var strategies = strategies || {};
-var utils = utils || {};
+var plugin = plugin || {};
 
 strategies.bfx = {
 
   init: function(){
-    utils.setLotSize(plugin.settings.LOTSIZE);
-    utils.displayIncr(plugin.settings.INCR);
+    plugin.setLotSize(plugin.settings.LOTSIZE);
+    plugin.displayIncr(plugin.settings.INCR);
   },
 
   market_buy: function(){
     document.getElementById('buy_type').value = 'MARKET';
-    utils.placeBuyOrder();
+    plugin.placeBuyOrder();
     document.getElementById('buy_type').value = 'LIMIT';
   },
 
   market_sell: function(){
     document.getElementById('sell_type').value = 'MARKET';
-    utils.placeSellOrder();
+    plugin.placeSellOrder();
     document.getElementById('sell_type').value = 'LIMIT';
   },
 
@@ -48,13 +48,13 @@ strategies.bfx = {
 
   placeBuyOrder: function(){
     if(!DEBUG){
-      utils.eventFire(document.getElementById('buy-button'), 'click');
+      plugin.eventFire(document.getElementById('buy-button'), 'click');
     }
   },
 
   placeSellOrder: function(){
     if (!DEBUG){
-      utils.eventFire(document.getElementById('sell-button'), 'click');
+      plugin.eventFire(document.getElementById('sell-button'), 'click');
     }
   },
 

@@ -1,5 +1,5 @@
 var strategies = strategies || {};
-var utils = utils || {};
+var plugin = plugin || {};
 
 strategies.cbex = {
 
@@ -7,9 +7,9 @@ strategies.cbex = {
     var limitScreen = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
 
     setTimeout(function(){
-      utils.eventFire(limitScreen, 'click');
-      utils.setLotSize(plugin.settings.LOTSIZE);
-      utils.displayIncr(plugin.settings.INCR);
+      plugin.eventFire(limitScreen, 'click');
+      plugin.setLotSize(plugin.settings.LOTSIZE);
+      plugin.displayIncr(plugin.settings.INCR);
     }, 2000);
 
   },
@@ -25,7 +25,7 @@ strategies.cbex = {
 
   cancel_all: function(){
     var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
-    utils.eventFire(cancelButton, 'click');
+    plugin.eventFire(cancelButton, 'click');
   },
 
   /* return the lot size input element */
@@ -51,18 +51,18 @@ strategies.cbex = {
 
   placeBuyOrder: function(){
     if (!DEBUG){
-      utils.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
+      plugin.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
       setTimeout(function(){
-        utils.setLotSize(plugin.settings.LOTSIZE);
+        plugin.setLotSize(plugin.settings.LOTSIZE);
       }, 250);
     }
   },
 
   placeSellOrder: function(){
     if (!DEBUG){
-      utils.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
+      plugin.eventFire(document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
       setTimeout(function(){
-        utils.setLotSize(plugin.settings.LOTSIZE);
+        plugin.setLotSize(plugin.settings.LOTSIZE);
       }, 250);
     }
   },

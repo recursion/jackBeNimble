@@ -1,5 +1,5 @@
 var plugin = plugin || {};
-var utils = utils || {};
+var plugin = plugin || {};
 var keyboardHandlers = {};
 
 
@@ -24,22 +24,22 @@ keyboardHandlers.onKeyup = function(e){
 
     // LOTSIZE UP
     case plugin.KEYS.TOGGLE_LOTSIZE_UP:
-      utils.toggleLotSize('up');
+      plugin.toggleLotSize('up');
       break;
 
     // LOTSIZE DOWN
     case plugin.KEYS.TOGGLE_LOTSIZE_DOWN:
-      utils.toggleLotSize('down');
+      plugin.toggleLotSize('down');
       break;
 
       // INCREMENT UP
     case plugin.KEYS.TOGGLE_INCR_UP:
-      utils.toggleIncrement('up');
+      plugin.toggleIncrement('up');
       break;
 
       // INCREMENT DOWN
     case plugin.KEYS.TOGGLE_INCR_DOWN:
-      utils.toggleIncrement('down');
+      plugin.toggleIncrement('down');
       break;
 
 
@@ -49,22 +49,22 @@ keyboardHandlers.onKeyup = function(e){
      ********************************/
     // place best limit bid order on the market
     case plugin.KEYS.BID_BETTER:
-      utils.bidBetter();
+      plugin.bidBetter();
       break;
 
     // place bid at current best bid
     case plugin.KEYS.BID_WITH_BEST_BID:
-      utils.bidWithBest();
+      plugin.bidWithBest();
       break;
 
     // Place bid at (INCR) below the current best bid
     case plugin.KEYS.BID_BELOW_BEST:
-      utils.bidBelowBest();
+      plugin.bidBelowBest();
       break;
 
     // Place bid at (INCR) below the current best bid
     case plugin.KEYS.BID_DOUBLE_BELOW_BEST:
-      utils.bidDoubleBelowBest();
+      plugin.bidDoubleBelowBest();
       break;
 
     // place market buy
@@ -79,22 +79,22 @@ keyboardHandlers.onKeyup = function(e){
      ********************************/
     // place the best limit sell on the market
     case plugin.KEYS.OFFER_BETTER:
-      utils.offerBetter();
+      plugin.offerBetter();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_WITH_BEST_ASK:
-      utils.offerWithBest();
+      plugin.offerWithBest();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_ABOVE_BEST:
-      utils.offerAboveBest();
+      plugin.offerAboveBest();
       break;
 
     // place offer at current best ask
     case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-      utils.offerDoubleAboveBest();
+      plugin.offerDoubleAboveBest();
       break;
 
     // place market sell

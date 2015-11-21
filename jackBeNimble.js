@@ -1,6 +1,5 @@
 var plugin = plugin || {};
 var keyboardHandlers = keyboardHandlers || {};
-var utils = utils || {};
 var strategies = strategies || {};
 
 /******************************************

@@ -2,7 +2,6 @@
  *          UTILITY FUNCTIONS
  **********************************/
 var plugin = plugin || {};
-var utils = {};
 
 
 
@@ -10,7 +9,7 @@ var utils = {};
  *     Set the desired lot size
  * @param {Number} v - the new lotsize value
  */
-utils.setLotSize = function(v){
+plugin.setLotSize = function(v){
   var amount = plugin.strategy.getLotSizeInputElement(v);
   v = v || plugin.settings.LOTSIZE;
   amount.value = v;
@@ -21,7 +20,7 @@ utils.setLotSize = function(v){
  * Display the increment value
  * @param {Number} v - the new increment value
  */
-utils.displayIncr = function(v){
+plugin.displayIncr = function(v){
   plugin.strategy.displayIncr(v);
 }
 
@@ -31,11 +30,11 @@ utils.displayIncr = function(v){
 /********************************************
  *           PLACE ORDER
  *******************************************/
-utils.placeBuyOrder = function(){
+plugin.placeBuyOrder = function(){
   plugin.strategy.placeBuyOrder();
 }
 
-utils.placeSellOrder = function(){
+plugin.placeSellOrder = function(){
   plugin.strategy.placeSellOrder();
 }
 
@@ -45,7 +44,7 @@ utils.placeSellOrder = function(){
 /********************************************
  *          SET ORDER PRICE
  *******************************************/
-utils.setBuyPrice = function(p){
+plugin.setBuyPrice = function(p){
   // make sure the bid is in a string format
   if(typeof p !== 'string'){
     p = '' + p;
@@ -53,7 +52,7 @@ utils.setBuyPrice = function(p){
   plugin.strategy.setBuyPrice(p);
 }
 
-utils.setSellPrice = function(p){
+plugin.setSellPrice = function(p){
   // make sure the bid is in a string format
   if(typeof p !== 'string'){
     p = '' + p;
@@ -67,11 +66,11 @@ utils.setSellPrice = function(p){
 /****************************************
  * Get Best Bid/ Best Offer data
  ***************************************/
-utils.getBestBid = function(){
+plugin.getBestBid = function(){
   return plugin.strategy.getBestBid();
 }
 
-utils.getBestOffer = function(){
+plugin.getBestOffer = function(){
   return plugin.strategy.getBestOffer();
 }
 
@@ -84,7 +83,7 @@ utils.getBestOffer = function(){
  * @param {String} direction - can be 'up' or 'down'
  * determines which way to toggle the lot size
  */
-utils.toggleLotSize = function(direction){
+plugin.toggleLotSize = function(direction){
     var idx = plugin.LOTSIZES.indexOf(plugin.settings.LOTSIZE);
 
     if (direction === 'up'){
@@ -100,7 +99,7 @@ utils.toggleLotSize = function(direction){
     }
 
     var lotsize = plugin.LOTSIZES[idx];
-    utils.setLotSize(lotsize);
+    plugin.setLotSize(lotsize);
 }
 
 /**
@@ -108,7 +107,7 @@ utils.toggleLotSize = function(direction){
  * @param {String} direction - can be 'up' or 'down'
  * determines which way to toggle the increment
  */
-utils.toggleIncrement = function(direction){
+plugin.toggleIncrement = function(direction){
   var idx = plugin.INCREMENTS.indexOf(plugin.settings.INCR);
   if (direction === 'up'){
     if (++idx >= plugin.INCREMENTS.length){
@@ -122,7 +121,7 @@ utils.toggleIncrement = function(direction){
     console.error('Unknown toggle increment direction: ', direction);
   }
   plugin.settings.INCR = plugin.INCREMENTS[idx];
-  utils.displayIncr(plugin.settings.INCR);
+  plugin.displayIncr(plugin.settings.INCR);
 }
 
 /*******************************************
@@ -130,34 +129,34 @@ utils.toggleIncrement = function(direction){
  ******************************************/
 
 /* Bid just above the best bid */
-utils.bidBetter = function() {
-  var bestBid = utils.getBestBid();
+plugin.bidBetter = function() {
+  var bestBid = plugin.getBestBid();
   var newBid = +bestBid + 0.01;
-  utils.setBuyPrice(newBid.toFixed(2));
-  utils.placeBuyOrder();
+  plugin.setBuyPrice(newBid.toFixed(2));
+  plugin.placeBuyOrder();
 }
 
 /* bid with the best current bid */
-utils.bidWithBest = function() {
-  var bestBid = utils.getBestBid();
-  utils.setBuyPrice(bestBid);
-  utils.placeBuyOrder();
+plugin.bidWithBest = function() {
+  var bestBid = plugin.getBestBid();
+  plugin.setBuyPrice(bestBid);
+  plugin.placeBuyOrder();
 }
 
 /* bid 1 increment level below the best bid */
-utils.bidBelowBest = function(){
-  var bestBid = utils.getBestBid();
+plugin.bidBelowBest = function(){
+  var bestBid = plugin.getBestBid();
   var newBid = +bestBid - plugin.settings.INCR;
-  utils.setBuyPrice(newBid.toFixed(2));
-  utils.placeBuyOrder();
+  plugin.setBuyPrice(newBid.toFixed(2));
+  plugin.placeBuyOrder();
 }
 
 /* bid 2 increment levels below best bid */
-utils.bidDoubleBelowBest = function(){
-  var bestBid = utils.getBestBid();
+plugin.bidDoubleBelowBest = function(){
+  var bestBid = plugin.getBestBid();
   var newBid = +bestBid - (plugin.settings.INCR * 2);
-  utils.setBuyPrice(newBid.toFixed(2));
-  utils.placeBuyOrder();
+  plugin.setBuyPrice(newBid.toFixed(2));
+  plugin.placeBuyOrder();
 }
 
 
@@ -167,34 +166,34 @@ utils.bidDoubleBelowBest = function(){
  ********************************/
 
 /* Offer just below best offer */
-utils.offerBetter = function(){
-  var bestOffer = utils.getBestOffer();
+plugin.offerBetter = function(){
+  var bestOffer = plugin.getBestOffer();
   var newOffer = +bestOffer - 0.01;
-  utils.setSellPrice(newOffer.toFixed(2));
-  utils.placeSellOrder();
+  plugin.setSellPrice(newOffer.toFixed(2));
+  plugin.placeSellOrder();
 }
 
 /* Offer with the best current offer */
-utils.offerWithBest = function(){
-  var bestOffer = utils.getBestOffer();
-  utils.setSellPrice(bestOffer);
-  utils.placeSellOrder();
+plugin.offerWithBest = function(){
+  var bestOffer = plugin.getBestOffer();
+  plugin.setSellPrice(bestOffer);
+  plugin.placeSellOrder();
 }
 
 /* Offer 1 increment level above the best offer */
-utils.offerAboveBest = function(){
-  var bestOffer = utils.getBestOffer();
+plugin.offerAboveBest = function(){
+  var bestOffer = plugin.getBestOffer();
   var newOffer = +bestOffer + plugin.settings.INCR;
-  utils.setSellPrice(newOffer.toFixed(2));
-  utils.placeSellOrder();
+  plugin.setSellPrice(newOffer.toFixed(2));
+  plugin.placeSellOrder();
 }
 
 /* Offer 2 increment levels above the best offer */
-utils.offerDoubleAboveBest = function() {
-  var bestOffer = utils.getBestOffer();
+plugin.offerDoubleAboveBest = function() {
+  var bestOffer = plugin.getBestOffer();
   var newOffer = +bestOffer + (plugin.settings.INCR * 2);
-  utils.setSellPrice(newOffer.toFixed(2));
-  utils.placeSellOrder();
+  plugin.setSellPrice(newOffer.toFixed(2));
+  plugin.placeSellOrder();
 }
 /**
  * Simulate an event being fired.
@@ -202,7 +201,7 @@ utils.offerDoubleAboveBest = function() {
  * @param {Element} el - the html element we will fire the event on
  * @param {String} - eType - the event type
  */
-utils.eventFire = function(el, etype){
+plugin.eventFire = function(el, etype){
   if (el.fireEvent) {
     el.fireEvent('on' + etype);
   } else {

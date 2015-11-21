@@ -3,7 +3,7 @@
 
   "name": "jackBeNimble",
   "description": "This extension gives hotkey order entry for the bitfinex and coinbase exchange platforms.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "browser_action": {
     "default_popup": "config.html",
     "default_title": "jackBeNimble"
@@ -21,7 +21,7 @@
 
       "css": ["main.css"],
 
-      "js": ["config.js", "strategy.bfx.js", "strategy.cbex.js", "utils.js", "keyboardHandlers.js", "orderEntry.js"],
+      "js": ["config.js", "strategy.bfx.js", "strategy.cbex.js", "jackBeNimble.controller.js", "keyboardHandlers.js", "jackBeNimble.js"],
 
       "run_at": "document_idle"
     }

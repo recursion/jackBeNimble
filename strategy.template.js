@@ -1,5 +1,5 @@
 var strategies = strategies || {};
-var utils = utils || {};
+var plugin = plugin || {};
 
 strategies.EXCHANGE = {
 
