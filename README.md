@@ -1,10 +1,17 @@
-# Bitfinix-hotkey-order-entry
+# multi-exchange-btc-hotkey-order-entry
 
-Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com and coinbase exchange trading.
+A simple Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com and exchange.coinbase.com trading. No more pesky point and clicking for all your order entry needs!
 
 Simply put, it allows you to place and cancel orders on the bitfinex exchange with hotkeys.
 
-Technically it adds listeners to the bitfinex (or coinbase exchange) page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element to the 'Margin' header row that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
+Technically it adds listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element to the 'Margin' header row that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
+
+This tool does not require any access to api keys, nor does it send any data anywhere. It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.
+
+- The concept is that you have lot size, and an increment for placing orders. 
+- Increment is the value used to determine how far from the best bid or best off you want your order to be. 
+- Use hotkeys to change lot size and increment value.
+- Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
 
 *Disclaimer: Trading is risky and can ruin you. Do not trade. If you do trade, you are doing so at your own risk, and neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*
 
