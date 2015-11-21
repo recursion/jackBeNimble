@@ -1,8 +1,8 @@
 # jackBeNimble
 
-#### Add hotkey order entry to multiple bitcoin exchange's trading pages.
+#### Add hotkey order entry to multiple bitcoin exchange trading pages.
 
-A Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages, basically allowing you to place an order of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
+This Google chrome extension adds a hotkey order entry mechanism for the www.bitfinex.com, beta.bitfinex.com, and exchange.coinbase.com bitcoin exchange trading pages. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
 
 This extension adds hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
@@ -13,41 +13,76 @@ This extension adds hotkeys that allow you to:
 
 On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
 
+**Currently this is still being developed and is not polished, production ready, or released as a public chrome extension.**
 
-*Disclaimer: Trading is risky and can ruin you. Do not trade. If you do trade, you are doing so at your own risk. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*
+**It is however, highly usable.**
 
----------------
+----------
+##### If you use this and like it, feel free to send some satoshi love my way!
+`37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9`
+
+-----------------------
+
+
+<small>*Disclaimer: Trading is risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not trade. If you do trade, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*</small>
+
+
+----------------------
 ###### *Jack be nimble, jack be quick. Jack jumped over the candle stick!*
 ---------------
 
-### Development
-
-Currently this is still being developed and is not polished, production ready, or released as a public chrome extension.
-
-It is however, highly usable.
 
 #### What works:
+- Support for bitfinex and coinbase exchange.
 - Hotkey order entry.
+  - Bid/Offer with current best bid/offer
+  - Bid/Offer below/above the market by `OFFSET`
+  - Bid/Offer below/above the market by 2x `OFFSET`
+  - Market Buy/Sell
 - Adjust order offset modifer up and down.
 - Adjust lot size up and down.
 - Cancel all orders.
 - Display current OFFSET value.
-- Support for bitfinex AND coinbase exchange!
+#### What doesnt work:
+- Configuration
+- Any sort of help/tutorial
+- Specific order canceling
 
 #### Todo
-- Help page.
-- Easy key assignment customization page.
+##### Features
+- Help/Tutoral.
+- Easy key assignment config through key recording.
+  - Ctrl/Alt-key support.
 - On/off switch.
 - Cancel last order
 - Cancel all buys.
 - Cancel all sells.
 - Stack bid order.
+  - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
 - Stack sell order.
-- Move stack order up.
-- Move stack order down.
-- Interfaces to other exchanges. (started)
+  - This will place a pyramid of offers (i.e. 1 lot @ 300, 3 lots at 305, 5 lots @ 310)
+- Move stack orders up.
+  - Adjust a stack of buy orders up to the current market levels.
+- Move stack orders down.
+  - Adjust a stack of sell orders to the current market levels.
 
-### Usage
+### Development
+###### Contributing via Pull requests is welcome!
+- Please follow existing style choices.
+  - Style guide incoming!
+
+###### Adding other exchanges.
+- Add support for new exchanges:
+  1. Use the `interface.template.js` file to implement the site specific methods.
+  2. Add the new file to manifest.json.
+  3. Add the interface to the setInteface function in `utilities.controller.js`.
+
+#####  Needed
+- Implement some front end framework for our gui needs.
+- More refactoring. I fear this thing is way too much of a blob object, as it started from a very simple proof of concept - and just kept growing in silly hackfest fashion! Some refactoring has begun, but Im not satisfied with its current implementation. More seperation of concerns is needed for proper growth/maintenance.
+  - Start using dependency injection where applicable instead of just global blob object.
+
+#### Usage
 
 - The concept is that you have lot size, and an `OFFSET` for placing orders.
 - `OFFSET` is the value used to determine how far from the best bid or best off you want your order to be.
@@ -55,11 +90,12 @@ It is however, highly usable.
 - Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
 
 
-### Install
+#### Install
+- Clone the repo to your machine.
 - Add plugin to chrome extensions as an unpacked extension. (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
 - Login to your account on exchange.coinbase.com, beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
-- Place orders!
 
+---------
 ##### Things to know:
 1. Currently hotkeys are hardwired, but custom configuration is planned.
 2. The keys may seem strange, but its based on using your keyboards home keys, bidding with left hand, offering with right.
@@ -77,24 +113,17 @@ It is however, highly usable.
 | Cancel all orders: | y |
 |    |
 | **Buy Orders** |
+| Market buy: | g |
 | Bid 0.01 above best bid: | f |
 | Bid at best bid: | d |
 | Bid `<OFFSET>` below market: | s |
 | Bid `<OFFSET * 2>` below market | a |
-| Market buy: | g |
 |    |
 | **Sell Orders** |
+| Market sell: | h |
 | Offer 0.01 below best ask: | j |
 | Offer at best ask: | k |
 | Offer `<OFFSET>` above best offer: | l |
 | Offer `<OFFSET * 2>` above best offer| ; |
-| Market sell: | h |
 
-##### Adding other exchanges.
-  You can easily add support for your own exchanges:
-  1. Just use the `interface.template.js` file to implement the site specific methods.
-  2. Add the new file to manifest.json.
-  3. Add the interface to the interface config.
 
-##### If you use this and like it, feel free to send some satoshi love my way!
-37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9
