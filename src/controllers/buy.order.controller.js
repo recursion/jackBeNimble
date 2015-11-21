@@ -4,7 +4,7 @@ var plugin = plugin || {};
  *              BUY ORDERS
  ******************************************/
 plugin.placeBuyOrder = function(){
-  plugin.strategy.placeBuyOrder();
+  plugin.interface.placeBuyOrder();
 }
 
 /* Bid just above the best bid */
@@ -43,5 +43,5 @@ plugin.setBuyPrice = function(p){
   if(typeof p !== 'string'){
     p = '' + p;
   }
-  plugin.strategy.setBuyPrice(p);
+  plugin.interface.setBuyPrice(p);
 }

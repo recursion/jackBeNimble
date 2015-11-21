@@ -69,7 +69,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // place market buy
     case plugin.KEYS.MARKET_BUY:
-      plugin.strategy.market_buy();
+      plugin.interface.market_buy();
       break;
 
 
@@ -99,7 +99,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // place market sell
     case plugin.KEYS.MARKET_SELL:
-      plugin.strategy.market_sell();
+      plugin.interface.market_sell();
       break;
 
 
@@ -110,7 +110,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      plugin.strategy.cancel_all();
+      plugin.interface.cancel_all();
       break;
 
     default:

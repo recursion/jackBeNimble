@@ -23,8 +23,8 @@
 
       "js": [
         "src/config.js",
-        "src/strategies/strategy.bfx.js",
-        "src/strategies/strategy.cbex.js",
+        "src/interfaces/interface.bfx.js",
+        "src/interfaces/interface.cbex.js",
         "src/controllers/utilities.controller.js",
         "src/controllers/sell.order.controller.js",
         "src/controllers/buy.order.controller.js",

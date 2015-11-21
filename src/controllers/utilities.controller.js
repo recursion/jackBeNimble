@@ -2,16 +2,39 @@
  *          Controller Functions
  **********************************/
 var plugin = plugin || {};
+var interfaces = interfaces || {};
+
+
+/********************************************
+ *      SET PLUGIN LOCATION STRATEGY
+ ********************************************/
+/**
+ * find and set the current web location
+ *
+ * determines the interface module we use for interfacing
+ * with the webpage DOM.
+ *
+ * - this is where new exchange 'interfaces' can be used.
+ */
+plugin.setInterface = function(){
+  if (window.location.hostname.indexOf('coinbase') !== -1){
+    plugin.interface = interfaces.cbex;
+  } else if (window.location.hostname.indexOf('bitfinex') !== -1){
+    plugin.interface = interfaces.bfx;
+  } else {
+    plugin.interface = 'unknown';
+  }
+}
 
 
 /********************************************
  *      DISPLAY INCREMENT VALUE
  ********************************************/
 /**
- * @param {Number} v - the new increment value
+ * @param {Number} v - the new offset value
  */
 plugin.displayOffset = function(v){
-  plugin.strategy.displayOffset(v);
+  plugin.interface.displayOffset(v);
 }
 
 
@@ -22,7 +45,7 @@ plugin.displayOffset = function(v){
  * @param {Number} v - the new lotsize value
  **********************************************/
 plugin.setLotSize = function(v){
-  var amount = plugin.strategy.getLotSizeInputElement(v);
+  var amount = plugin.interface.getLotSizeInputElement(v);
   v = v || plugin.settings.LOTSIZE;
   amount.value = v;
   plugin.settings.LOTSIZE = v;
@@ -34,11 +57,11 @@ plugin.setLotSize = function(v){
  *      GET BEST BID / BEST OFFER
  ***************************************/
 plugin.getBestBid = function(){
-  return plugin.strategy.getBestBid();
+  return plugin.interface.getBestBid();
 }
 
 plugin.getBestOffer = function(){
-  return plugin.strategy.getBestOffer();
+  return plugin.interface.getBestOffer();
 }
 
 

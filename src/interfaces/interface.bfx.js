@@ -1,7 +1,7 @@
-var strategies = strategies || {};
+var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-strategies.bfx = {
+interfaces.bfx = {
 
   init: function(){
     plugin.setLotSize(plugin.settings.LOTSIZE);
@@ -68,13 +68,11 @@ strategies.bfx = {
 
   getBestBid: function(){
     var bestBid = document.querySelector('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
-    console.log(bestBid.innerHTML);
     return bestBid.innerHTML;
   },
 
   getBestOffer: function(){
     var bestAsk = document.querySelector('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
-    console.log(bestAsk.innerHTML);
     return bestAsk.innerHTML;
   }
 

@@ -1,7 +1,7 @@
 var plugin = plugin || {};
 
 plugin.placeSellOrder = function(){
-  plugin.strategy.placeSellOrder();
+  plugin.interface.placeSellOrder();
 }
 /* Offer just below best offer */
 plugin.offerBetter = function(){
@@ -39,5 +39,5 @@ plugin.setSellPrice = function(p){
   if(typeof p !== 'string'){
     p = '' + p;
   }
-  plugin.strategy.setSellPrice(p);
+  plugin.interface.setSellPrice(p);
 }

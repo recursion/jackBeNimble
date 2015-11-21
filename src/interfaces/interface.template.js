@@ -1,7 +1,7 @@
-var strategies = strategies || {};
+var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-strategies.EXCHANGE = {
+interfaces.EXCHANGE = {
 
   init: function(){
     // Any site specific setup goes here

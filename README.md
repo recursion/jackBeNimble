@@ -90,9 +90,11 @@ It is however, highly usable.
 | Offer `<OFFSET * 2>` above best offer| ; |
 | Market sell: | h |
 
-##### Extending
-  You can easily add support for your own exchanges as well.
-  Just use the `strategy.template.js` file to implement the site specific methods and add the new file to manifest.json.
+##### Adding other exchanges.
+  You can easily add support for your own exchanges:
+  1. Just use the `interface.template.js` file to implement the site specific methods.
+  2. Add the new file to manifest.json.
+  3. Add the interface to the interface config.
 
 ##### If you use this and like it, feel free to send some satoshi love my way!
 37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9

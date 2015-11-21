@@ -1,7 +1,7 @@
-var strategies = strategies || {};
+var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-strategies.cbex = {
+interfaces.cbex = {
 
   /**
    * Try to get the dom object we need,
@@ -14,7 +14,7 @@ strategies.cbex = {
       initialize(limitButtonElement, plugin);
     } else {
       setTimeout(function(){
-        strategies.cbex.init();
+        interfaces.cbex.init();
       }, 250);
     }
 
