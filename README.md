@@ -1,4 +1,5 @@
-# multi-exchange-btc-hotkey-order-entry
+# jackBeNimble 
+#### multi-exchange-btc-hotkey-order-entry
 
 A simple Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com and exchange.coinbase.com trading. No more pesky point and clicking for all your order entry needs!
 
