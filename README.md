@@ -24,7 +24,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 -----------------------
 
 
-<small>*Disclaimer: Trading is risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not trade. If you do trade, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*</small>
+<small>*Disclaimer: Investing and/or trading are risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not do it. If you do, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*</small>
 
 
 ----------------------
@@ -43,10 +43,11 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Adjust lot size up and down.
 - Cancel all orders.
 - Display current OFFSET value.
-#### What doesnt work:
+#### What doesnt work/exist:
 - Configuration
-- Any sort of help/tutorial
-- Specific order canceling
+- Any GUI at all - (other than a silly popup with nearly useless info in it)
+- Any sort of help/tutorial/explanation other than this readme.
+- Better order canceling (cancel last, cancel all bids, etc).
 
 #### Todo
 ##### Features
@@ -57,14 +58,15 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Cancel last order
 - Cancel all buys.
 - Cancel all sells.
-- Stack bid order.
-  - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
-- Stack sell order.
-  - This will place a pyramid of offers (i.e. 1 lot @ 300, 3 lots at 305, 5 lots @ 310)
-- Move stack orders up.
-  - Adjust a stack of buy orders up to the current market levels.
-- Move stack orders down.
-  - Adjust a stack of sell orders to the current market levels.
+- Stack Orders
+  - Stack bid order.
+    - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
+  - Stack sell order.
+    - This will place a pyramid of offers (i.e. 1 lot @ 300, 3 lots at 305, 5 lots @ 310)
+  - Move stack orders up.
+    - Adjust a stack of buy orders up to the current market levels.
+  - Move stack orders down.
+    - Adjust a stack of sell orders to the current market levels.
 
 ### Development
 ###### Contributing via Pull requests is welcome!
