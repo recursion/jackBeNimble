@@ -29,14 +29,21 @@ utils.placeSellOrder = function(){
   plugin.strategy.placeSellOrder();
 }
 
-utils.setPrice = function(p){
+utils.setBuyPrice = function(p){
   // make sure the bid is in a string format
   if(typeof p !== 'string'){
     p = '' + p;
   }
-  plugin.strategy.setPrice(p);
+  plugin.strategy.setBuyPrice(p);
 }
 
+utils.setSellPrice = function(p){
+  // make sure the bid is in a string format
+  if(typeof p !== 'string'){
+    p = '' + p;
+  }
+  plugin.strategy.setSellPrice(p);
+}
 
 utils.getBestBid = function(){
   return plugin.strategy.getBestBid();

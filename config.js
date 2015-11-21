@@ -1,7 +1,7 @@
 /******************************************
  *          SETUP/CONFIG
  ****************************************/
-var DEBUG = true;
+var DEBUG = false;
 
 var plugin = plugin || {};
 plugin.settings = {};
