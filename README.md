@@ -5,7 +5,7 @@ A simple Google chrome extension that provides a hotkey order entry mechanism fo
 
 Simply put, it allows you to place and cancel orders on the bitfinex exchange with hotkeys.
 
-Technically it adds listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element to the 'Margin' header row that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
+Technically it adds listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
 
 This tool does not require any access to api keys, nor does it send any data anywhere. It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.
 
