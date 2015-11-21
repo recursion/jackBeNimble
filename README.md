@@ -1,10 +1,10 @@
 # Bitfinix-hotkey-order-entry
 
-Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com exchange trading.
+Google chrome extension that provides a hotkey order entry mechanism for bitfinex.com and coinbase exchange trading.
 
 Simply put, it allows you to place and cancel orders on the bitfinex exchange with hotkeys.
 
-Technically it adds listeners to the bitfinex page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element to the 'Margin' header row that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
+Technically it adds listeners to the bitfinex (or coinbase exchange) page that allows placing bids and offers, adjusting lot size, and bid/offer increment modifier all with hotkeys.It also adds a page element to the 'Margin' header row that displays the current INCREMENT setting, which is also adjustable via hotkeys (as it lot size).
 
 *Disclaimer: Trading is risky and can ruin you. Do not trade. If you do trade, you are doing so at your own risk, and neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*
 
@@ -20,6 +20,7 @@ It is however, highly usable.
 - Incrementing lot size up and down.
 - Canceling all orders.
 - Display current INCREMENT value.
+- Support for bitfinex AND coinbase exchange!
 
 #### Todo
 - Help/Configuration page.
@@ -31,13 +32,13 @@ It is however, highly usable.
 - Stack sell order.
 - Move stack order up.
 - Move stack order down.
-- Interfaces to other exchanges.
+- Interfaces to other exchanges. (started)
 - Build as standalone node service for faster/cleaner api integration.
 
 ### Usage
 
 - Add plugin (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
-- Login to beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
+- Login to exchange.coinbase.com, beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
 - Place orders!
 
 ##### Things to know:
@@ -69,6 +70,10 @@ It is however, highly usable.
 | Offer `<INCREMENT>` above best offer: | l | 
 | Offer `<INCREMENT * 2>` above best offer| ; |
 | Market sell: | h |
+
+##### Extending 
+  You can easily add support for your own exchanges as well.
+  Just use the strategy.template.js file to implement the site specific methods and add the new file to manifest.json.
 
 ##### If you use this and like it, feel free to send some satoshi love my way!
 37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9
