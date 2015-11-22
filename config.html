@@ -5,6 +5,10 @@
     <link href="config.css" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <h3>jackBeNimble</h3>
+      <h5>bitcoin order entry made simple</h5>
+    </header>
     <h5>Usage</h5>
     <ul>
       <li>Use hotkeys to place limit and market orders.</li>
@@ -13,110 +17,93 @@
       <li>Increase and decrease lot sizes.</li>
       <li>Custom config hotkeys.</li>
     </ul>
-    <div class="keybindingsBoxContainer">
-      <div class="keybindingsBox left">
-        <h5>Buy Keybindings</h5>
-        <table class="keybindingsTable">
-          <colgroup span="2"></colgroup>
-          <tr>
-            <th>Key</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>Buy at Market</td>
-            <td>g</td>
-          </tr>
-          <tr>
-            <td>Bid 0.01 above best bid</td>
-            <td>f</td>
-          </tr>
-          <tr>
-            <td>Bid with best bid</td>
-            <td>d</td>
-          </tr>
-          <tr>
-            <td>Bid offset below best bid</td>
-            <td>s</td>
-          </tr>
-          <tr>
-            <td>Bid 2x offset below best bid</td>
-            <td>a</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="keybindingsBox right">
-        <h5>Sell Keybindings</h5>
-        <table class="keybindingsTable">
-          <colgroup span="2"></colgroup>
-          <tr>
-            <th>Key</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>Sell at Market</td>
-            <td>h</td>
-          </tr>
-          <tr>
-            <td>Offer 0.01 below best offer</td>
-            <td>j</td>
-          </tr>
-          <tr>
-            <td>Offer with best offer</td>
-            <td>k</td>
-          </tr>
-          <tr>
-            <td>Offer offset above best offer</td>
-            <td>l</td>
-          </tr>
-          <tr>
-            <td>Offer 2x offset best offer</td>
-            <td>;</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="keybindingsBox ">
-        <h5>Toggle Keybindings</h5>
-        <table class="keybindingsTable">
-          <colgroup span="2"></colgroup>
-          <tr>
-            <th>Key</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>Increase Lotsize</td>
-            <td>\</td>
-          </tr>
-          <tr>
-            <td>Decrease Lotsize</td>
-            <td>'</td>
-          </tr>
-          <tr>
-            <td>Increase Offset</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>Decrease Offset</td>
-            <td>=</td>
-          </tr>
-        </table>
-      </div>
+    <div class="keybindingsBox">
+      <h5>Buy Keybindings</h5>
+      <table class="keybindingsTable">
+        <colgroup span="2"></colgroup>
+        <tr>
+          <th>Action</th>
+          <th>Key</th>
+        </tr>
+        <tr>
+          <td>Buy at Market</td>
+          <td>g</td>
+        </tr>
+        <tr>
+          <td>Bid 0.01 above best bid</td>
+          <td>f</td>
+        </tr>
+        <tr>
+          <td>Bid with best bid</td>
+          <td>d</td>
+        </tr>
+        <tr>
+          <td>Bid offset below best bid</td>
+          <td>s</td>
+        </tr>
+        <tr>
+          <td>Bid 2x offset below best bid</td>
+          <td>a</td>
+        </tr>
+      </table>
     </div>
+
+    <div class="keybindingsBox">
+      <h5>Sell Keybindings</h5>
+      <table class="keybindingsTable">
+        <colgroup span="2"></colgroup>
+        <tr>
+          <th>Action</th>
+          <th>Key</th>
+        </tr>
+        <tr>
+          <td>Sell at Market</td>
+          <td>h</td>
+        </tr>
+        <tr>
+          <td>Offer 0.01 below best offer</td>
+          <td>j</td>
+        </tr>
+        <tr>
+          <td>Offer with best offer</td>
+          <td>k</td>
+        </tr>
+        <tr>
+          <td>Offer offset above best offer</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>Offer 2x offset best offer</td>
+          <td>;</td>
+        </tr>
+      </table>
     </div>
-    <!--
-      TOGGLE_LOTSIZE_UP: 220,
-      TOGGLE_LOTSIZE_DOWN: 222,
-      TOGGLE_INCR_UP: 189,
-      TOGGLE_INCR_DOWN: 187,
-      INCR_BID: 68,
-      INCR_OFFER: 75,
-      OFFER_WITH_BEST_ASK: 76,
-      BID_WITH_BEST_BID: 83,
-      OFFER_ABOVE_BEST: 186,
-      BID_BELOW_BEST: 65,
-      MARKET_BUY: 71,
-      MARKET_SELL: 72
-    -->
+
+    <div class="keybindingsBox ">
+      <h5>Toggle Keybindings</h5>
+      <table class="keybindingsTable">
+        <colgroup span="2"></colgroup>
+        <tr>
+          <th>Action</th>
+          <th>Key</th>
+        </tr>
+        <tr>
+          <td>Increase Lotsize</td>
+          <td>\</td>
+        </tr>
+        <tr>
+          <td>Decrease Lotsize</td>
+          <td>'</td>
+        </tr>
+        <tr>
+          <td>Increase Offset</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Decrease Offset</td>
+          <td>=</td>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>

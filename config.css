@@ -1,10 +1,12 @@
 body {
-  width: 600px;
+  width: 300px;
   margin: auto;
   margin-bottom: 10px;
 }
 
-h1, h5 {
+h1, h3, h5 {
+  padding: 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -14,10 +16,9 @@ h1, h5 {
 }
 
 .keybindingsBox {
-  display: inline-block;
+  display: block;
   margin: 0 auto;
-  width: 45%;
-  height: 200px;
+  width: 75%;
   background-color: grey;
   border: 1px solid black;
   box-shadow: 1px 1px 1px green;
@@ -30,10 +31,25 @@ h1, h5 {
   float: left;
 }
 
-.keybindingsBoxContainer {
-  width: 450px;
-  margin: auto;
+header {
+  padding: 0;
+  margin: 0;
   margin-bottom: 10px;
+  background: grey;
+  border: 1px solid black;
+  font-size: 2em;
+  text-align: center;
+}
+
+header > h5 {
+  background-color: black;
+  color: white;
+  font-size: .25em;
+}
+
+td{
+  text-align: center;
+  border: 1px solid black;
 }
 
 tr:nth-child(even) {background: #CCC}
