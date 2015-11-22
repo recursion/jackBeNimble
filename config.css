@@ -1,0 +1,40 @@
+body {
+  width: 600px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+h1, h5 {
+  text-align: center;
+}
+
+.keybindingsTable {
+  margin: 0 auto;
+  font-size: .85em;
+}
+
+.keybindingsBox {
+  display: inline-block;
+  margin: 0 auto;
+  width: 45%;
+  height: 200px;
+  background-color: grey;
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px green;
+}
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.keybindingsBoxContainer {
+  width: 450px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}

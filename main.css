@@ -8,6 +8,21 @@
 }
 
 #CBEX_OFFSET_VALUE{
-  font-size: 2em;
+  font-size: 1.25em;
   font-weight: bold;
+}
+
+body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > ul > li {
+
+  top: 15px;
+
+}
+
+
+body > div:nth-child(10) > aside{
+  width: 160px !important;
+}
+
+body > div:nth-child(10) > section{
+  left: 162px !important;
 }

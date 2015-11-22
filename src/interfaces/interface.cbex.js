@@ -79,6 +79,7 @@ interfaces.cbex = {
     var target = document.getElementById('CBEX_OFFSET_VALUE');
     if(!target){
       var listItem = document.createElement('li');
+      listItem.style.textAlign = 'center';
       var newEl = document.createElement('span');
       newEl.id = 'CBEX_OFFSET_VALUE';
       newEl.innerHTML = 'Offset: ' + v;

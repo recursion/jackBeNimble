@@ -34,5 +34,7 @@
 
       "run_at": "document_idle"
     }
-  ]
+  ],
+
+  "web_accessible_resources": ["main.css"]
 }
