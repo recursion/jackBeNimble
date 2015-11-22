@@ -105,7 +105,7 @@ keyboardHandlers.onKeyup = function(e){
 
     // cancel last order
     case plugin.KEYS.CANCEL_LAST:
-      //do something
+      plugin.interface.cancel_last();
       break;
 
     // cancel all order
