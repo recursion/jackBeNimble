@@ -31,6 +31,10 @@ h1, h3, h5 {
   float: left;
 }
 
+body > header > h5{
+  letter-spacing: 0.5em;
+}
+
 header {
   padding: 0;
   margin: 0;
@@ -39,6 +43,7 @@ header {
   border: 1px solid black;
   font-size: 2em;
   text-align: center;
+  letter-spacing: 0.1em;
 }
 
 header > h5 {
@@ -48,6 +53,7 @@ header > h5 {
 }
 
 td{
+  padding: 2px;
   text-align: center;
   border: 1px solid black;
 }
