@@ -1,8 +1,6 @@
 # jackBeNimble
 
-#### Add hotkey order entry to multiple bitcoin exchange trading pages.
-
-This Google chrome extension adds a hotkey order entry mechanism for the www.bitfinex.com, beta.bitfinex.com, and exchange.coinbase.com bitcoin exchange trading pages. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
+A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com), [beta.bitfinex.com](http:beta.bitfinex.com), and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
 
 This extension adds hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
