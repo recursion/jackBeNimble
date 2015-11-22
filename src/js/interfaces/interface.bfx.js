@@ -31,7 +31,25 @@ interfaces.bfx = {
 
   /*  CANCEL LAST ORDER */
   cancel_last: function(){
-    console.log(getOrders());
+    var orders = getOrders();
+    plugin.eventFire(orders[0].cancelButton, 'click');
+
+    /*
+    var xhr = new XMLHttpRequest();
+    var url = encodeURI('/orders/' + orders[orders.length -1].id);
+
+    // function to fire each time `onreadystatechange` fires
+    xhr.onreadystatechange = function () {
+      console.log(xhr);
+      console.log(xhr.readyState);
+      console.log(xhr.status);
+    };
+
+    xhr.open('DELETE', url, true);
+    xhr.setRequestHeader('X-CSRF-Token', TOKEN);
+    xhr.send();
+    */
+
   },
 
   /*  CANCEL ALL ORDERS */
@@ -156,15 +174,19 @@ function filterOrders(nodeList){
     if (i != 0){
 
       // the string is full of whitespace - so strip it
-      var thisOrderElement = nodeList[i].textContent.split(' ');
+      var thisOrderElement = nodeList[i]
+      var orderData = thisOrderElement.textContent.split(' ');
+      var cancelButton = thisOrderElement.childNodes[18].childNodes[0];
 
       // create a new array with the order data we want
       var newOrderData = [];
-      for (var idx = 0; idx < thisOrderElement.length; idx++){
-        if (thisOrderElement[idx] != ''){
-          newOrderData.push(thisOrderElement[idx]);
+      for (var idx = 0; idx < orderData.length; idx++){
+        if (orderData[idx] != ''){
+          newOrderData.push(orderData[idx]);
         }
       }
+
+      newOrderData.push(cancelButton);
 
       // Use that order data array to create an order object and push
       // it onto our array of orders.
@@ -179,8 +201,12 @@ function filterOrders(nodeList){
 
 /**
  * take an array of order data, and create an order object with it
- * @param {Array} orderDataArray - an array of strings containing order data
- *    [id, pair, orderType, size, price, status, date, time]
+ * @param {Array} orderDataArray
+ *      - an array of strings, containing order data
+ *      - and an HTMLElement
+ *
+ *    [id, pair, orderType, size, price, status, date, time, cancelButton]
+ *
  * @returns {Object} - an object with all of the order data in it
  *
  */
@@ -189,12 +215,13 @@ function Order(orderData){
   this.id = orderData[0];
   this.pair = orderData[1];
   this.orderType = orderData[2];
+  this.side = (isSellOrder(orderData[3])) ? 'sell' : 'buy';
   this.size = orderData[3];
   this.price = orderData[4];
   this.status = orderData[5];
   this.date = orderData[6];
   this.time = orderData[7];
-  this.side = (isSellOrder(orderData[3])) ? 'sell' : 'buy';
+  this.cancelButton = orderData[8];
 }
 
 function isSellOrder(order){

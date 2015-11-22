@@ -128,7 +128,8 @@ plugin.eventFire = function(el, etype){
     el.fireEvent('on' + etype);
   } else {
     var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
+    evObj.initEvent(etype, true, true);
+    evObj.preventDefault();
     el.dispatchEvent(evObj);
   }
 }
