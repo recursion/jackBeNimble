@@ -5,7 +5,7 @@
   "description": "Adds order entry hotkeys for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
   "version": "0.0.2",
   "browser_action": {
-    "default_popup": "config.html",
+    "default_popup": "src/html/config.html",
     "default_title": "jackBeNimble"
   },
 
@@ -19,22 +19,20 @@
         "https://exchange.coinbase.com/trade?product_id=BTC-USD&"
       ],
 
-      "css": ["main.css"],
+      "css": ["src/css/main.css"],
 
       "js": [
-        "src/config.js",
-        "src/interfaces/interface.bfx.js",
-        "src/interfaces/interface.cbex.js",
-        "src/controllers/utilities.controller.js",
-        "src/controllers/sell.order.controller.js",
-        "src/controllers/buy.order.controller.js",
-        "src/keyboardHandlers.js",
-        "src/jackBeNimble.js"
+        "src/js/config.js",
+        "src/js/interfaces/interface.bfx.js",
+        "src/js/interfaces/interface.cbex.js",
+        "src/js/controllers/utilities.controller.js",
+        "src/js/controllers/sell.order.controller.js",
+        "src/js/controllers/buy.order.controller.js",
+        "src/js/keyboardHandlers.js",
+        "src/js/jackBeNimble.js"
       ],
 
       "run_at": "document_idle"
     }
-  ],
-
-  "web_accessible_resources": ["main.css"]
+  ]
 }
