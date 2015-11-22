@@ -7,7 +7,6 @@ This extension adds hotkeys that allow you to:
 - Toggle a price `OFFSET` up and down.
 - Place a bid at current best bid or offer at current best offer.
 - Place an order of `LOTSIZE` at `OFFSET` below best bid/above best offer.
-- *This plugin does not require any access to api keys, nor does it send any data anywhere. It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.*
 
 On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
 
@@ -21,6 +20,14 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 
 -----------------------
 
+- **Privacy First!**
+  - This plugin does not require any access to api keys
+  - It does not send/recieve any data outside of whats provided by your exchange to the exchanges trading site page.
+  - Does not use any ads, cookies, data collection or tracking of any kind whatsoever.
+  - It does not use _any_ outside libraries.
+  - It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.
+
+----------------
 
 <small>*Disclaimer: Investing and/or trading are risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not do it. If you do, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*</small>
 
