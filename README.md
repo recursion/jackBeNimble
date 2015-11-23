@@ -9,7 +9,7 @@ This extension adds hotkeys that allow you to:
 - Place an order of `LOTSIZE` at `OFFSET` below best bid/above best offer.
 - Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
-On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
+On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). Currently it also slightly alters the coinbase page to make the trading column thinner, providing more room to the rest of the page. This may be turned off, or become togglable.
 
 **Currently this is still being developed and is not polished, production ready, or released as a public chrome extension.**
 
@@ -49,14 +49,13 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Adjust lot size up and down.
 - Cancel all orders.
 - Cancel last order.
-- Cancel all bids (bfx only)
-- Cancel all offers (bfx only)
+- Cancel all bids
+- Cancel all offers
 - Display current OFFSET value.
 
 #### What doesnt work/exist:
 - Configuration
 - Stacked orders
-- Cancel all bids / cancel all offers (coinbase exchange only)
 
 ---------------------
 
@@ -72,12 +71,10 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 
 #### Todo
 ##### Features
-- Help/Tutoral.
+- Help/Tutoral (general work/polish on any front-end stuff).
 - Easy key assignment config through key recording.
   - Ctrl/Alt-key support.
 - On/off switch (and hotkey?).
-- Cancel all buys. (coinbase exchange)
-- Cancel all sells. (coinbase exchange)
 - Stack Orders
   - Stack bid order.
     - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
@@ -87,11 +84,9 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
     - Adjust a stack of buy orders up to the current market levels.
   - Move stack orders down.
     - Adjust a stack of sell orders to the current market levels.
-
-##### Dev focus 
-- Implement some front end framework for our gui needs.
 - More refactoring. I fear this thing is way too much of a blob object, as it started from a very simple proof of concept - and just kept growing in silly hackfest fashion! Some refactoring has begun, but Im not satisfied with its current implementation. More seperation of concerns is needed for proper growth/maintenance.
   - Start using dependency injection where applicable instead of just global blob object.
+- Coinbase page elements change depending on the size of the display. Currently coinbase elemtns are being accessed through childNode indexing, which only works in a given display size. We need to either make the selectors more specific so that they work in all display sizes, or construct selectors for a variety of display ranges.
 
 -----------------
 

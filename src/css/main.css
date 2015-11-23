@@ -7,9 +7,28 @@
   text-shadow: 1px 1px 1px black;
 }
 
+body > div:nth-child(10) > section > div.history-view-wrapper.clearfix > div > div.visible > div > ul {
+  font-size: 1.5em;
+}
+
+body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy {
+  font-size: 1.5em;
+}
+
+body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div {
+  font-size: 1.5em;
+}
+
+body > div:nth-child(9) > section > div.history-view-wrapper.clearfix > div > div.visible > div > ul {
+ font-size: 1.5em;
+}
+
 #CBEX_OFFSET_VALUE{
-  font-size: 1.25em;
+  font-size: 1.5em;
   font-weight: bold;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  margin: 0 auto;
 }
 
 body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > ul > li {
