@@ -52,6 +52,25 @@ plugin.setLotSize = function(v){
 }
 
 
+/****************************************
+ *            CANCEL
+ ***************************************/
+plugin.cancel_all = function(){
+  plugin.interface.cancel_all();
+}
+
+plugin.cancel_last = function(){
+  plugin.interface.cancel_last();
+}
+
+plugin.cancel_bids = function(){
+  plugin.interface.cancel_bids();
+}
+
+plugin.cancel_offers = function(){
+  plugin.interface.cancel_offers();
+}
+
 
 /****************************************
  *      GET BEST BID / BEST OFFER

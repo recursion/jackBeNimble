@@ -103,14 +103,27 @@ keyboardHandlers.onKeyup = function(e){
       break;
 
 
+    /********************************
+     *      CANCEL ORDER KEYS
+     ********************************/
+    // cancel all bids
+    case plugin.KEYS.CANCEL_BIDS:
+      plugin.cancel_bids();
+      break;
+
+    // cancel all order
+    case plugin.KEYS.CANCEL_OFFERS:
+      plugin.cancel_offers();
+      break;
+
     // cancel last order
     case plugin.KEYS.CANCEL_LAST:
-      plugin.interface.cancel_last();
+      plugin.cancel_last();
       break;
 
     // cancel all order
     case plugin.KEYS.CANCEL_ALL:
-      plugin.interface.cancel_all();
+      plugin.cancel_all();
       break;
 
     default:
