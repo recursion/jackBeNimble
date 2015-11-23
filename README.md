@@ -7,6 +7,7 @@ This extension adds hotkeys that allow you to:
 - Toggle a price `OFFSET` up and down.
 - Place a bid at current best bid or offer at current best offer.
 - Place an order of `LOTSIZE` at `OFFSET` below best bid/above best offer.
+- Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
 On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
 
@@ -48,11 +49,14 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Adjust lot size up and down.
 - Cancel all orders.
 - Cancel last order.
+- Cancel all bids (bfx only)
+- Cancel all offers (bfx only)
 - Display current OFFSET value.
+
 #### What doesnt work/exist:
 - Configuration
 - Stacked orders
-- Cancel all bids / cancel all offers
+- Cancel all bids / cancel all offers (coinbase exchange only)
 
 ---------------------
 
@@ -72,8 +76,8 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Easy key assignment config through key recording.
   - Ctrl/Alt-key support.
 - On/off switch (and hotkey?).
-- Cancel all buys.
-- Cancel all sells.
+- Cancel all buys. (coinbase exchange)
+- Cancel all sells. (coinbase exchange)
 - Stack Orders
   - Stack bid order.
     - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
