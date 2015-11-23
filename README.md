@@ -47,20 +47,31 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Adjust order offset modifer up and down.
 - Adjust lot size up and down.
 - Cancel all orders.
+- Cancel last order.
 - Display current OFFSET value.
 #### What doesnt work/exist:
 - Configuration
-- Any GUI at all - (other than a silly popup with nearly useless info in it)
-- Any sort of help/tutorial/explanation other than this readme.
-- Better order canceling (cancel last, cancel all bids, etc).
+- Stacked orders
+- Cancel all bids / cancel all offers
+
+---------------------
+
+### Development
+####### Pull requests are welcome.
+
+###### Adding other exchanges.
+- Add support for new exchanges:
+  1. Use the `interface.template.js` file to implement the site specific methods.
+  2. Add the new file to manifest.json.
+  3. Add the interface to the setInteface function in `utilities.controller.js`.
+
 
 #### Todo
 ##### Features
 - Help/Tutoral.
 - Easy key assignment config through key recording.
   - Ctrl/Alt-key support.
-- On/off switch.
-- Cancel last order
+- On/off switch (and hotkey?).
 - Cancel all buys.
 - Cancel all sells.
 - Stack Orders
@@ -73,23 +84,14 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
   - Move stack orders down.
     - Adjust a stack of sell orders to the current market levels.
 
-### Development
-###### Contributing via Pull requests is welcome!
-- Please follow existing style choices.
-  - Style guide incoming!
-
-###### Adding other exchanges.
-- Add support for new exchanges:
-  1. Use the `interface.template.js` file to implement the site specific methods.
-  2. Add the new file to manifest.json.
-  3. Add the interface to the setInteface function in `utilities.controller.js`.
-
-#####  Needed
+##### Dev focus 
 - Implement some front end framework for our gui needs.
 - More refactoring. I fear this thing is way too much of a blob object, as it started from a very simple proof of concept - and just kept growing in silly hackfest fashion! Some refactoring has begun, but Im not satisfied with its current implementation. More seperation of concerns is needed for proper growth/maintenance.
   - Start using dependency injection where applicable instead of just global blob object.
 
-#### Usage
+-----------------
+
+## Usage
 
 - The concept is that you have lot size, and an `OFFSET` for placing orders.
 - `OFFSET` is the value used to determine how far from the best bid or best off you want your order to be.
@@ -102,6 +104,8 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Add plugin to chrome extensions as an unpacked extension. (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
 - Login to your account on exchange.coinbase.com, beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
 
+>Until custom configuration support is added - changing hotkeys has to be hardcoded using keyCodes in `config.js`.
+
 ---------
 ##### Things to know:
 1. Currently hotkeys are hardwired, but custom configuration is planned.
@@ -109,6 +113,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 3. Lot size can be increased up and down.
 4. There is an `<OFFSET>` value which is displayed on the page in the 'Margin' table header. `<OFFSET>` is the value at which orders are place above/below current market ask/bid.
 
+## Keymap
 | Function | Key |
 | --------|----------|
 |    |
@@ -118,6 +123,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 | Increase `<OFFSET>`: | \ |
 | Decrease `<OFFSET>`: | ' |
 | Cancel all orders: | y |
+| Cancel last order: | t |
 |    |
 | **Buy Orders** |
 | Market buy: | g |
