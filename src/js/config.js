@@ -23,6 +23,8 @@ plugin.settings.LOTSIZE = 0.1;
 plugin.KEYS = {
   CANCEL_ALL: 89, // y
   CANCEL_LAST: 84, // t
+  CANCEL_BIDS: 82, // r
+  CANCEL_OFFERS: 85, // u
 
   TOGGLE_LOTSIZE_UP: 220,
   TOGGLE_LOTSIZE_DOWN: 222,
