@@ -18,7 +18,9 @@ interfaces.cbex = {
   init: function(){
 
     if (switchToLimitOrder()){
-      initialize(plugin);
+      setTimeout(function(){
+        initialize(plugin);
+      }, 250);
     } else {
       setTimeout(function(){
         interfaces.cbex.init();
@@ -54,6 +56,17 @@ interfaces.cbex = {
   },
 
 
+  /*  CANCEL LAST ORDER */
+  cancel_last: function(){
+    var orders = getOrders();
+    //plugin.eventFire(getLastValidCancelButton(), 'click');
+    var button = getLastValidCancelButton(orders);
+    if (button){
+      plugin.eventFire(button, 'click');
+    }
+  },
+
+
   /*  CANCEL ALL ORDERS */
   cancel_all: function(){
     var cancelButton = document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
@@ -65,8 +78,6 @@ interfaces.cbex = {
   getLotSizeInputElement: function(v){
     return document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
   },
-
-
 
 
   /**
@@ -179,6 +190,9 @@ function initialize(plugin){
 }
 
 
+/**
+ * switches the site page to the market order screen.
+ */
 function switchToMarketOrder(){
     var marketButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)');
     if (marketButtonElement){
@@ -189,6 +203,9 @@ function switchToMarketOrder(){
     }
 }
 
+/**
+ * switches the site page to the limit order screen.
+ */
 function switchToLimitOrder(){
     var limitButtonElement = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
     if (limitButtonElement){
@@ -202,7 +219,82 @@ function switchToLimitOrder(){
 /* set the lot size on the market order screen */
 function setMarketOrderLotSize(){
     var lotSize = document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
-
     lotSize.value = plugin.settings.LOTSIZE;
-
 };
+
+
+/**
+ * gets the list of orders
+ * @return {Array} - an array of order objects
+ */
+function getOrders(){
+  var orders = document.querySelector('#orders-list > ul').children;
+  return filterOrders(orders);
+}
+
+
+/**
+ * takes a list of order elements and
+ * extracts the needed order info from it
+ * @returns {Array} - an array of order objects
+ */
+function filterOrders(orders){
+  var orderList = [];
+  for (var i = 0; i < orders.length; i++){
+    var order = orders[i].childNodes;
+    var size = order[0].innerText;
+    var filled = order[1].innerText;
+    var price = order[2].innerText;
+    var cancelButton = order[6].childNodes[1].childNodes[0];
+    var thisOrderData = [size, filled, price, cancelButton];
+    orderList.push(new Order(thisOrderData));
+  }
+  return orderList;
+}
+
+
+/**
+ * take an array of order data, and create an order object with it
+ * @param {Array} orderDataArray
+ *      - an array of strings, containing order data
+ *      - and an HTMLElement
+ *
+ *    [size, filled, price, cancelButton]
+ *
+ * @returns {Object} - an object with all of the order data in it
+ *
+ */
+function Order(orderData){
+  this.size = orderData[0];
+  this.filled = orderData[1]
+  this.price = orderData[2];
+  this.cancelButton = orderData[3];
+}
+
+
+/**
+ * cbex cancel buttons will still show even if cancelled
+ * so we must get a valid cancel button when needed
+ * @param {Array} orders - an array of order object
+ * @returns a usable cancel button or null;
+ */
+function getLastValidCancelButton(orders){
+
+  var index = orders.length - 1;
+  var button;
+  var classes;
+
+  while (index >= 0){
+
+    button = orders[index].cancelButton;
+    classes = button.className.split(' ');
+
+    if (classes.indexOf('visible') != -1){
+      return button;
+    } else {
+      index--;
+    }
+
+  }
+  return null;
+}
