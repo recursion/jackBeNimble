@@ -170,28 +170,24 @@ interfaces.cbex = (function() {
 
     /**     GET BEST BID    */
     getBestBid: function(){
-        var wholeNum = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.whole');
-        wholeNum = wholeNum.innerHTML;
-        var decimal1 = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.part');
-        decimal1 = decimal1.innerHTML;
+      var bid = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable');
 
-        var decimal2 = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable > span.part-2');
-        decimal2 = decimal2.innerHTML;
+      var wholeNum = bid.children[0].innerHTML;
+      var decimal1 = bid.children[1].innerHTML;
+      var decimal2 = bid.children[2].innerHTML;
 
-        var bb = wholeNum + '.' + decimal1 + decimal2;
-        return bb;
+      var bb = wholeNum + '.' + decimal1 + decimal2;
+      return bb;
     },
 
 
     /**     GET BEST OFFER       */
     getBestOffer: function(){
-      var wholeNum = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.whole');
-      wholeNum = wholeNum.innerHTML;
-      var decimal1 = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.part');
-      decimal1 = decimal1.innerHTML;
+      var offer = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
 
-      var decimal2 = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable > span.part-2');
-      decimal2 = decimal2.innerHTML;
+      var wholeNum = offer.children[0].innerHTML;
+      var decimal1 = offer.children[1].innerHTML;
+      var decimal2 = offer.children[2].innerHTML;
 
       var bo = wholeNum + '.' + decimal1 + decimal2;
       return bo;
