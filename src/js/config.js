@@ -41,7 +41,10 @@ plugin.KEYS = {
   OFFER_ABOVE_BEST: 76, // l
   OFFER_DOUBLE_ABOVE_BEST: 186, // ;
 
-  MARKET_BUY: 71, // g
-  MARKET_SELL: 72 // h
+  HIT_THE_BID: 72, // h
+  HIT_THE_OFFER: 71, // g
+
+  MARKET_BUY: 444, // ctrl + g
+  MARKET_SELL:  555// ctrl + h
 };
 

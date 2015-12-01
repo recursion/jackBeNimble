@@ -67,6 +67,12 @@ keyboardHandlers.onKeyup = function(e){
       plugin.bidDoubleBelowBest();
       break;
 
+    // place limit order at the current ask price
+    case plugin.KEYS.HIT_THE_OFFER:
+      plugin.interface.hit_the_offer();
+      break;
+
+
     // place market buy
     case plugin.KEYS.MARKET_BUY:
       plugin.interface.market_buy();
@@ -95,6 +101,11 @@ keyboardHandlers.onKeyup = function(e){
     // place offer at current best ask
     case plugin.KEYS.OFFER_DOUBLE_ABOVE_BEST:
       plugin.offerDoubleAboveBest();
+      break;
+
+    // place limit order at the current bid price
+    case plugin.KEYS.HIT_THE_BID:
+      plugin.interface.hit_the_bid();
       break;
 
     // place market sell
