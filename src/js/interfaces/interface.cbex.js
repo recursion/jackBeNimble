@@ -97,7 +97,7 @@ interfaces.cbex.cancel_all = function(){
 
 /* return the lot size input element */
 interfaces.cbex.getLotSizeInputElement = function(v){
-  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
+  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
 };
 
 
@@ -107,7 +107,7 @@ interfaces.cbex.getLotSizeInputElement = function(v){
  *     @param {Number} v - the offset value to display
  */
 interfaces.cbex.displayOffset = function(v){
-  var homeDiv = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix');
+  var homeDiv = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div');
   var target = document.getElementById('CBEX_OFFSET_VALUE');
   if(!target){
     var listItem = document.createElement('li');
@@ -127,7 +127,7 @@ interfaces.cbex.displayOffset = function(v){
 /**    PLACE A BUY ORDER   */
 interfaces.cbex.placeBuyOrder = function(){
   if (!DEBUG){
-    plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
+    plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
     setTimeout(function(){
       plugin.config.getSettings(function(settings){
         plugin.setLotSize(settings.lotsize);
@@ -140,7 +140,7 @@ interfaces.cbex.placeBuyOrder = function(){
 /**   PLACE A SELL ORDER    */
 interfaces.cbex.placeSellOrder = function(){
   if (!DEBUG){
-    plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
+    plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
     setTimeout(function(){
       plugin.config.getSettings(function(settings){
         plugin.setLotSize(settings.lotsize);
@@ -172,7 +172,7 @@ interfaces.cbex.setSellPrice = function(p){
 
 /**     GET BEST BID    */
 interfaces.cbex.getBestBid = function(){
-  var bid = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable');
+  var bid = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable' || document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable'));
 
   var wholeNum = bid.children[0].innerHTML;
   var decimal1 = bid.children[1].innerHTML;
@@ -185,7 +185,7 @@ interfaces.cbex.getBestBid = function(){
 
 /**     GET BEST OFFER       */
 interfaces.cbex.getBestOffer = function(){
-  var offer = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
+  var offer = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
 
   var wholeNum = offer.children[0].innerHTML;
   var decimal1 = offer.children[1].innerHTML;
@@ -195,8 +195,13 @@ interfaces.cbex.getBestOffer = function(){
   return bo;
 };
 
-/******************   HELPERS   ***************************/
 
+
+
+
+/**********************************************************/
+/******************   HELPERS   ***************************/
+/**********************************************************/
 /**
 *        INITIALIZE
 * @param {Element} - limitButtonElement - the pages limit button
@@ -228,7 +233,7 @@ function switchToMarketOrder(){
 * switches the site page to the limit order screen.
 */
 function switchToLimitOrder(){
-  var limitButtonElement = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+  var limitButtonElement = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
   if (limitButtonElement){
     plugin.eventFire(limitButtonElement, 'click');
     return true;
