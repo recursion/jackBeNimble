@@ -9,6 +9,10 @@
     "default_title": "jackBeNimble"
   },
 
+  "permissions": [
+    "storage"
+  ],
+
   "content_scripts": [
     {
 

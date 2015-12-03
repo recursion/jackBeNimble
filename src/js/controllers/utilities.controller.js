@@ -45,10 +45,12 @@ plugin.displayOffset = function(v){
  * @param {Number} v - the new lotsize value
  **********************************************/
 plugin.setLotSize = function(v){
-  var amount = plugin.interface.getLotSizeInputElement(v);
-  v = v || plugin.settings.LOTSIZE;
-  amount.value = v;
-  plugin.settings.LOTSIZE = v;
+  chrome.storage.sync.get('lotsize', function(settings){
+    var amount = plugin.interface.getLotSizeInputElement(v);
+    v = v || settings.lotsize;
+    amount.value = v;
+    chrome.storage.sync.set({'lotsize': v});
+  });
 }
 
 
@@ -93,22 +95,24 @@ plugin.getBestOffer = function(){
  * determines which way to toggle the lot size
  */
 plugin.toggleLotSize = function(direction){
-    var idx = plugin.LOTSIZES.indexOf(plugin.settings.LOTSIZE);
+  chrome.storage.sync.get('lotsize', function(settings){
+    var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
 
     if (direction === 'up'){
-      if (++idx >= plugin.LOTSIZES.length){
+      if (++idx >= plugin.config.LOTSIZES.length){
         idx = 0;
       }
     } else if (direction === 'down'){
       if (--idx < 0){
-        idx = plugin.LOTSIZES.length - 1;
+        idx = plugin.config.LOTSIZES.length - 1;
       }
     } else {
       console.error('Unknown lot size direction: ', direction);
     }
 
-    var lotsize = plugin.LOTSIZES[idx];
+    var lotsize = plugin.config.LOTSIZES[idx];
     plugin.setLotSize(lotsize);
+  });
 }
 
 /**
@@ -118,20 +122,25 @@ plugin.toggleLotSize = function(direction){
  * determines which way to toggle the offset
  */
 plugin.toggleOffset = function(direction){
-  var idx = plugin.OFFSETS.indexOf(plugin.settings.OFFSET);
-  if (direction === 'up'){
-    if (++idx >= plugin.OFFSETS.length){
-      idx = 0;
+  chrome.storage.sync.get('offset', function(settings){
+    var idx = plugin.config.OFFSETS.indexOf(settings.offset);
+
+    if (direction === 'up'){
+      if (++idx >= plugin.config.OFFSETS.length){
+        idx = 0;
+      }
+    } else if (direction === 'down'){
+      if (--idx < 0){
+        idx = plugin.config.OFFSETS.length - 1;
+      }
+    } else {
+      console.error('Unknown toggle offset direction: ', direction);
     }
-  } else if (direction === 'down'){
-    if (--idx < 0){
-      idx = plugin.OFFSETS.length - 1;
-    }
-  } else {
-    console.error('Unknown toggle offset direction: ', direction);
-  }
-  plugin.settings.OFFSET = plugin.OFFSETS[idx];
-  plugin.displayOffset(plugin.settings.OFFSET);
+
+    chrome.storage.sync.set({'offset': plugin.config.OFFSETS[idx]}, function(){
+      plugin.displayOffset(plugin.config.OFFSETS[idx]);
+    });
+  });
 }
 
 
