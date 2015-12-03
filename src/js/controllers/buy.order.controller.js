@@ -20,6 +20,16 @@ plugin.placeBuyOrder = function(){
 /*******************************************
  *             ACTIONS
  ******************************************/
+
+/*  HIT THE OFFER */
+plugin.hitTheOffer = function(){
+  // get offer price
+  // place limit buy at offer price
+  var price = plugin.getBestOffer();
+  plugin.setBuyPrice(price);
+  plugin.placeBuyOrder();
+};
+
 /* Bid just above the best bid */
 plugin.bidBetter = function() {
   var bestBid = plugin.getBestBid();

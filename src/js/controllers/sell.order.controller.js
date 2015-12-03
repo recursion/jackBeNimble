@@ -15,10 +15,23 @@ plugin.placeSellOrder = function(){
   plugin.interface.placeSellOrder();
 }
 
+plugin.marketSell = function(){
+  plugin.interface.marketSell();
+}
 
 /****************************************
  *          ACTIONS
  ***************************************/
+
+/* HIT THE BID  */
+plugin.hitTheBid = function(){
+  // get bid price
+  // place limit sell order at bid
+  var price = plugin.getBestBid();
+  plugin.setSellPrice(price);
+  plugin.placeSellOrder();
+};
+
 
 /* Offer just below best offer */
 plugin.offerBetter = function(){

@@ -69,13 +69,13 @@ keyboardHandlers.onKeyup = function(e){
 
       // place limit order at the current ask price
       case settings.KEYS.HIT_THE_OFFER:
-        plugin.interface.hit_the_offer();
+        plugin.hitTheOffer();
         break;
 
 
       // place market buy
       case settings.KEYS.MARKET_BUY:
-        plugin.interface.market_buy();
+        plugin.market_buy();
         break;
 
 
@@ -105,12 +105,12 @@ keyboardHandlers.onKeyup = function(e){
 
       // place limit order at the current bid price
       case settings.KEYS.HIT_THE_BID:
-        plugin.interface.hit_the_bid();
+        plugin.hitTheBid();
         break;
 
       // place market sell
       case settings.KEYS.MARKET_SELL:
-        plugin.interface.market_sell();
+        plugin.market_sell();
         break;
 
 

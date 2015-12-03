@@ -29,26 +29,6 @@ interfaces.cbex = (function() {
 
     },
 
-    /* HIT THE BID  */
-    hit_the_bid: function(){
-      // get bid price
-      // place limit sell order at bid
-      var price = plugin.getBestBid();
-      plugin.setSellPrice(price);
-      plugin.placeSellOrder();
-    },
-
-
-    /*  HIT THE OFFER */
-    hit_the_offer: function(){
-      // get offer price
-      // place limit buy at offer price
-      var price = plugin.getBestOffer();
-      plugin.setBuyPrice(price);
-      plugin.placeBuyOrder();
-    },
-
-
     /*  MARKET BUY  */
     market_buy: function(){
       switchToMarketOrder();
