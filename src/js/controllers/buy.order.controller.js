@@ -1,12 +1,25 @@
 var plugin = plugin || {};
 
 /*******************************************
- *              BUY ORDERS
+ *              INTERFACE CALLS
  ******************************************/
+plugin.setBuyPrice = function(p){
+  // make sure the bid is in a string format
+  if(typeof p !== 'string'){
+    p = '' + p;
+  }
+  plugin.interface.setBuyPrice(p);
+}
+
 plugin.placeBuyOrder = function(){
   plugin.interface.placeBuyOrder();
 }
 
+
+
+/*******************************************
+ *             ACTIONS
+ ******************************************/
 /* Bid just above the best bid */
 plugin.bidBetter = function() {
   var bestBid = plugin.getBestBid();
@@ -24,24 +37,21 @@ plugin.bidWithBest = function() {
 
 /* bid 1 offset level below the best bid */
 plugin.bidBelowBest = function(){
-  var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - plugin.settings.OFFSET;
-  plugin.setBuyPrice(newBid.toFixed(2));
-  plugin.placeBuyOrder();
+  plugin.config.getSettings(function(settings){
+    var bestBid = plugin.getBestBid();
+    var newBid = +bestBid - settings.offset;
+    plugin.setBuyPrice(newBid.toFixed(2));
+    plugin.placeBuyOrder();
+  });
 }
 
 /* bid 2 offset levels below best bid */
 plugin.bidDoubleBelowBest = function(){
-  var bestBid = plugin.getBestBid();
-  var newBid = +bestBid - (plugin.settings.OFFSET * 2);
-  plugin.setBuyPrice(newBid.toFixed(2));
-  plugin.placeBuyOrder();
+  plugin.config.getSettings(function(settings){
+    var bestBid = plugin.getBestBid();
+    var newBid = +bestBid - (settings.offset * 2);
+    plugin.setBuyPrice(newBid.toFixed(2));
+    plugin.placeBuyOrder();
+  });
 }
 
-plugin.setBuyPrice = function(p){
-  // make sure the bid is in a string format
-  if(typeof p !== 'string'){
-    p = '' + p;
-  }
-  plugin.interface.setBuyPrice(p);
-}

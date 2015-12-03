@@ -45,11 +45,11 @@ plugin.displayOffset = function(v){
  * @param {Number} v - the new lotsize value
  **********************************************/
 plugin.setLotSize = function(v){
-  chrome.storage.sync.get('lotsize', function(settings){
+  plugin.config.getSettings(function(settings){
     var amount = plugin.interface.getLotSizeInputElement(v);
     v = v || settings.lotsize;
     amount.value = v;
-    chrome.storage.sync.set({'lotsize': v});
+    plugin.config.set({'lotsize': v});
   });
 }
 
@@ -95,7 +95,7 @@ plugin.getBestOffer = function(){
  * determines which way to toggle the lot size
  */
 plugin.toggleLotSize = function(direction){
-  chrome.storage.sync.get('lotsize', function(settings){
+  plugin.config.getSettings(function(settings){
     var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
 
     if (direction === 'up'){
@@ -109,7 +109,6 @@ plugin.toggleLotSize = function(direction){
     } else {
       console.error('Unknown lot size direction: ', direction);
     }
-
     var lotsize = plugin.config.LOTSIZES[idx];
     plugin.setLotSize(lotsize);
   });
@@ -122,7 +121,7 @@ plugin.toggleLotSize = function(direction){
  * determines which way to toggle the offset
  */
 plugin.toggleOffset = function(direction){
-  chrome.storage.sync.get('offset', function(settings){
+  plugin.config.getSettings(function(settings){
     var idx = plugin.config.OFFSETS.indexOf(settings.offset);
 
     if (direction === 'up'){
@@ -137,9 +136,9 @@ plugin.toggleOffset = function(direction){
       console.error('Unknown toggle offset direction: ', direction);
     }
 
-    chrome.storage.sync.set({'offset': plugin.config.OFFSETS[idx]}, function(){
-      plugin.displayOffset(plugin.config.OFFSETS[idx]);
-    });
+    plugin.config.set({'offset': plugin.config.OFFSETS[idx]});
+    plugin.displayOffset(plugin.config.OFFSETS[idx]);
+
   });
 }
 

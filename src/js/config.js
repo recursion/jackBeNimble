@@ -12,11 +12,11 @@ plugin.config = {};
 /*                    DEFAULT VALUES            */
 /************************************************/
 // LOT SIZE VALUES
-var LOTSIZES = plugin.config.LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
+plugin.config.LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
 
 
 // OFFSET VALUES
-var OFFSETS = plugin.config.OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5,  2, 2.5,  3, 5, 10];
+plugin.config.OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5,  2, 2.5,  3, 5, 10];
 
 // Set default OFFSET
 var DEFAULT_OFFSET = 0.1;
@@ -52,18 +52,48 @@ var DEFAULT_KEYS = {
   MARKET_SELL:  555// ctrl + h
 };
 
+// The alt keys required to activate a hotkey
+// [altKeyBOOL, ctrlKeyBool, shiftKeyBool]
+var DEFAULT_KEY_REQS = {
+  CANCEL_ALL: [],
+  CANCEL_LAST: [],
+  CANCEL_BIDS: [],
+  CANCEL_OFFERS: [],
+
+  TOGGLE_LOTSIZE_UP: [],
+  TOGGLE_LOTSIZE_DOWN: [],
+  TOGGLE_OFFSET_UP: [],
+  TOGGLE_OFFSET_DOWN: [],
+
+  BID_BETTER: [],
+  BID_WITH_BEST_BID: [],
+  BID_BELOW_BEST: [],
+  BID_DOUBLE_BELOW_BEST: [],
+
+  OFFER_BETTER: [],
+  OFFER_WITH_BEST_ASK: [],
+  OFFER_ABOVE_BEST: [],
+  OFFER_DOUBLE_ABOVE_BEST: [],
+
+  HIT_THE_BID: [],
+  HIT_THE_OFFER: [],
+
+  MARKET_BUY: [],
+  MARKET_SELL:  []
+};
 
 /************************************************/
 /*           ADD DEFAULTS TO CHROME STORAGE     */
 /************************************************/
 
-chrome.storage.sync.get(['offset', 'lotsize', 'KEYS'], function(settings){
-  if (!settings.offset || Object.keys(settings.offset).length === 0){
+chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], function(settings){
+
+  if (!settings.offset){
     // Default key bindings
     chrome.storage.sync.set({'offset': DEFAULT_OFFSET});
   }
 
-  if (!settings.lotsize || Object.keys(settings.lotsize).length === 0){
+  if (!settings.lotsize){
     // Default key bindings
     chrome.storage.sync.set({'lotsize': DEFAULT_LOTSIZE});
   }
@@ -72,4 +102,26 @@ chrome.storage.sync.get(['offset', 'lotsize', 'KEYS'], function(settings){
     // Default key bindings
     chrome.storage.sync.set({'KEYS': DEFAULT_KEYS});
   }
+
+  if (!settings.KEY_REQS || Object.keys(settings.KEY_REQS).length === 0){
+    // Default key bindings
+    chrome.storage.sync.set({'KEY_REQS': DEFAULT_KEY_REQS});
+  }
+
 });
+
+
+/**
+ * Set a config value
+ * @param {value} value - An object with the key/value pair to set
+ * @TODO error checking
+ */
+plugin.config.set = function(value){
+  chrome.storage.sync.set(value);
+};
+
+// Handle all requests to settings storage
+// incase the way we do it changes in the future.
+plugin.config.getSettings = function(cb){
+  chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], cb);
+}

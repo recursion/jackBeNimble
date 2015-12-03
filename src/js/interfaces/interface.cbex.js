@@ -150,7 +150,7 @@ interfaces.cbex = (function() {
       if (!DEBUG){
         plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
         setTimeout(function(){
-          chrome.storage.get('lotsize', function(settings){
+          plugin.config.getSettings(function(settings){
             plugin.setLotSize(settings.lotsize);
           });
         }, 250);
@@ -163,7 +163,7 @@ interfaces.cbex = (function() {
       if (!DEBUG){
         plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
         setTimeout(function(){
-          chrome.storage.get('lotsize', function(settings){
+          plugin.config.getSettings(function(settings){
             plugin.setLotSize(settings.lotsize);
           });
         }, 250);
@@ -227,7 +227,7 @@ interfaces.cbex = (function() {
    */
 
   function initialize(plugin){
-    chrome.storage.sync.get(['lotsize', 'offset'], function(settings){
+    plugin.config.getSettings(function(settings){
       plugin.setLotSize(settings.lotsize);
       plugin.displayOffset(settings.offset);
     });
@@ -263,7 +263,7 @@ interfaces.cbex = (function() {
   /* set the lot size on the market order screen */
   function setMarketOrderLotSize(){
       var lotSize = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
-      chrome.storage.get('lotsize', function(settings){
+      plugin.config.getSettings(function(settings){
         lotSize.value = settings.lotsize;
       });
   };

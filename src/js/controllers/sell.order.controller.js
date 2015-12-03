@@ -1,8 +1,25 @@
 var plugin = plugin || {};
 
+/****************************************
+ *        INTERFACE CALLS
+ ***************************************/
+plugin.setSellPrice = function(p){
+  // make sure the bid is in a string format
+  if(typeof p !== 'string'){
+    p = '' + p;
+  }
+  plugin.interface.setSellPrice(p);
+}
+
 plugin.placeSellOrder = function(){
   plugin.interface.placeSellOrder();
 }
+
+
+/****************************************
+ *          ACTIONS
+ ***************************************/
+
 /* Offer just below best offer */
 plugin.offerBetter = function(){
   var bestOffer = plugin.getBestOffer();
@@ -21,23 +38,19 @@ plugin.offerWithBest = function(){
 /* Offer 1 offset level above the best offer */
 plugin.offerAboveBest = function(){
   var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + plugin.settings.OFFSET;
-  plugin.setSellPrice(newOffer.toFixed(2));
-  plugin.placeSellOrder();
+  plugin.config.getSettings(function(settings){
+    var newOffer = +bestOffer + settings.offset;
+    plugin.setSellPrice(newOffer.toFixed(2));
+    plugin.placeSellOrder();
+  });
 }
 
 /* Offer 2 offset levels above the best offer */
 plugin.offerDoubleAboveBest = function() {
   var bestOffer = plugin.getBestOffer();
-  var newOffer = +bestOffer + (plugin.settings.OFFSET * 2);
-  plugin.setSellPrice(newOffer.toFixed(2));
-  plugin.placeSellOrder();
-}
-
-plugin.setSellPrice = function(p){
-  // make sure the bid is in a string format
-  if(typeof p !== 'string'){
-    p = '' + p;
-  }
-  plugin.interface.setSellPrice(p);
+  plugin.config.getSettings(function(settings){
+    var newOffer = +bestOffer + (settings.offset * 2);
+    plugin.setSellPrice(newOffer.toFixed(2));
+    plugin.placeSellOrder();
+  });
 }

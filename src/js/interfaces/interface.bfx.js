@@ -10,7 +10,8 @@ interfaces.bfx = (function(){
      * set lot size and display offset
      */
     init: function(){
-      chrome.storage.sync.get(['lotsize', 'offset'], function(settings){
+      plugin.config.getSettings(function(settings){
+        console.log(settings);
         plugin.setLotSize(settings.lotsize);
         plugin.displayOffset(settings.offset);
       });

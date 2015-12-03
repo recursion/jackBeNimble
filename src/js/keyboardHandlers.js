@@ -16,7 +16,7 @@ keyboardHandlers.onKeypress = function(e){
 }
 
 keyboardHandlers.onKeyup = function(e){
-  chrome.storage.sync.get('KEYS', function(settings){
+  plugin.config.getSettings(function(settings){
     switch(e.keyCode){
       /**************************************
        *            TOGGLE KEYS
