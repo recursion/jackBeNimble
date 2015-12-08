@@ -6,16 +6,6 @@ var keyboardHandlers = {};
  *            KEYBOARD HANDLERS
  ****************************************/
 keyboardHandlers.onKeydown = function(e){
-  if(DEBUG){
-    console.log('Keypress', e.keyCode);
-  }
-}
-
-keyboardHandlers.onKeypress = function(e){
-  //console.log('Keyup', e);
-}
-
-keyboardHandlers.onKeyup = function(e){
   plugin.config.getSettings(function(settings){
     switch(e.keyCode){
       /**************************************
@@ -142,4 +132,12 @@ keyboardHandlers.onKeyup = function(e){
         break
     }
   });
+}
+
+keyboardHandlers.onKeypress = function(e){
+  //console.log('Keyup', e);
+}
+
+keyboardHandlers.onKeyup = function(e){
+
 }
