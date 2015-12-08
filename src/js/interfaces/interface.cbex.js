@@ -320,6 +320,23 @@ var plugin = plugin || {};
   */
   function getLastValidCancelButton(orders){
 
+    var index = 0;
+    var button;
+    var classes;
+
+    while (index < orders.length){
+
+      button = orders[index].cancelButton;
+      classes = button.className.split(' ');
+
+      if (classes.indexOf('visible') != -1){
+        return button;
+      } else {
+        index++;
+      }
+    }
+    /*
+     * This is the reverse order we need to use
     var index = orders.length - 1;
     var button;
     var classes;
@@ -336,6 +353,7 @@ var plugin = plugin || {};
       }
 
     }
+    */
     return null;
   }
 })();
