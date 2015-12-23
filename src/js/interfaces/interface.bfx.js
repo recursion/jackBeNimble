@@ -16,6 +16,38 @@ var plugin = plugin || {};
     });
   };
 
+
+  /*  SET LOT SIZE*/
+  interfaces.bfx.setLotSize = function(v){
+    plugin.config.getSettings(function(settings){
+      var amount = plugin.interface.getLotSizeInputElement(v);
+      v = v || settings.lotsize;
+      amount.value = v;
+      plugin.config.set({'lotsize': v});
+    });
+  };
+
+  /* TOGGLE LOT SIZE */
+  interfaces.bfx.toggleLotSize = function(direction){
+    plugin.config.getSettings(function(settings){
+      var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
+
+      if (direction === 'up'){
+        if (++idx >= plugin.config.LOTSIZES.length){
+          idx = 0;
+        }
+      } else if (direction === 'down'){
+        if (--idx < 0){
+          idx = plugin.config.LOTSIZES.length - 1;
+        }
+      } else {
+        console.error('Unknown lot size direction: ', direction);
+      }
+      var lotsize = plugin.config.LOTSIZES[idx];
+      plugin.setLotSize(lotsize);
+    });
+  };
+
   /*  MARKET BUY  */
   interfaces.bfx.market_buy = function(){
     document.getElementById('buy_type').value = 'MARKET';

@@ -21,6 +21,8 @@ plugin.setInterface = function(){
     plugin.interface = interfaces.cbex;
   } else if (window.location.hostname.indexOf('bitfinex') !== -1){
     plugin.interface = interfaces.bfx;
+  } else if (window.location.hostname.indexOf('cryptofacilities') !== -1){
+    plugin.interface = interfaces.cfex;
   } else {
     plugin.interface = 'unknown';
   }
@@ -45,13 +47,8 @@ plugin.displayOffset = function(v){
  * @param {Number} v - the new lotsize value
  **********************************************/
 plugin.setLotSize = function(v){
-  plugin.config.getSettings(function(settings){
-    var amount = plugin.interface.getLotSizeInputElement(v);
-    v = v || settings.lotsize;
-    amount.value = v;
-    plugin.config.set({'lotsize': v});
-  });
-}
+  plugin.interface.setLotSize(v);
+};
 
 
 /****************************************
@@ -59,19 +56,19 @@ plugin.setLotSize = function(v){
  ***************************************/
 plugin.cancel_all = function(){
   plugin.interface.cancel_all();
-}
+};
 
 plugin.cancel_last = function(){
   plugin.interface.cancel_last();
-}
+};
 
 plugin.cancel_bids = function(){
   plugin.interface.cancel_bids();
-}
+};
 
 plugin.cancel_offers = function(){
   plugin.interface.cancel_offers();
-}
+};
 
 
 /****************************************
@@ -79,11 +76,11 @@ plugin.cancel_offers = function(){
  ***************************************/
 plugin.getBestBid = function(){
   return plugin.interface.getBestBid();
-}
+};
 
 plugin.getBestOffer = function(){
   return plugin.interface.getBestOffer();
-}
+};
 
 
 /****************************************
@@ -95,24 +92,8 @@ plugin.getBestOffer = function(){
  * determines which way to toggle the lot size
  */
 plugin.toggleLotSize = function(direction){
-  plugin.config.getSettings(function(settings){
-    var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
-
-    if (direction === 'up'){
-      if (++idx >= plugin.config.LOTSIZES.length){
-        idx = 0;
-      }
-    } else if (direction === 'down'){
-      if (--idx < 0){
-        idx = plugin.config.LOTSIZES.length - 1;
-      }
-    } else {
-      console.error('Unknown lot size direction: ', direction);
-    }
-    var lotsize = plugin.config.LOTSIZES[idx];
-    plugin.setLotSize(lotsize);
-  });
-}
+  plugin.interface.toggleLotSize(direction);
+};
 
 /**
  *      Toggle the offset value up or down
