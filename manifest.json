@@ -20,7 +20,8 @@
         "https://www.bitfinex.com/trading",
         "https://beta.bitfinex.com/trading",
         "https://exchange.coinbase.com/trade/BTC-USD",
-        "https://exchange.coinbase.com/trade?product_id=BTC-USD&"
+        "https://exchange.coinbase.com/trade?product_id=BTC-USD&",
+        "https://www.cryptofacilities.com/derivatives/market"
       ],
 
       "css": ["src/css/main.css"],
@@ -28,6 +29,7 @@
       "js": [
         "src/js/config.js",
         "src/js/interfaces/interface.bfx.js",
+        "src/js/interfaces/interface.cfex.js",
         "src/js/interfaces/interface.cbex.js",
         "src/js/controllers/utilities.controller.js",
         "src/js/controllers/sell.order.controller.js",
