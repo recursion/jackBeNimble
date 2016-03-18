@@ -17,8 +17,8 @@
     {
 
       "matches": [
-        "https://www.bitfinex.com/trading",
-        "https://beta.bitfinex.com/trading",
+        "https://www.bitfinex.com/trading/index/btcusd",
+        "https://beta.bitfinex.com/trading/index/btcusd",
         "https://exchange.coinbase.com/trade/BTC-USD",
         "https://exchange.coinbase.com/trade?product_id=BTC-USD&",
         "https://www.cryptofacilities.com/derivatives/market"
