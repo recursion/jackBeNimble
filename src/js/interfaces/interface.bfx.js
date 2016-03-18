@@ -138,8 +138,7 @@ var plugin = plugin || {};
    * @param {Number} v - the offset value to display
    */
   interfaces.bfx.displayOffset = function(v){
-    var homeDiv = document.querySelector('#trading-ticket-form > div:nth-child(5) > ul > li > div.collapsible-header');
-
+    var homeDiv = document.querySelector('#orders > div > ul > li > div.collapsible-header') || document.querySelector('#positions > div > ul > li > div.collapsible-header');
     var target = document.getElementById('BFX_OFFSET_VALUE');
     if(!target){
       var span = document.createElement('span');
