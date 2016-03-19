@@ -18,7 +18,16 @@
 
       "matches": [
         "https://www.bitfinex.com/trading/index/btcusd",
-        "https://beta.bitfinex.com/trading/index/btcusd",
+        "https://www.bitfinex.com/exchange/index/btcusd",
+        "https://www.bitfinex.com/trading/index/ltcusd",
+        "https://www.bitfinex.com/exchange/index/ltcusd",
+        "https://www.bitfinex.com/trading/index/ethusd",
+        "https://www.bitfinex.com/exchange/index/ethusd",
+        "https://www.bitfinex.com/trading/index/ethbtc",
+        "https://www.bitfinex.com/exchange/index/ethbtc",
+        "https://www.bitfinex.com/trading/index/ltcbtc",
+        "https://www.bitfinex.com/exchange/index/ltcbtc",
+
         "https://exchange.coinbase.com/trade/BTC-USD",
         "https://exchange.coinbase.com/trade?product_id=BTC-USD&",
         "https://www.cryptofacilities.com/derivatives/market"
