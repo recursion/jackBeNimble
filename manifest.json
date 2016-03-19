@@ -17,6 +17,10 @@
     {
 
       "matches": [
+        // Coinbase URLs
+        "https://exchange.coinbase.com/trade/BTC-USD",
+
+        // Bitfinex URLs
         "https://www.bitfinex.com/trading/index/btcusd",
         "https://www.bitfinex.com/exchange/index/btcusd",
         "https://www.bitfinex.com/trading/index/ltcusd",
@@ -28,8 +32,7 @@
         "https://www.bitfinex.com/trading/index/ltcbtc",
         "https://www.bitfinex.com/exchange/index/ltcbtc",
 
-        "https://exchange.coinbase.com/trade/BTC-USD",
-        "https://exchange.coinbase.com/trade?product_id=BTC-USD&",
+        // Cryptofacilities URLs
         "https://www.cryptofacilities.com/derivatives/market"
       ],
 

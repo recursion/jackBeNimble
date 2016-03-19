@@ -1,8 +1,7 @@
 # jackBeNimble
 
-A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com), [beta.bitfinex.com](http:beta.bitfinex.com), and ~~[exchange.coinbase.com](http://exchange.coinbase.com)~~** bitcoin exchange trading sites. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
+A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com), [beta.bitfinex.com](http:beta.bitfinex.com), and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
 
-** Currently the coinbase frontend is too unstable to be worth writing for. I may take another stab at implementing something there, but as it stands they change their css/html structure too often to be worth messing with. 
 
 This extension adds hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.

@@ -129,7 +129,7 @@ var plugin = plugin || {};
 
   /* return the lot size input element */
   interfaces.cbex.getLotSizeInputElement = function(v){
-    return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > input');
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') ;
   };
 
 
@@ -159,12 +159,31 @@ var plugin = plugin || {};
   /**    PLACE A BUY ORDER   */
   interfaces.cbex.placeBuyOrder = function(){
     if (!DEBUG){
-      plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.buy.balance-ok'), 'click');
-      setTimeout(function(){
-        plugin.config.getSettings(function(settings){
-          plugin.setLotSize(settings.lotsize);
-        });
-      }, 250);
+      var switchTarget = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy');
+      if (switchTarget) {
+
+        switchTarget.click();
+        setTimeout(function() {
+
+          var target = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy');
+          // this no longer works for some reason..
+          //plugin.eventFire(target, 'click');
+          // but this is even better
+          if (target) {
+            target.click();
+          } else  {
+            console.error("Unable to locate buy button");
+          }
+          setTimeout(function(){
+            plugin.config.getSettings(function(settings){
+              plugin.setLotSize(settings.lotsize);
+            });
+          }, 250);
+        }, 10);
+
+      } else {
+        console.error('Cannot locate buy button');
+      }
     }
   };
 
@@ -172,12 +191,28 @@ var plugin = plugin || {};
   /**   PLACE A SELL ORDER    */
   interfaces.cbex.placeSellOrder = function(){
     if (!DEBUG){
-      plugin.eventFire(document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > div > button.sell.balance-ok'), 'click');
-      setTimeout(function(){
-        plugin.config.getSettings(function(settings){
-          plugin.setLotSize(settings.lotsize);
-        });
-      }, 250);
+      // switch to sell window
+      var switchTarget = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell');
+      if (switchTarget) {
+        switchTarget.click();
+        setTimeout(function() {
+          var target = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell');
+          if (target) {
+            target.click();
+          } else  {
+            console.error("Unable to locate sell button");
+          }
+          setTimeout(function(){
+            plugin.config.getSettings(function(settings){
+              plugin.setLotSize(settings.lotsize);
+            });
+          }, 250);
+        }, 10);
+
+      } else {
+        console.error('No sell button found');
+      }
+
     }
   };
 
@@ -204,7 +239,7 @@ var plugin = plugin || {};
 
   /**     GET BEST BID    */
   interfaces.cbex.getBestBid = function(){
-    var bid = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable' || document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable'));
+    var bid = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable');
 
     var wholeNum = bid.children[0].innerHTML;
     var decimal1 = bid.children[1].innerHTML;
@@ -217,7 +252,7 @@ var plugin = plugin || {};
 
   /**     GET BEST OFFER       */
   interfaces.cbex.getBestOffer = function(){
-    var offer = document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
+    var offer = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
 
     var wholeNum = offer.children[0].innerHTML;
     var decimal1 = offer.children[1].innerHTML;
