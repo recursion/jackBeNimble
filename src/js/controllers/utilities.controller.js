@@ -120,23 +120,4 @@ var interfaces = interfaces || {};
     });
   }
 
-
-
-  /**
-   * Simulate an event being fired.
-   * Used for 'clicking' the buy/sell buttons.
-   * @param {Element} el - the html element we will fire the event on
-   * @param {String} - eType - the event type
-   */
-  plugin.eventFire = function(el, etype){
-    if (el.fireEvent) {
-      el.fireEvent('on' + etype);
-    } else {
-      var evObj = document.createEvent('Events');
-      evObj.initEvent(etype, true, true);
-      evObj.preventDefault();
-      el.dispatchEvent(evObj);
-    }
-  }
-
 })();
