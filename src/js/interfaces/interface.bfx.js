@@ -20,7 +20,7 @@ var plugin = plugin || {};
   /*  SET LOT SIZE*/
   interfaces.bfx.setLotSize = function(v){
     plugin.config.getSettings(function(settings){
-      var amount = plugin.interface.getLotSizeInputElement(v);
+      var amount = plugin.interface.getLotSizeInputElement();
       v = v || settings.lotsize;
       amount.value = v;
       plugin.config.set({'lotsize': v});
@@ -50,17 +50,17 @@ var plugin = plugin || {};
 
   /*  MARKET BUY  */
   interfaces.bfx.market_buy = function(){
-    document.getElementById('buy_type').value = 'MARKET';
+    getBuyOrderTypeElement().value = 'MARKET';
     plugin.placeBuyOrder();
-    document.getElementById('buy_type').value = 'LIMIT';
+    getBuyOrderTypeElement().value = 'LIMIT';
   };
 
 
   /*  MARKET SELL */
   interfaces.bfx.market_sell = function(){
-    document.getElementById('sell_type').value = 'MARKET';
+    getSellOrderTypeElement().value = 'MARKET';
     plugin.placeSellOrder();
-    document.getElementById('sell_type').value = 'LIMIT';
+    getSellOrderTypeElement().value = 'LIMIT';
   };
 
 
@@ -70,7 +70,7 @@ var plugin = plugin || {};
     orders.forEach(function(order){
       if (order.side === 'buy'){
         setTimeout(function(){
-          plugin.eventFire(order.cancelButton, 'click');
+          order.cancelButton.click();
         }, 100);
       }
     });
@@ -83,7 +83,7 @@ var plugin = plugin || {};
     orders.forEach(function(order){
       if (order.side === 'sell'){
         setTimeout(function(){
-          plugin.eventFire(order.cancelButton, 'click');
+          order.cancelButton.click();
         }, 100);
       }
     });
@@ -93,32 +93,13 @@ var plugin = plugin || {};
   /*  CANCEL LAST ORDER */
   interfaces.bfx.cancel_last = function(){
     var orders = getOrders();
-    console.log(orders);
-    plugin.eventFire(orders[orders.length - 1].cancelButton, 'click');
-
-    /*
-    var xhr = new XMLHttpRequest();
-    var url = encodeURI('/orders/' + orders[orders.length -1].id);
-
-    // function to fire each time `onreadystatechange` fires
-    xhr.onreadystatechange = function () {
-      console.log(xhr);
-      console.log(xhr.readyState);
-      console.log(xhr.status);
-    };
-
-    xhr.open('DELETE', url, true);
-    xhr.setRequestHeader('X-CSRF-Token', TOKEN);
-    xhr.send();
-    */
-
+    orders[orders.length - 1].cancelButton.click();
   };
 
   /*  CANCEL ALL ORDERS */
+  // this uses xhr because the sites 'cancel all button' causes
+  // a popup which is not desirable here
   interfaces.bfx.cancel_all = function(){
-    /* For now this works, where as canceling individual orders requires the token
-     * It may be wise to change this back to a button click instead of using xhr.
-     */
     var xhr = new XMLHttpRequest();
     xhr.open('GET', encodeURI('/orders/cancel_all'));
     xhr.send();
@@ -127,9 +108,7 @@ var plugin = plugin || {};
   /**
    * return the lot size input element
    */
-  interfaces.bfx.getLotSizeInputElement = function(){
-    return document.getElementById('amount');
-  };
+  interfaces.bfx.getLotSizeInputElement = getLotSizeInputElement;
 
 
   /**
@@ -138,8 +117,8 @@ var plugin = plugin || {};
    * @param {Number} v - the offset value to display
    */
   interfaces.bfx.displayOffset = function(v){
-    var homeDiv = document.querySelector('#orders > div > ul > li > div.collapsible-header') || document.querySelector('#positions > div > ul > li > div.collapsible-header');
-    var target = document.getElementById('BFX_OFFSET_VALUE');
+    var homeDiv = getOffsetParentElement();
+    var target = getOffsetElement();
     if(!target){
       var span = document.createElement('span');
       span.id = 'BFX_OFFSET_VALUE';
@@ -154,7 +133,8 @@ var plugin = plugin || {};
   /**    PLACE A BUY ORDER   */
   interfaces.bfx.placeBuyOrder = function(){
     if(!DEBUG){
-      plugin.eventFire(document.getElementById('buy-button'), 'click');
+      //plugin.eventFire(getBuyButtonElement(), 'click');
+      getBuyButtonElement().click();
     }
   };
 
@@ -162,7 +142,8 @@ var plugin = plugin || {};
   /**    PLACE A SELL ORDER   */
   interfaces.bfx.placeSellOrder = function(){
     if (!DEBUG){
-      plugin.eventFire(document.getElementById('sell-button'), 'click');
+      //plugin.eventFire(getSellButtonElement(), 'click');
+      getSellButtonElement().click();
     }
   };
 
@@ -173,7 +154,7 @@ var plugin = plugin || {};
    * @param {Number} p - the price to set
    */
   interfaces.bfx.setBuyPrice = function(p){
-    document.getElementById('buy_price').value = p;
+    getBuyPriceElement().value = p;
   };
 
 
@@ -183,20 +164,20 @@ var plugin = plugin || {};
    * @param {Number} p - the price to set
    */
   interfaces.bfx.setSellPrice = function(p){
-    document.getElementById('sell_price').value = p;
+    getSellPriceElement().value = p;
   };
 
 
   /**     GET BEST BID    */
   interfaces.bfx.getBestBid = function(){
-    var bestBid = document.querySelector('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
+    var bestBid = getBestBidElement();
     return bestBid.innerHTML;
   };
 
 
   /**     GET BEST OFFER  */
   interfaces.bfx.getBestOffer = function(){
-    var bestAsk = document.querySelector('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
+    var bestAsk = getBestOfferElement();
     return bestAsk.innerHTML;
   };
 
@@ -207,8 +188,7 @@ var plugin = plugin || {};
   *  @TODO strip only the critical order data from the orders.
   */
   function getOrders(){
-    var orderEls = document.getElementById('orderstable').children[1].childNodes;
-    console.log(orderEls);
+    var orderEls = getOrderElements();
     return filterOrders(orderEls);
   }
 
@@ -260,8 +240,6 @@ var plugin = plugin || {};
   }
 
 
-
-
   /**
   * take an array of order data, and create an order object with it
   * @param {Array} orderDataArray
@@ -288,5 +266,59 @@ var plugin = plugin || {};
 
   function isSellOrder(order){
     return order < 0;
+  }
+
+  /**
+   *     ELEMENT ACCESSORS
+   */
+
+  // get the element where we want to attach the offset value
+  // returns an html element
+  function getOffsetParentElement() {
+    return document.querySelector('#orders > div > ul > li > div.collapsible-header') || document.querySelector('#positions > div > ul > li > div.collapsible-header');
+  }
+
+  function getOffsetElement() {
+    return document.getElementById('BFX_OFFSET_VALUE');
+  }
+
+  function getBuyButtonElement() {
+    return document.getElementById('buy-button');
+  }
+
+  function getSellButtonElement() {
+    return document.getElementById('sell-button');
+  }
+
+  function getBestBidElement(){
+    return document.querySelector('#bids > div > table > tbody > tr:nth-child(1) > td > div > div.col.price.col-currency');
+  }
+
+  function getBestOfferElement() {
+    return document.querySelector('#asks > div > table > tbody > tr:nth-child(1) > td > div > div.col.col-currency.price');
+  }
+
+  function getOrderElements() {
+    return document.getElementById('orderstable').children[1].childNodes;
+  }
+
+  function getSellPriceElement() {
+    return document.getElementById('sell_price');
+  }
+
+  function getBuyPriceElement() {
+    return document.getElementById('buy_price');
+  }
+
+  function getLotSizeInputElement() {
+    return document.getElementById('amount');
+  }
+
+  function getBuyOrderTypeElement() {
+    return document.getElementById('buy_type');
+  }
+
+  function getSellOrderTypeElement() {
+    return document.getElementById('sell_type');
   }
 })();
