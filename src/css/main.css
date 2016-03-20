@@ -10,22 +10,6 @@
 /*****************************************/
 /*             COINBASE STYLING          */
 /*****************************************/
-
-/* coinbase exchange bids table */
-body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy {
-  font-size: 1.5em;
-}
-
-/* coinbase exchange offers table */
-body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div {
-  font-size: 1.5em;
-}
-
-/* coinbase exchange time and sales */
-body > div:nth-child(9) > section > div.history-view-wrapper.clearfix > div > div.visible > div > ul {
- font-size: 1.5em;
-}
-
 /* OFFSET */
 #CBEX_OFFSET_VALUE{
   font-size: 1.5em;
@@ -39,22 +23,4 @@ body > div:nth-child(9) > section > div.history-view-wrapper.clearfix > div > di
 body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > ul > li {
   position: relative !important;
   top: 15px !important;
-}
-
-
-/** SIDEBAR
- * we are shrinking this some.
- * */
-body > div:nth-child(10) > aside{
-  width: 160px !important;
-}
-
-/**
- * BODY
- * we are moving this over to the left so that it lines up
- * with the shrunken sidebar.
- *
- */
-body > div:nth-child(10) > section{
-  left: 162px !important;
 }

@@ -469,7 +469,7 @@ interfaces.cbex = (function(){
   }
 
   function getBuyButtonElement() {
-    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy');
+    return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy');
   }
 
   function getOffsetParentElement() {
