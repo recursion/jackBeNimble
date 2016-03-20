@@ -133,7 +133,6 @@ var plugin = plugin || {};
   /**    PLACE A BUY ORDER   */
   interfaces.bfx.placeBuyOrder = function(){
     if(!DEBUG){
-      //plugin.eventFire(getBuyButtonElement(), 'click');
       getBuyButtonElement().click();
     }
   };
@@ -142,7 +141,6 @@ var plugin = plugin || {};
   /**    PLACE A SELL ORDER   */
   interfaces.bfx.placeSellOrder = function(){
     if (!DEBUG){
-      //plugin.eventFire(getSellButtonElement(), 'click');
       getSellButtonElement().click();
     }
   };
