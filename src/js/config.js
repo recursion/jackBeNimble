@@ -5,20 +5,49 @@
 var DEBUG = false;
 var plugin = plugin || {};
 
-(function() {
-  plugin.config = {};
+plugin.config = (function() {
 
 
-
-  /************************************************/
-  /*                    DEFAULT VALUES            */
-  /************************************************/
   // LOT SIZE VALUES
-  plugin.config.LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
+  var LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
 
 
   // OFFSET VALUES
-  plugin.config.OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5,  2, 2.5,  3, 5, 10];
+  var OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5,  2, 2.5,  3, 5, 10];
+
+  /**
+   * Set a config value
+   * @param {value} value - An object with the key/value pair to set
+   * @TODO error checking
+   */
+  var set = function(value){
+    chrome.storage.sync.set(value);
+  };
+
+  // Handle all requests to settings storage
+  // incase the way we do it changes in the future.
+  var getSettings = function(cb){
+    chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], cb);
+  }
+
+  var public_api = {
+    LOTSIZES: LOTSIZES,
+    OFFSETS: OFFSETS,
+    set: set,
+    getSettings: getSettings
+  };
+
+  loadDefaults();
+  return public_api;
+})();
+
+
+/************************************************
+*              Load Defaults                    *
+*   creates default values and loads them into
+*   google extention storage (if none yet exist)
+************************************************/
+function loadDefaults() {
 
   // Set default OFFSET
   var DEFAULT_OFFSET = 0.1;
@@ -87,7 +116,6 @@ var plugin = plugin || {};
   /************************************************/
   /*           ADD DEFAULTS TO CHROME STORAGE     */
   /************************************************/
-
   chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], function(settings){
 
     if (!settings.offset){
@@ -111,21 +139,4 @@ var plugin = plugin || {};
     }
 
   });
-
-
-  /**
-   * Set a config value
-   * @param {value} value - An object with the key/value pair to set
-   * @TODO error checking
-   */
-  plugin.config.set = function(value){
-    chrome.storage.sync.set(value);
-  };
-
-  // Handle all requests to settings storage
-  // incase the way we do it changes in the future.
-  plugin.config.getSettings = function(cb){
-    chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], cb);
-  }
-
-})();
+}
