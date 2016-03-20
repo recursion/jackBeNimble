@@ -1,13 +1,19 @@
 var plugin = plugin || {};
 
-(function(){
-  plugin.keyboardHandlers = {};
+plugin.keyboardHandlers = (function(){
 
+  var public_api = {
+    onKeydown: onKeydown,
+    onKeypress: onKeypress,
+    onKeyup: onKeyup
+  };
+
+  return public_api;
 
   /*****************************************
    *            KEYBOARD HANDLERS
    ****************************************/
-  plugin.keyboardHandlers.onKeydown = function(e){
+  function onKeydown(e){
     plugin.config.getSettings(function(settings){
       switch(e.keyCode){
         /**************************************
@@ -136,12 +142,13 @@ var plugin = plugin || {};
     });
   }
 
-  plugin.keyboardHandlers.onKeypress = function(e){
+  function onKeypress(e){
     //console.log('Keyup', e);
   }
 
-  plugin.keyboardHandlers.onKeyup = function(e){
+  function onKeyup(e){
 
   }
+
 
 })();
