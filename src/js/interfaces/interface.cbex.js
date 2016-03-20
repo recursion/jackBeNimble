@@ -7,8 +7,7 @@ interfaces.cbex = (function(){
 
     init: init,
 
-    setLotSize: setLotSize,
-    toggleLotSize: toggleLotSize,
+    getLotSizeInputElement: getLotSizeInputElement,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -56,7 +55,10 @@ interfaces.cbex = (function(){
     }
   }
 
-  /*  SET LOT SIZE*/
+  /**
+   *  SET LOT SIZE
+   *  @param {Number} v - the lotsize value
+   */
   function setLotSize (v){
     plugin.config.getSettings(function(settings){
       var amount = getLotSizeInputElement();
@@ -66,7 +68,10 @@ interfaces.cbex = (function(){
     });
   }
 
-  /* TOGGLE LOT SIZE */
+  /**
+   * TOGGLE LOT SIZE
+   * @param {String} direction - the direction to toggle our lotsize (up or down)
+   **/
   function toggleLotSize (direction){
     plugin.config.getSettings(function(settings){
       var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
@@ -229,24 +234,24 @@ interfaces.cbex = (function(){
 
   /**
    *        SET THE BUY PRICE
-   *
    * @param {Number} p - the price to set
    */
   function setBuyPrice (p){
     getPriceInputElement().value = p;
   }
 
-
   /**
    *        SET THE SELL PRICE
-   *
    * @param {Number} p - the price to set
    */
   function setSellPrice (p){
     getPriceInputElement().value = p;
   }
 
-  /**     GET BEST BID    */
+  /**
+   * GET BEST BID
+   * @returns {String} - the current best bid
+   */
   function getBestBid (){
     var bid = getBestBidElement();
     var wholeNum = bid.children[0].innerHTML;
@@ -257,7 +262,10 @@ interfaces.cbex = (function(){
     return bb;
   }
 
-  /**     GET BEST OFFER       */
+  /**
+   * GET BEST Offer
+   * @returns {String} - the current best offer
+   */
   function getBestOffer (){
     var offer = getBestOfferElement();
 
@@ -273,12 +281,12 @@ interfaces.cbex = (function(){
   /**********************************************************/
   /******************   Private Functions *******************/
   /**********************************************************/
+
+
   /**
   *        INITIALIZE
-  * @param {Element} - limitButtonElement - the pages limit button
   * @param {PluginObject} - plugin - the plugin object
   */
-
   function initialize(plugin){
     plugin.config.getSettings(function(settings){
       setLotSize(settings.lotsize);
@@ -409,8 +417,13 @@ interfaces.cbex = (function(){
   }
 
 
-  /*     ELEMENT ACCESSORS  */
-  /* return the lot size input element */
+  /**********************************************************
+   *     ELEMENT ACCESSORS
+   *     these functions are used to get html elements
+   *     any changes to a sites css/html can be addressed here
+   **********************************************************/
+
+
   function getLotSizeInputElement(){
     return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') ;
   };

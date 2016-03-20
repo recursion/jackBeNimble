@@ -12,6 +12,7 @@ plugin.keyboardHandlers = (function(){
 
   /*****************************************
    *            KEYBOARD HANDLERS
+   * @TODO convert to an engine that can handle more than one key
    ****************************************/
   function onKeydown(e){
     plugin.config.getSettings(function(settings){

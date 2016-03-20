@@ -7,8 +7,7 @@ interfaces.bfx = (function(){
 
     init: init,
 
-    setLotSize: setLotSize,
-    toggleLotSize: toggleLotSize,
+    getLotSizeInputElement: getLotSizeInputElement,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -36,46 +35,15 @@ interfaces.bfx = (function(){
   /**
    *              INIT
    *
-   * set lot size and display offset
+   *  get existing settings and apply them
    */
   function init (){
     plugin.config.getSettings(function(settings){
-      setLotSize(settings.lotsize);
+      plugin.setLotSize(settings.lotsize);
       displayOffset(settings.offset);
     });
   }
 
-
-  /*  SET LOT SIZE*/
-  function setLotSize(v){
-    plugin.config.getSettings(function(settings){
-      var amount = getLotSizeInputElement();
-      v = v || settings.lotsize;
-      amount.value = v;
-      plugin.config.set({'lotsize': v});
-    });
-  }
-
-  /* TOGGLE LOT SIZE */
-  function toggleLotSize (direction){
-    plugin.config.getSettings(function(settings){
-      var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
-
-      if (direction === 'up'){
-        if (++idx >= plugin.config.LOTSIZES.length){
-          idx = 0;
-        }
-      } else if (direction === 'down'){
-        if (--idx < 0){
-          idx = plugin.config.LOTSIZES.length - 1;
-        }
-      } else {
-        console.error('Unknown lot size direction: ', direction);
-      }
-      var lotsize = plugin.config.LOTSIZES[idx];
-      plugin.setLotSize(lotsize);
-    });
-  }
 
   /*  MARKET BUY  */
   function marketBuy(){
@@ -116,7 +84,6 @@ interfaces.bfx = (function(){
       }
     });
   }
-
 
   /*  CANCEL LAST ORDER */
   function cancelLast(){
@@ -168,7 +135,6 @@ interfaces.bfx = (function(){
 
   /**
    *        SET THE BUY PRICE
-   *
    * @param {Number} p - the price to set
    */
   function setBuyPrice (p){
@@ -178,7 +144,6 @@ interfaces.bfx = (function(){
 
   /**
    *        SET THE SELL PRICE
-   *
    * @param {Number} p - the price to set
    */
   function setSellPrice(p){
@@ -186,14 +151,20 @@ interfaces.bfx = (function(){
   }
 
 
-  /**     GET BEST BID    */
+  /**
+   * GET BEST BID
+   * @returns {String} - the current best bid
+   */
   function getBestBid (){
     var bestBid = getBestBidElement();
     return bestBid.innerHTML;
   }
 
 
-  /**     GET BEST OFFER  */
+  /**
+   * GET BEST Offer
+   * @returns {String} - the current best offer
+   */
   function getBestOffer(){
     var bestAsk = getBestOfferElement();
     return bestAsk.innerHTML;
@@ -289,12 +260,12 @@ interfaces.bfx = (function(){
     return order < 0;
   }
 
-  /**
+  /**********************************************************
    *     ELEMENT ACCESSORS
-   */
+   *     these functions are used to get html elements
+   *     any changes to a sites css/html can be addressed here
+   **********************************************************/
 
-  // get the element where we want to attach the offset value
-  // returns an html element
   function getOffsetParentElement() {
     return document.querySelector('#orders > div > ul > li > div.collapsible-header') || document.querySelector('#positions > div > ul > li > div.collapsible-header');
   }

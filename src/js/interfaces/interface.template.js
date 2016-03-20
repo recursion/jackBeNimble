@@ -7,8 +7,7 @@ interfaces.cbex = (function(){
 
     init: init,
 
-    setLotSize: setLotSize,
-    toggleLotSize: toggleLotSize,
+    getLotSizeInputElement: getLotSizeInputElement,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -35,13 +34,11 @@ interfaces.cbex = (function(){
 
   /**
    *              INIT
-   *
-   * set lot size and display offset
+   *    Any site specific setup goes here
    */
   function init(){
-    // Any site specific setup goes here
-  }
 
+  }
 
   /*  MARKET BUY  */
   function marketBuy(){
@@ -58,12 +55,6 @@ interfaces.cbex = (function(){
 
   /*  CANCEL ALL ORDERS */
   function cancelAll(){
-
-  }
-
-
-  /* return the lot size input element */
-  function getLotSizeInputElement (){
 
   }
 
