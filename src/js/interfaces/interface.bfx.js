@@ -1,34 +1,63 @@
 var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-(function(){
-  interfaces.bfx = {};
+interfaces.bfx = (function(){
+
+  var public_api = {
+
+    init: init,
+
+    setLotSize: setLotSize,
+    toggleLotSize: toggleLotSize,
+
+    marketBuy: marketBuy,
+    marketSell: marketSell,
+
+    cancelBids: cancelBids,
+    cancelOffers: cancelOffers,
+    cancelAll: cancelAll,
+    cancelLast: cancelLast,
+
+    displayOffset: displayOffset,
+
+    placeBuyOrder: placeBuyOrder,
+    placeSellOrder: placeSellOrder,
+
+    setBuyPrice: setBuyPrice,
+    setSellPrice: setSellPrice,
+
+    getBestBid: getBestBid,
+    getBestOffer: getBestOffer
+
+  };
+
+  return public_api;
 
   /**
    *              INIT
    *
    * set lot size and display offset
    */
-  interfaces.bfx.init = function(){
+  function init (){
     plugin.config.getSettings(function(settings){
-      plugin.setLotSize(settings.lotsize);
-      plugin.displayOffset(settings.offset);
+      setLotSize(settings.lotsize);
+      displayOffset(settings.offset);
     });
-  };
+  }
 
 
   /*  SET LOT SIZE*/
-  interfaces.bfx.setLotSize = function(v){
+  function setLotSize(v){
     plugin.config.getSettings(function(settings){
-      var amount = plugin.interface.getLotSizeInputElement();
+      var amount = getLotSizeInputElement();
       v = v || settings.lotsize;
       amount.value = v;
       plugin.config.set({'lotsize': v});
     });
-  };
+  }
 
   /* TOGGLE LOT SIZE */
-  interfaces.bfx.toggleLotSize = function(direction){
+  function toggleLotSize (direction){
     plugin.config.getSettings(function(settings){
       var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
 
@@ -46,26 +75,26 @@ var plugin = plugin || {};
       var lotsize = plugin.config.LOTSIZES[idx];
       plugin.setLotSize(lotsize);
     });
-  };
+  }
 
   /*  MARKET BUY  */
-  interfaces.bfx.market_buy = function(){
+  function marketBuy(){
     getBuyOrderTypeElement().value = 'MARKET';
     plugin.placeBuyOrder();
     getBuyOrderTypeElement().value = 'LIMIT';
-  };
+  }
 
 
   /*  MARKET SELL */
-  interfaces.bfx.market_sell = function(){
+  function marketSell(){
     getSellOrderTypeElement().value = 'MARKET';
     plugin.placeSellOrder();
     getSellOrderTypeElement().value = 'LIMIT';
-  };
+  }
 
 
   /* CANCEL BIDS */
-  interfaces.bfx.cancel_bids = function(){
+  function cancelBids (){
     var orders = getOrders();
     orders.forEach(function(order){
       if (order.side === 'buy'){
@@ -74,11 +103,10 @@ var plugin = plugin || {};
         }, 100);
       }
     });
-  };
-
+  }
 
   /* CANCEL OFFERS */
-  interfaces.bfx.cancel_offers = function(){
+  function cancelOffers(){
     var orders = getOrders();
     orders.forEach(function(order){
       if (order.side === 'sell'){
@@ -87,36 +115,30 @@ var plugin = plugin || {};
         }, 100);
       }
     });
-  };
+  }
 
 
   /*  CANCEL LAST ORDER */
-  interfaces.bfx.cancel_last = function(){
+  function cancelLast(){
     var orders = getOrders();
     orders[orders.length - 1].cancelButton.click();
-  };
+  }
 
   /*  CANCEL ALL ORDERS */
   // this uses xhr because the sites 'cancel all button' causes
   // a popup which is not desirable here
-  interfaces.bfx.cancel_all = function(){
+  function cancelAll(){
     var xhr = new XMLHttpRequest();
     xhr.open('GET', encodeURI('/orders/cancel_all'));
     xhr.send();
-  };
-
-  /**
-   * return the lot size input element
-   */
-  interfaces.bfx.getLotSizeInputElement = getLotSizeInputElement;
-
+  }
 
   /**
    *     DISPLAY THE OFFSET VALUE ON THE PAGE
    *
    * @param {Number} v - the offset value to display
    */
-  interfaces.bfx.displayOffset = function(v){
+  function displayOffset(v){
     var homeDiv = getOffsetParentElement();
     var target = getOffsetElement();
     if(!target){
@@ -127,11 +149,10 @@ var plugin = plugin || {};
     } else {
       target.innerHTML = 'Offset: ' + v;
     }
-  };
-
+  }
 
   /**    PLACE A BUY ORDER   */
-  interfaces.bfx.placeBuyOrder = function(){
+  function placeBuyOrder(){
     if(!DEBUG){
       getBuyButtonElement().click();
     }
@@ -139,21 +160,20 @@ var plugin = plugin || {};
 
 
   /**    PLACE A SELL ORDER   */
-  interfaces.bfx.placeSellOrder = function(){
+  function placeSellOrder(){
     if (!DEBUG){
       getSellButtonElement().click();
     }
-  };
-
+  }
 
   /**
    *        SET THE BUY PRICE
    *
    * @param {Number} p - the price to set
    */
-  interfaces.bfx.setBuyPrice = function(p){
+  function setBuyPrice (p){
     getBuyPriceElement().value = p;
-  };
+  }
 
 
   /**
@@ -161,24 +181,27 @@ var plugin = plugin || {};
    *
    * @param {Number} p - the price to set
    */
-  interfaces.bfx.setSellPrice = function(p){
+  function setSellPrice(p){
     getSellPriceElement().value = p;
-  };
+  }
 
 
   /**     GET BEST BID    */
-  interfaces.bfx.getBestBid = function(){
+  function getBestBid (){
     var bestBid = getBestBidElement();
     return bestBid.innerHTML;
-  };
+  }
 
 
   /**     GET BEST OFFER  */
-  interfaces.bfx.getBestOffer = function(){
+  function getBestOffer(){
     var bestAsk = getBestOfferElement();
     return bestAsk.innerHTML;
-  };
+  }
 
+  /**********************************/
+  /*        Private functions       */
+  /**********************************/
 
   /**
   *  Gets all orders currently on the page

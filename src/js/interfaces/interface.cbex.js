@@ -1,9 +1,37 @@
 var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-(function(){
+interfaces.cbex = (function(){
 
-  interfaces.cbex = {};
+  var public_api = {
+
+    init: init,
+
+    setLotSize: setLotSize,
+    toggleLotSize: toggleLotSize,
+
+    marketBuy: marketBuy,
+    marketSell: marketSell,
+
+    cancelBids: cancelBids,
+    cancelOffers: cancelOffers,
+    cancelAll: cancelAll,
+    cancelLast: cancelLast,
+
+    displayOffset: displayOffset,
+
+    placeBuyOrder: placeBuyOrder,
+    placeSellOrder: placeSellOrder,
+
+    setBuyPrice: setBuyPrice,
+    setSellPrice: setSellPrice,
+
+    getBestBid: getBestBid,
+    getBestOffer: getBestOffer
+
+  };
+
+  return public_api;
 
   /**
    *              INIT
@@ -16,8 +44,7 @@ var plugin = plugin || {};
    *    - set lot size
    *    - display offset
    */
-  interfaces.cbex.init = function(){
-
+  function init(){
     if (switchToLimitOrder()){
       setTimeout(function(){
         initialize(plugin);
@@ -27,21 +54,20 @@ var plugin = plugin || {};
         interfaces.cbex.init();
       }, 500);
     }
-
-  };
+  }
 
   /*  SET LOT SIZE*/
-  interfaces.cbex.setLotSize = function(v){
+  function setLotSize (v){
     plugin.config.getSettings(function(settings){
       var amount = getLotSizeInputElement();
       v = v || settings.lotsize;
       amount.value = v;
       plugin.config.set({'lotsize': v});
     });
-  };
+  }
 
   /* TOGGLE LOT SIZE */
-  interfaces.cbex.toggleLotSize = function(direction){
+  function toggleLotSize (direction){
     plugin.config.getSettings(function(settings){
       var idx = plugin.config.LOTSIZES.indexOf(settings.lotsize);
 
@@ -59,9 +85,10 @@ var plugin = plugin || {};
       var lotsize = plugin.config.LOTSIZES[idx];
       plugin.setLotSize(lotsize);
     });
-  };
+  }
+
   /*  MARKET BUY  */
-  interfaces.cbex.market_buy = function(){
+  function marketBuy (){
     switchToMarketOrder();
     setTimeout(function(){
       setMarketOrderLotSize();
@@ -70,11 +97,10 @@ var plugin = plugin || {};
     setTimeout(function(){
       switchToLimitOrder();
     }, 200);
-  };
-
+  }
 
   /*  MARKET SELL */
-  interfaces.cbex.market_sell = function(){
+  function marketSell(){
     switchToMarketOrder();
     setTimeout(function(){
       setMarketOrderLotSize();
@@ -83,10 +109,10 @@ var plugin = plugin || {};
     setTimeout(function(){
       switchToLimitOrder();
     }, 200);
-  };
+  }
 
   /* CANCEL ALL BIDS */
-  interfaces.cbex.cancel_bids = function(){
+  function cancelBids(){
     var orders = getOrders();
     orders.forEach(function(order){
       if (order.side === 'buy'){
@@ -95,10 +121,10 @@ var plugin = plugin || {};
         }, 100);
       }
     });
-  };
+  }
 
   /* CANCEL ALL OFFERS */
-  interfaces.cbex.cancel_offers = function(){
+  function cancelOffers (){
     var orders = getOrders();
     orders.forEach(function(order){
       if (order.side === 'sell'){
@@ -107,31 +133,29 @@ var plugin = plugin || {};
         }, 100);
       }
     });
-  };
+  }
 
   /*  CANCEL LAST ORDER */
-  interfaces.cbex.cancel_last = function(){
+  function cancelLast (){
     var orders = getOrders();
     var button = getLastValidCancelButton(orders);
     if (button){
       button.click();
     }
-  };
-
+  }
 
   /*  CANCEL ALL ORDERS */
-  interfaces.cbex.cancel_all = function(){
+  function cancelAll (){
     var cancelButton = getCancelAllButtonElement();
     cancelButton.click();
-  };
-
+  }
 
   /**
    *     DISPLAY THE OFFSET VALUE ON THE PAGE
    *
    *     @param {Number} v - the offset value to display
    */
-  interfaces.cbex.displayOffset = function(v){
+  function displayOffset (v){
     var homeDiv = getOffsetParentElement();
     var target = getOffsetElement();
     if(!target){
@@ -145,12 +169,10 @@ var plugin = plugin || {};
     } else {
       target.innerHTML = 'Offset: ' + v;
     }
-
-  };
-
+  }
 
   /**    PLACE A BUY ORDER   */
-  interfaces.cbex.placeBuyOrder = function(){
+  function placeBuyOrder (){
     if (!DEBUG){
       var switchTarget = getBuyTabButtonElement();
       if (switchTarget) {
@@ -174,11 +196,10 @@ var plugin = plugin || {};
         console.error('Cannot locate buy button');
       }
     }
-  };
-
+  }
 
   /**   PLACE A SELL ORDER    */
-  interfaces.cbex.placeSellOrder = function(){
+  function placeSellOrder (){
     if (!DEBUG){
       // switch to sell window
       var switchTarget = getSellTabButtonElement();
@@ -203,7 +224,7 @@ var plugin = plugin || {};
       }
 
     }
-  };
+  }
 
 
   /**
@@ -211,9 +232,9 @@ var plugin = plugin || {};
    *
    * @param {Number} p - the price to set
    */
-  interfaces.cbex.setBuyPrice = function(p){
+  function setBuyPrice (p){
     getPriceInputElement().value = p;
-  };
+  }
 
 
   /**
@@ -221,26 +242,23 @@ var plugin = plugin || {};
    *
    * @param {Number} p - the price to set
    */
-  interfaces.cbex.setSellPrice = function(p){
+  function setSellPrice (p){
     getPriceInputElement().value = p;
-  };
-
+  }
 
   /**     GET BEST BID    */
-  interfaces.cbex.getBestBid = function(){
+  function getBestBid (){
     var bid = getBestBidElement();
-
     var wholeNum = bid.children[0].innerHTML;
     var decimal1 = bid.children[1].innerHTML;
     var decimal2 = bid.children[2].innerHTML;
 
     var bb = wholeNum + '.' + decimal1 + decimal2;
     return bb;
-  };
-
+  }
 
   /**     GET BEST OFFER       */
-  interfaces.cbex.getBestOffer = function(){
+  function getBestOffer (){
     var offer = getBestOfferElement();
 
     var wholeNum = offer.children[0].innerHTML;
@@ -249,11 +267,11 @@ var plugin = plugin || {};
 
     var bo = wholeNum + '.' + decimal1 + decimal2;
     return bo;
-  };
+  }
 
 
   /**********************************************************/
-  /******************   HELPERS   ***************************/
+  /******************   Private Functions *******************/
   /**********************************************************/
   /**
   *        INITIALIZE
@@ -262,10 +280,10 @@ var plugin = plugin || {};
   */
 
   function initialize(plugin){
-  plugin.config.getSettings(function(settings){
-    plugin.setLotSize(settings.lotsize);
-    plugin.displayOffset(settings.offset);
-  });
+    plugin.config.getSettings(function(settings){
+      setLotSize(settings.lotsize);
+      displayOffset(settings.offset);
+    });
   }
 
 

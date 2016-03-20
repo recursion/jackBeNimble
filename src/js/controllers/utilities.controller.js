@@ -51,20 +51,20 @@ var interfaces = interfaces || {};
   /****************************************
    *            CANCEL
    ***************************************/
-  plugin.cancel_all = function(){
-    plugin.interface.cancel_all();
+  plugin.cancelAll = function(){
+    plugin.interface.cancelAll();
   };
 
-  plugin.cancel_last = function(){
-    plugin.interface.cancel_last();
+  plugin.cancelLast = function(){
+    plugin.interface.cancelLast();
   };
 
-  plugin.cancel_bids = function(){
-    plugin.interface.cancel_bids();
+  plugin.cancelBids = function(){
+    plugin.interface.cancelBids();
   };
 
-  plugin.cancel_offers = function(){
-    plugin.interface.cancel_offers();
+  plugin.cancelOffers = function(){
+    plugin.interface.cancelOffers();
   };
 
 

@@ -1,40 +1,71 @@
 var interfaces = interfaces || {};
 var plugin = plugin || {};
 
-interfaces.EXCHANGE = {
+interfaces.cbex = (function(){
 
+  var public_api = {
+
+    init: init,
+
+    setLotSize: setLotSize,
+    toggleLotSize: toggleLotSize,
+
+    marketBuy: marketBuy,
+    marketSell: marketSell,
+
+    cancelBids: cancelBids,
+    cancelOffers: cancelOffers,
+    cancelAll: cancelAll,
+    cancelLast: cancelLast,
+
+    displayOffset: displayOffset,
+
+    placeBuyOrder: placeBuyOrder,
+    placeSellOrder: placeSellOrder,
+
+    setBuyPrice: setBuyPrice,
+    setSellPrice: setSellPrice,
+
+    getBestBid: getBestBid,
+    getBestOffer: getBestOffer
+
+  };
+
+  return public_api;
 
   /**
    *              INIT
    *
    * set lot size and display offset
    */
-  init: function(){
+  function init(){
     // Any site specific setup goes here
-  },
+  }
 
 
   /*  MARKET BUY  */
-  market_buy: function(){
+  function marketBuy(){
 
-  },
+  }
 
 
   /*  MARKET SELL */
-  market_sell: function(){
+  function marketSell(){
 
 
-  },
+  }
 
 
   /*  CANCEL ALL ORDERS */
-  cancel_all: function(){
-  },
+  function cancelAll(){
+
+  }
 
 
   /* return the lot size input element */
-  getLotSizeInputElement: function(){
-  },
+  function getLotSizeInputElement (){
+
+  }
 
 
   /**
@@ -42,33 +73,35 @@ interfaces.EXCHANGE = {
    *
    * @param {Number} v - the offset value to display
    */
-  displayOffset: function(v){
-  },
+  function displayOffset (v){
+
+  }
 
 
   /**
    * click the buy order button
    */
-  placeBuyOrder: function(){
-  },
+  function placeBuyOrder(){
 
+  }
 
   /**
    * click the sell order button
    */
-  placeSellOrder: function(){
+  function placeSellOrder(){
     if (!DEBUG){
-    }
-  },
 
+    }
+  }
 
   /**
    *        SET THE BUY PRICE
    *
    * @param {Number} p - the price to set
    */
-  setBuyPrice: function(p){
-  },
+  function setBuyPrice(p){
+
+  }
 
 
   /**
@@ -76,22 +109,24 @@ interfaces.EXCHANGE = {
    *
    * @param {Number} p - the price to set
    */
-  setSellPrice: function(p){
-  },
+  function setSellPrice(p){
+
+  }
 
 
   /**
    * @returns {String} bestBid in 123.80 format
    */
-  getBestBid: function(){
-  },
+  function getBestBid(){
+
+  }
 
   /**
    *     GET BEST OFFER
    *
    * @returns {String} bestOffer in 123.80 format
    */
-  getBestOffer: function(){
+  function getBestOffer(){
 
   }
 

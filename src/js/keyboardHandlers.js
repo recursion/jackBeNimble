@@ -73,7 +73,7 @@ plugin.keyboardHandlers = (function(){
 
         // place market buy
         case settings.KEYS.MARKET_BUY:
-          plugin.market_buy();
+          plugin.marketBuy();
           break;
 
 
@@ -108,7 +108,7 @@ plugin.keyboardHandlers = (function(){
 
         // place market sell
         case settings.KEYS.MARKET_SELL:
-          plugin.market_sell();
+          plugin.marketSell();
           break;
 
 
@@ -117,22 +117,22 @@ plugin.keyboardHandlers = (function(){
          ********************************/
         // cancel all bids
         case settings.KEYS.CANCEL_BIDS:
-          plugin.cancel_bids();
+          plugin.cancelBids();
           break;
 
         // cancel all order
         case settings.KEYS.CANCEL_OFFERS:
-          plugin.cancel_offers();
+          plugin.cancelOffers();
           break;
 
         // cancel last order
         case settings.KEYS.CANCEL_LAST:
-          plugin.cancel_last();
+          plugin.cancelLast();
           break;
 
         // cancel all order
         case settings.KEYS.CANCEL_ALL:
-          plugin.cancel_all();
+          plugin.cancelAll();
           break;
 
         default:
