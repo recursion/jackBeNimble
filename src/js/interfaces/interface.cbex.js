@@ -33,7 +33,7 @@ var plugin = plugin || {};
   /*  SET LOT SIZE*/
   interfaces.cbex.setLotSize = function(v){
     plugin.config.getSettings(function(settings){
-      var amount = plugin.interface.getLotSizeInputElement(v);
+      var amount = getLotSizeInputElement();
       v = v || settings.lotsize;
       amount.value = v;
       plugin.config.set({'lotsize': v});
@@ -91,7 +91,7 @@ var plugin = plugin || {};
     orders.forEach(function(order){
       if (order.side === 'buy'){
         setTimeout(function(){
-          plugin.eventFire(order.cancelButton, 'click');
+          order.cancelButton.click();
         }, 100);
       }
     });
@@ -103,7 +103,7 @@ var plugin = plugin || {};
     orders.forEach(function(order){
       if (order.side === 'sell'){
         setTimeout(function(){
-          plugin.eventFire(order.cancelButton, 'click');
+          order.cancelButton.click();
         }, 100);
       }
     });
@@ -112,24 +112,17 @@ var plugin = plugin || {};
   /*  CANCEL LAST ORDER */
   interfaces.cbex.cancel_last = function(){
     var orders = getOrders();
-    //plugin.eventFire(getLastValidCancelButton(), 'click');
     var button = getLastValidCancelButton(orders);
     if (button){
-      plugin.eventFire(button, 'click');
+      button.click();
     }
   };
 
 
   /*  CANCEL ALL ORDERS */
   interfaces.cbex.cancel_all = function(){
-    var cancelButton = document.querySelector('body > div:nth-child(9) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');
-    plugin.eventFire(cancelButton, 'click');
-  };
-
-
-  /* return the lot size input element */
-  interfaces.cbex.getLotSizeInputElement = function(v){
-    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') ;
+    var cancelButton = getCancelAllButtonElement();
+    cancelButton.click();
   };
 
 
@@ -139,8 +132,8 @@ var plugin = plugin || {};
    *     @param {Number} v - the offset value to display
    */
   interfaces.cbex.displayOffset = function(v){
-    var homeDiv = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div');
-    var target = document.getElementById('CBEX_OFFSET_VALUE');
+    var homeDiv = getOffsetParentElement();
+    var target = getOffsetElement();
     if(!target){
       var listItem = document.createElement('li');
       listItem.style.textAlign = 'center';
@@ -159,16 +152,12 @@ var plugin = plugin || {};
   /**    PLACE A BUY ORDER   */
   interfaces.cbex.placeBuyOrder = function(){
     if (!DEBUG){
-      var switchTarget = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy');
+      var switchTarget = getBuyTabButtonElement();
       if (switchTarget) {
-
         switchTarget.click();
         setTimeout(function() {
 
-          var target = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy');
-          // this no longer works for some reason..
-          //plugin.eventFire(target, 'click');
-          // but this is even better
+          var target = getBuyButtonElement();
           if (target) {
             target.click();
           } else  {
@@ -192,11 +181,11 @@ var plugin = plugin || {};
   interfaces.cbex.placeSellOrder = function(){
     if (!DEBUG){
       // switch to sell window
-      var switchTarget = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell');
+      var switchTarget = getSellTabButtonElement();
       if (switchTarget) {
         switchTarget.click();
         setTimeout(function() {
-          var target = document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell');
+          var target = getSellButtonElement();
           if (target) {
             target.click();
           } else  {
@@ -210,7 +199,7 @@ var plugin = plugin || {};
         }, 10);
 
       } else {
-        console.error('No sell button found');
+        console.error('No sell tab button found');
       }
 
     }
@@ -223,7 +212,7 @@ var plugin = plugin || {};
    * @param {Number} p - the price to set
    */
   interfaces.cbex.setBuyPrice = function(p){
-    document.getElementById('inputusd').value = p;
+    getPriceInputElement().value = p;
   };
 
 
@@ -233,13 +222,13 @@ var plugin = plugin || {};
    * @param {Number} p - the price to set
    */
   interfaces.cbex.setSellPrice = function(p){
-    document.getElementById('inputusd').value = p;
+    getPriceInputElement().value = p;
   };
 
 
   /**     GET BEST BID    */
   interfaces.cbex.getBestBid = function(){
-    var bid = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable');
+    var bid = getBestBidElement();
 
     var wholeNum = bid.children[0].innerHTML;
     var decimal1 = bid.children[1].innerHTML;
@@ -252,7 +241,7 @@ var plugin = plugin || {};
 
   /**     GET BEST OFFER       */
   interfaces.cbex.getBestOffer = function(){
-    var offer = document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
+    var offer = getBestOfferElement();
 
     var wholeNum = offer.children[0].innerHTML;
     var decimal1 = offer.children[1].innerHTML;
@@ -261,9 +250,6 @@ var plugin = plugin || {};
     var bo = wholeNum + '.' + decimal1 + decimal2;
     return bo;
   };
-
-
-
 
 
   /**********************************************************/
@@ -287,9 +273,9 @@ var plugin = plugin || {};
   * switches the site page to the market order screen.
   */
   function switchToMarketOrder(){
-    var marketButtonElement = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)');
+    var marketButtonElement = getMarketButtonElement();
     if (marketButtonElement){
-      plugin.eventFire(marketButtonElement, 'click');
+      marketButtonElement.click();
       return true;
     } else {
       return false;
@@ -300,9 +286,9 @@ var plugin = plugin || {};
   * switches the site page to the limit order screen.
   */
   function switchToLimitOrder(){
-    var limitButtonElement = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+    var limitButtonElement = getLimitButtonElement();
     if (limitButtonElement){
-      plugin.eventFire(limitButtonElement, 'click');
+      limitButtonElement.click();
       return true;
     } else {
       return false;
@@ -311,7 +297,7 @@ var plugin = plugin || {};
 
   /* set the lot size on the market order screen */
   function setMarketOrderLotSize(){
-    var lotSize = document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
+    var lotSize = getLotSizeElement();
     plugin.config.getSettings(function(settings){
       lotSize.value = settings.lotsize;
     });
@@ -323,7 +309,7 @@ var plugin = plugin || {};
   * @return {Array} - an array of order objects
   */
   function getOrders(){
-    var orders = document.querySelector('#orders-list > ul').children;
+    var orders = getOrderElements();
     return filterOrders(orders);
   }
 
@@ -400,25 +386,70 @@ var plugin = plugin || {};
         index++;
       }
     }
-    /*
-     * This is the reverse order we need to use
-    var index = orders.length - 1;
-    var button;
-    var classes;
 
-    while (index >= 0){
-
-      button = orders[index].cancelButton;
-      classes = button.className.split(' ');
-
-      if (classes.indexOf('visible') != -1){
-        return button;
-      } else {
-        index--;
-      }
-
-    }
-    */
     return null;
+  }
+
+
+  /*     ELEMENT ACCESSORS  */
+  /* return the lot size input element */
+  function getLotSizeInputElement(){
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') ;
+  };
+
+  function getOrderElements() {
+    return document.querySelector('#orders-list > ul').children;
+  }
+
+  function getLotSizeElement() {
+    return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input');
+  }
+
+  function getLimitButtonElement() {
+    return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)');
+  }
+
+  function getMarketButtonElement() {
+    return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
+  }
+
+  function getBestOfferElement() {
+    return document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable');
+  }
+
+  function getBestBidElement() {
+    return document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable');
+  }
+
+  function getPriceInputElement() {
+    return document.getElementById('inputusd');
+  }
+
+  function getSellTabButtonElement() {
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell');
+  }
+
+  function getSellButtonElement() {
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell');
+  }
+
+  function getBuyTabButtonElement() {
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy');
+  }
+
+  function getBuyButtonElement() {
+    return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy');
+  }
+
+  function getOffsetParentElement() {
+    return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div');
+  }
+
+  function getOffsetElement() {
+    return document.getElementById('CBEX_OFFSET_VALUE');
+  }
+
+  function getCancelAllButtonElement() {
+    return document.querySelector('body > div:nth-child(9) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a') || document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a');;
   }
 })();
