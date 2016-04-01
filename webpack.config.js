@@ -15,9 +15,6 @@ module.exports = {
     reasons: true,
     chunks: false
   },
-  node: {
-    fs: 'empty'
-  },
   module: {
     loaders: [
       {

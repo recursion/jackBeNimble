@@ -18,14 +18,12 @@
 
       "matches": [
         // Coinbase URLs
-        "https://exchange.coinbase.com/trade/BTC-USD",
+        "https://exchange.coinbase.com/*",
 
         // Bitfinex URLs
-        "https://www.bitfinex.com/trading/*",
-        "https://www.bitfinex.com/exchange/*"
+        "https://www.bitfinex.com/*"
       ],
 
-      "css": [],
 
       "js": [
         "dist/jackBeNimble.js"
