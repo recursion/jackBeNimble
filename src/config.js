@@ -5,7 +5,7 @@
 
 // set to true to turn off live orders
 // and get a console.log message instead of an order
-const DEBUG = true
+const DEBUG = false
 
 // LOT SIZE VALUES
 const LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10]

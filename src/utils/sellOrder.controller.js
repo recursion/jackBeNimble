@@ -40,23 +40,20 @@ module.exports = (domInterface) => {
     // get bid price
     // place limit sell order at bid
     var price = domInterface.getBestBid()
-    domInterface.setSellPrice(price)
-    domInterface.placeSellOrder()
+    domInterface.placeSellOrder(price)
   }
 
   /* Offer just below best offer */
   function offerBetter () {
     var bestOffer = domInterface.getBestOffer()
     var newOffer = +bestOffer - 0.01
-    domInterface.setSellPrice(newOffer.toFixed(2))
-    domInterface.placeSellOrder()
+    domInterface.placeSellOrder(newOffer.toFixed(2))
   }
 
   /* Offer with the best current offer */
   function offerWithBest () {
     var bestOffer = domInterface.getBestOffer()
-    domInterface.setSellPrice(bestOffer)
-    domInterface.placeSellOrder()
+    domInterface.placeSellOrder(bestOffer)
   }
 
   /* Offer 1 offset level above the best offer */
@@ -64,8 +61,7 @@ module.exports = (domInterface) => {
     var bestOffer = domInterface.getBestOffer()
     config.getSettings((settings) => {
       var newOffer = +bestOffer + settings.offset
-      domInterface.setSellPrice(newOffer.toFixed(2))
-      domInterface.placeSellOrder()
+      domInterface.placeSellOrder(newOffer.toFixed(2))
     })
   }
 
@@ -74,8 +70,7 @@ module.exports = (domInterface) => {
     var bestOffer = domInterface.getBestOffer()
     config.getSettings((settings) => {
       var newOffer = +bestOffer + (settings.offset * 2)
-      domInterface.setSellPrice(newOffer.toFixed(2))
-      domInterface.placeSellOrder()
+      domInterface.placeSellOrder(newOffer.toFixed(2))
     })
   }
 }

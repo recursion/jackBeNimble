@@ -261,7 +261,7 @@
 
 	// set to true to turn off live orders
 	// and get a console.log message instead of an order
-	var DEBUG = true;
+	var DEBUG = false;
 
 	// LOT SIZE VALUES
 	var LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
@@ -1339,23 +1339,20 @@
 	    // get bid price
 	    // place limit sell order at bid
 	    var price = domInterface.getBestBid();
-	    domInterface.setSellPrice(price);
-	    domInterface.placeSellOrder();
+	    domInterface.placeSellOrder(price);
 	  }
 
 	  /* Offer just below best offer */
 	  function offerBetter() {
 	    var bestOffer = domInterface.getBestOffer();
 	    var newOffer = +bestOffer - 0.01;
-	    domInterface.setSellPrice(newOffer.toFixed(2));
-	    domInterface.placeSellOrder();
+	    domInterface.placeSellOrder(newOffer.toFixed(2));
 	  }
 
 	  /* Offer with the best current offer */
 	  function offerWithBest() {
 	    var bestOffer = domInterface.getBestOffer();
-	    domInterface.setSellPrice(bestOffer);
-	    domInterface.placeSellOrder();
+	    domInterface.placeSellOrder(bestOffer);
 	  }
 
 	  /* Offer 1 offset level above the best offer */
@@ -1363,8 +1360,7 @@
 	    var bestOffer = domInterface.getBestOffer();
 	    config.getSettings(function (settings) {
 	      var newOffer = +bestOffer + settings.offset;
-	      domInterface.setSellPrice(newOffer.toFixed(2));
-	      domInterface.placeSellOrder();
+	      domInterface.placeSellOrder(newOffer.toFixed(2));
 	    });
 	  }
 
@@ -1373,8 +1369,7 @@
 	    var bestOffer = domInterface.getBestOffer();
 	    config.getSettings(function (settings) {
 	      var newOffer = +bestOffer + settings.offset * 2;
-	      domInterface.setSellPrice(newOffer.toFixed(2));
-	      domInterface.placeSellOrder();
+	      domInterface.placeSellOrder(newOffer.toFixed(2));
 	    });
 	  }
 	};
