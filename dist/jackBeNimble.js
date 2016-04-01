@@ -46,20 +46,11 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
-	var keyboardHandlers = __webpack_require__(2);
+	var keyboardHandlers = __webpack_require__(1);
 
 	var interfaces = __webpack_require__(3);
 
 	var domInterface = null;
-
-	/** ****************************************
-	 * - setup keyboard event listeners
-	 ****************************************/
-	/*
-	    HOTKEY SETUP HERE
-
-	*/
 
 	/** ****************************************
 	 *      SET PLUGIN LOCATION STRATEGY
@@ -71,7 +62,7 @@
 	 * with the webpage DOM.
 	 */
 
-	// iterate through our interfaces
+	// iterate through our interfaces list
 	for (var DInterface in interfaces) {
 	  if (interfaces.hasOwnProperty(DInterface)) {
 	    // if the current window locations contains the string of the interface objects name property
@@ -84,28 +75,181 @@
 
 	// make sure we got an interface
 	if (!domInterface) {
-	  var msg = 'Unable to set domInterface';
-	  console.error(msg);
-	  throw new Error(msg);
+	  throw new Error('Unable to set domInterface');
 	}
+
+	// load up the plugins methods
+	var utils = __webpack_require__(6)(domInterface);
+	var kbc = keyboardHandlers(utils);
 
 	/**
 	* Initialize the interface
 	* - sets default lotsize
 	* - add the default offset value to the display
 	*/
-
-	var utils = __webpack_require__(6)(domInterface);
-	var kbc = keyboardHandlers(utils);
-	console.log(utils, domInterface);
 	domInterface.init();
 
+	/** ****************************************
+	 * - setup keyboard event listeners
+	 ****************************************/
 	window.addEventListener('keydown', kbc.onKeydown, false);
 	window.addEventListener('keypress', kbc.onKeypress, false);
 	window.addEventListener('keyup', kbc.onKeyup, false);
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var config = __webpack_require__(2);
+
+	module.exports = function (actionsObject) {
+
+	  var public_api = {
+	    onKeydown: onKeydown,
+	    onKeypress: onKeypress,
+	    onKeyup: onKeyup
+	  };
+
+	  return public_api;
+
+	  /* **************************************
+	   *            KEYBOARD HANDLERS
+	   * @TODO convert to an engine that can handle more than one key
+	   ****************************************/
+	  function onKeydown(e) {
+	    config.getSettings(function (settings) {
+	      switch (e.keyCode) {
+	        /**************************************
+	         *            TOGGLE KEYS
+	         *************************************/
+
+	        // LOTSIZE UP
+	        case settings.KEYS.TOGGLE_LOTSIZE_UP:
+	          actionsObject.toggleLotSize('up');
+	          break;
+
+	        // LOTSIZE DOWN
+	        case settings.KEYS.TOGGLE_LOTSIZE_DOWN:
+	          actionsObject.toggleLotSize('down');
+	          break;
+
+	        // OFFSET UP
+	        case settings.KEYS.TOGGLE_OFFSET_UP:
+	          actionsObject.toggleOffset('up');
+	          break;
+
+	        // OFFSET DOWN
+	        case settings.KEYS.TOGGLE_OFFSET_DOWN:
+	          actionsObject.toggleOffset('down');
+	          break;
+
+	        /********************************
+	         *          BUY ORDER KEYS
+	         ********************************/
+	        // place best limit bid order on the market
+	        case settings.KEYS.BID_BETTER:
+	          actionsObject.bidBetter();
+	          break;
+
+	        // place bid at current best bid
+	        case settings.KEYS.BID_WITH_BEST_BID:
+	          actionsObject.bidWithBest();
+	          break;
+
+	        // Place bid at (INCR) below the current best bid
+	        case settings.KEYS.BID_BELOW_BEST:
+	          actionsObject.bidBelowBest();
+	          break;
+
+	        // Place bid at (INCR) below the current best bid
+	        case settings.KEYS.BID_DOUBLE_BELOW_BEST:
+	          actionsObject.bidDoubleBelowBest();
+	          break;
+
+	        // place limit order at the current ask price
+	        case settings.KEYS.HIT_THE_OFFER:
+	          actionsObject.hitTheOffer();
+	          break;
+
+	        // place market buy
+	        case settings.KEYS.MARKET_BUY:
+	          actionsObject.marketBuy();
+	          break;
+
+	        /********************************
+	         *           SELL ORDER KEYS
+	         ********************************/
+	        // place the best limit sell on the market
+	        case settings.KEYS.OFFER_BETTER:
+	          actionsObject.offerBetter();
+	          break;
+
+	        // place offer at current best ask
+	        case settings.KEYS.OFFER_WITH_BEST_ASK:
+	          actionsObject.offerWithBest();
+	          break;
+
+	        // place offer at current best ask
+	        case settings.KEYS.OFFER_ABOVE_BEST:
+	          actionsObject.offerAboveBest();
+	          break;
+
+	        // place offer at current best ask
+	        case settings.KEYS.OFFER_DOUBLE_ABOVE_BEST:
+	          actionsObject.offerDoubleAboveBest();
+	          break;
+
+	        // place limit order at the current bid price
+	        case settings.KEYS.HIT_THE_BID:
+	          actionsObject.hitTheBid();
+	          break;
+
+	        // place market sell
+	        case settings.KEYS.MARKET_SELL:
+	          actionsObject.marketSell();
+	          break;
+
+	        /********************************
+	         *      CANCEL ORDER KEYS
+	         ********************************/
+	        // cancel all bids
+	        case settings.KEYS.CANCEL_BIDS:
+	          actionsObject.cancelBids();
+	          break;
+
+	        // cancel all order
+	        case settings.KEYS.CANCEL_OFFERS:
+	          actionsObject.cancelOffers();
+	          break;
+
+	        // cancel last order
+	        case settings.KEYS.CANCEL_LAST:
+	          actionsObject.cancelLast();
+	          break;
+
+	        // cancel all order
+	        case settings.KEYS.CANCEL_ALL:
+	          actionsObject.cancelAll();
+	          break;
+
+	        default:
+	          console.log('Key: ', e.keyCode);
+	          break;
+	      }
+	    });
+	  }
+
+	  function onKeypress(e) {
+	    //console.log('Keyup', e);
+	  }
+
+	  function onKeyup(e) {}
+	};
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -253,158 +397,6 @@
 	}
 
 /***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var config = __webpack_require__(1);
-
-	module.exports = function (actionsObject) {
-
-	  var public_api = {
-	    onKeydown: onKeydown,
-	    onKeypress: onKeypress,
-	    onKeyup: onKeyup
-	  };
-
-	  return public_api;
-
-	  /* **************************************
-	   *            KEYBOARD HANDLERS
-	   * @TODO convert to an engine that can handle more than one key
-	   ****************************************/
-	  function onKeydown(e) {
-	    config.getSettings(function (settings) {
-	      switch (e.keyCode) {
-	        /**************************************
-	         *            TOGGLE KEYS
-	         *************************************/
-
-	        // LOTSIZE UP
-	        case settings.KEYS.TOGGLE_LOTSIZE_UP:
-	          actionsObject.toggleLotSize('up');
-	          break;
-
-	        // LOTSIZE DOWN
-	        case settings.KEYS.TOGGLE_LOTSIZE_DOWN:
-	          actionsObject.toggleLotSize('down');
-	          break;
-
-	        // OFFSET UP
-	        case settings.KEYS.TOGGLE_OFFSET_UP:
-	          actionsObject.toggleOffset('up');
-	          break;
-
-	        // OFFSET DOWN
-	        case settings.KEYS.TOGGLE_OFFSET_DOWN:
-	          actionsObject.toggleOffset('down');
-	          break;
-
-	        /********************************
-	         *          BUY ORDER KEYS
-	         ********************************/
-	        // place best limit bid order on the market
-	        case settings.KEYS.BID_BETTER:
-	          actionsObject.bidBetter();
-	          break;
-
-	        // place bid at current best bid
-	        case settings.KEYS.BID_WITH_BEST_BID:
-	          actionsObject.bidWithBest();
-	          break;
-
-	        // Place bid at (INCR) below the current best bid
-	        case settings.KEYS.BID_BELOW_BEST:
-	          actionsObject.bidBelowBest();
-	          break;
-
-	        // Place bid at (INCR) below the current best bid
-	        case settings.KEYS.BID_DOUBLE_BELOW_BEST:
-	          actionsObject.bidDoubleBelowBest();
-	          break;
-
-	        // place limit order at the current ask price
-	        case settings.KEYS.HIT_THE_OFFER:
-	          actionsObject.hitTheOffer();
-	          break;
-
-	        // place market buy
-	        case settings.KEYS.MARKET_BUY:
-	          actionsObject.marketBuy();
-	          break;
-
-	        /********************************
-	         *           SELL ORDER KEYS
-	         ********************************/
-	        // place the best limit sell on the market
-	        case settings.KEYS.OFFER_BETTER:
-	          actionsObject.offerBetter();
-	          break;
-
-	        // place offer at current best ask
-	        case settings.KEYS.OFFER_WITH_BEST_ASK:
-	          actionsObject.offerWithBest();
-	          break;
-
-	        // place offer at current best ask
-	        case settings.KEYS.OFFER_ABOVE_BEST:
-	          actionsObject.offerAboveBest();
-	          break;
-
-	        // place offer at current best ask
-	        case settings.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-	          actionsObject.offerDoubleAboveBest();
-	          break;
-
-	        // place limit order at the current bid price
-	        case settings.KEYS.HIT_THE_BID:
-	          actionsObject.hitTheBid();
-	          break;
-
-	        // place market sell
-	        case settings.KEYS.MARKET_SELL:
-	          actionsObject.marketSell();
-	          break;
-
-	        /********************************
-	         *      CANCEL ORDER KEYS
-	         ********************************/
-	        // cancel all bids
-	        case settings.KEYS.CANCEL_BIDS:
-	          actionsObject.cancelBids();
-	          break;
-
-	        // cancel all order
-	        case settings.KEYS.CANCEL_OFFERS:
-	          actionsObject.cancelOffers();
-	          break;
-
-	        // cancel last order
-	        case settings.KEYS.CANCEL_LAST:
-	          actionsObject.cancelLast();
-	          break;
-
-	        // cancel all order
-	        case settings.KEYS.CANCEL_ALL:
-	          actionsObject.cancelAll();
-	          break;
-
-	        default:
-	          console.log('Key: ', e.keyCode);
-	          break;
-	      }
-	    });
-	  }
-
-	  function onKeypress(e) {
-	    //console.log('Keyup', e);
-	  }
-
-	  function onKeyup(e) {}
-	};
-
-/***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -430,7 +422,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
+	var config = __webpack_require__(2);
 	module.exports = function () {
 	  var public_api = {
 
@@ -439,6 +431,7 @@
 	    init: init,
 
 	    getLotSizeInputElement: getLotSizeInputElement,
+	    displayLotsize: displayLotsize,
 
 	    marketBuy: marketBuy,
 	    marketSell: marketSell,
@@ -469,7 +462,7 @@
 	 */
 	function init() {
 	  config.getSettings(function (settings) {
-	    config.setLotSize(settings.lotsize);
+	    displayLotsize(settings.lotsize);
 	    displayOffset(settings.offset);
 	  });
 	}
@@ -522,6 +515,8 @@
 	// this uses xhr because the sites 'cancel all button' causes
 	// a popup which is not desirable here
 	function cancelAll() {
+	  /* global XMLHttpRequest */
+	  // TODO: change this to fetch
 	  var xhr = new XMLHttpRequest();
 	  xhr.open('GET', encodeURI('/orders/cancel_all'));
 	  xhr.send();
@@ -545,17 +540,27 @@
 	  }
 	}
 
+	function displayLotsize(v) {
+	  getLotSizeInputElement().value = v;
+	}
+
 	/**    PLACE A BUY ORDER   */
-	function placeBuyOrder() {
+	function placeBuyOrder(p) {
+	  setBuyPrice(p);
 	  if (!config.DEBUG) {
 	    getBuyButtonElement().click();
+	  } else {
+	    console.log('Simulating buy @ ', p);
 	  }
 	}
 
 	/**    PLACE A SELL ORDER   */
-	function placeSellOrder() {
+	function placeSellOrder(p) {
+	  setSellPrice(p);
 	  if (!config.DEBUG) {
 	    getSellButtonElement().click();
+	  } else {
+	    console.log('Simulating sell @ ', p);
 	  }
 	}
 
@@ -739,7 +744,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
+	var config = __webpack_require__(2);
 
 	module.exports = function () {
 	  var public_api = {
@@ -749,7 +754,7 @@
 	    init: init,
 
 	    getLotSizeInputElement: getLotSizeInputElement,
-	    setLotSize: setLotSize,
+	    displayLotsize: displayLotsize,
 
 	    marketBuy: marketBuy,
 	    marketSell: marketSell,
@@ -794,19 +799,6 @@
 	      init();
 	    }, 500);
 	  }
-	}
-
-	/**
-	 *  SET LOT SIZE
-	 *  @param {Number} v - the lotsize value
-	 */
-	function setLotSize(v) {
-	  config.getSettings(function (settings) {
-	    var amount = getLotSizeInputElement();
-	    v = v || settings.lotsize;
-	    amount.value = v;
-	    config.set({ 'lotsize': v });
-	  });
 	}
 
 	/*  MARKET BUY  */
@@ -904,14 +896,11 @@
 	      if (target) {
 	        setBuyPrice(p);
 	        setTimeout(function () {
-	          config.getSettings(function (settings) {
-	            setLotSize(settings.lotsize);
-	            if (!config.DEBUG) {
-	              target.click();
-	            } else {
-	              console.log('DEBUG -> SIMULATING CLICK ON: ', target);
-	            }
-	          });
+	          if (!config.DEBUG) {
+	            target.click();
+	          } else {
+	            console.log('DEBUG -> SIMULATING CLICK ON: ', target);
+	          }
 	        }, 100);
 	      } else {
 	        console.error('Unable to locate buy button');
@@ -933,14 +922,11 @@
 	      if (target) {
 	        setSellPrice(p);
 	        setTimeout(function () {
-	          config.getSettings(function (settings) {
-	            setLotSize(settings.lotsize);
-	            if (!config.DEBUG) {
-	              target.click();
-	            } else {
-	              console.log('DEBUG -> SIMULATING CLICK ON: ', target);
-	            }
-	          });
+	          if (!config.DEBUG) {
+	            target.click();
+	          } else {
+	            console.log('DEBUG -> SIMULATING CLICK ON: ', target);
+	          }
 	        }, 250);
 	      } else {
 	        console.error('Unable to locate sell button');
@@ -1006,9 +992,13 @@
 	*/
 	function initialize(plugin) {
 	  config.getSettings(function (settings) {
-	    setLotSize(settings.lotsize);
+	    displayLotsize(settings.lotsize);
 	    displayOffset(settings.offset);
 	  });
+	}
+
+	function displayLotsize(value) {
+	  getLotSizeInputElement().value = value;
 	}
 
 	/**
@@ -1230,7 +1220,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
+	var config = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1307,7 +1297,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
+	var config = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1395,7 +1385,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(1);
+	var config = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1461,6 +1451,7 @@
 	      v = v || settings.lotsize;
 	      amount.value = v;
 	      config.set({ 'lotsize': v });
+	      domInterface.displayLotsize(v);
 	    });
 	  }
 
@@ -1484,7 +1475,7 @@
 	        console.error('Unknown lot size direction: ', direction);
 	      }
 	      var lotsize = config.LOTSIZES[idx];
-	      domInterface.setLotSize(lotsize);
+	      setLotSize(lotsize);
 	    });
 	  }
 

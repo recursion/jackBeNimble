@@ -64,6 +64,7 @@ module.exports = function (domInterface) {
       v = v || settings.lotsize
       amount.value = v
       config.set({'lotsize': v})
+      domInterface.displayLotsize(v)
     })
   }
 
@@ -87,7 +88,7 @@ module.exports = function (domInterface) {
         console.error('Unknown lot size direction: ', direction)
       }
       var lotsize = config.LOTSIZES[idx]
-      domInterface.setLotSize(lotsize)
+      setLotSize(lotsize)
     })
   }
 

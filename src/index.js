@@ -1,17 +1,8 @@
-const config = require('./config')
 const keyboardHandlers = require('./keyboardHandlers')
 
 const interfaces = require('./interfaces')
 
 let domInterface = null
-
-/** ****************************************
- * - setup keyboard event listeners
- ****************************************/
-/*
-    HOTKEY SETUP HERE
-
-*/
 
 /** ****************************************
  *      SET PLUGIN LOCATION STRATEGY
@@ -23,7 +14,7 @@ let domInterface = null
  * with the webpage DOM.
  */
 
-// iterate through our interfaces
+// iterate through our interfaces list
 for (let DInterface in interfaces) {
   if (interfaces.hasOwnProperty(DInterface)) {
     // if the current window locations contains the string of the interface objects name property
@@ -36,22 +27,23 @@ for (let DInterface in interfaces) {
 
 // make sure we got an interface
 if (!domInterface) {
-  const msg = 'Unable to set domInterface'
-  console.error(msg)
-  throw new Error(msg)
+  throw new Error('Unable to set domInterface')
 }
+
+// load up the plugins methods
+const utils = require('./utils')(domInterface)
+const kbc = keyboardHandlers(utils)
 
  /**
  * Initialize the interface
  * - sets default lotsize
  * - add the default offset value to the display
  */
-
-const utils = require('./utils')(domInterface)
-const kbc = keyboardHandlers(utils)
-console.log(utils, domInterface)
 domInterface.init()
 
-window.addEventListener('keydown', kbc.onKeydown, false);
-window.addEventListener('keypress', kbc.onKeypress, false);
-window.addEventListener('keyup', kbc.onKeyup, false);
+/** ****************************************
+ * - setup keyboard event listeners
+ ****************************************/
+window.addEventListener('keydown', kbc.onKeydown, false)
+window.addEventListener('keypress', kbc.onKeypress, false)
+window.addEventListener('keyup', kbc.onKeyup, false)

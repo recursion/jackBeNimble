@@ -8,7 +8,7 @@ module.exports = () => {
     init: init,
 
     getLotSizeInputElement: getLotSizeInputElement,
-    setLotSize,
+    displayLotsize,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -53,19 +53,6 @@ function init () {
       init()
     }, 500)
   }
-}
-
-/**
- *  SET LOT SIZE
- *  @param {Number} v - the lotsize value
- */
-function setLotSize (v) {
-  config.getSettings((settings) => {
-    const amount = getLotSizeInputElement()
-    v = v || settings.lotsize
-    amount.value = v
-    config.set({'lotsize': v})
-  })
 }
 
 /*  MARKET BUY  */
@@ -163,14 +150,11 @@ function placeBuyOrder (p) {
       if (target) {
         setBuyPrice(p)
         setTimeout(() => {
-          config.getSettings((settings) => {
-            setLotSize(settings.lotsize)
-            if (!config.DEBUG) {
-              target.click()
-            } else {
-              console.log('DEBUG -> SIMULATING CLICK ON: ', target)
-            }
-          })
+          if (!config.DEBUG) {
+            target.click()
+          } else {
+            console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+          }
         }, 100)
       } else {
         console.error('Unable to locate buy button')
@@ -192,14 +176,11 @@ function placeSellOrder (p) {
       if (target) {
         setSellPrice(p)
         setTimeout(() => {
-          config.getSettings((settings) => {
-            setLotSize(settings.lotsize)
-            if (!config.DEBUG) {
-              target.click()
-            } else {
-              console.log('DEBUG -> SIMULATING CLICK ON: ', target)
-            }
-          })
+          if (!config.DEBUG) {
+            target.click()
+          } else {
+            console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+          }
         }, 250)
       } else {
         console.error('Unable to locate sell button')
@@ -265,9 +246,13 @@ function getBestOffer () {
 */
 function initialize (plugin) {
   config.getSettings((settings) => {
-    setLotSize(settings.lotsize)
+    displayLotsize(settings.lotsize)
     displayOffset(settings.offset)
   })
+}
+
+function displayLotsize (value) {
+  getLotSizeInputElement().value = value
 }
 
 /**

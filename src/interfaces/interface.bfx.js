@@ -7,6 +7,7 @@ module.exports = () => {
     init: init,
 
     getLotSizeInputElement: getLotSizeInputElement,
+    displayLotsize,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -37,7 +38,7 @@ module.exports = () => {
  */
 function init () {
   config.getSettings((settings) => {
-    config.setLotSize(settings.lotsize)
+    displayLotsize(settings.lotsize)
     displayOffset(settings.offset)
   })
 }
@@ -90,6 +91,8 @@ function cancelLast () {
 // this uses xhr because the sites 'cancel all button' causes
 // a popup which is not desirable here
 function cancelAll () {
+  /* global XMLHttpRequest */
+  // TODO: change this to fetch
   var xhr = new XMLHttpRequest()
   xhr.open('GET', encodeURI('/orders/cancel_all'))
   xhr.send()
@@ -113,17 +116,27 @@ function displayOffset (v) {
   }
 }
 
+function displayLotsize (v) {
+  getLotSizeInputElement().value = v
+}
+
 /**    PLACE A BUY ORDER   */
-function placeBuyOrder () {
+function placeBuyOrder (p) {
+  setBuyPrice(p)
   if (!config.DEBUG) {
     getBuyButtonElement().click()
+  } else {
+    console.log('Simulating buy @ ', p)
   }
 }
 
 /**    PLACE A SELL ORDER   */
-function placeSellOrder () {
+function placeSellOrder (p) {
+  setSellPrice(p)
   if (!config.DEBUG) {
     getSellButtonElement().click()
+  } else {
+    console.log('Simulating sell @ ', p)
   }
 }
 

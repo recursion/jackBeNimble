@@ -21,16 +21,8 @@
         "https://exchange.coinbase.com/trade/BTC-USD",
 
         // Bitfinex URLs
-        "https://www.bitfinex.com/trading/index/btcusd",
-        "https://www.bitfinex.com/exchange/index/btcusd",
-        "https://www.bitfinex.com/trading/index/ltcusd",
-        "https://www.bitfinex.com/exchange/index/ltcusd",
-        "https://www.bitfinex.com/trading/index/ethusd",
-        "https://www.bitfinex.com/exchange/index/ethusd",
-        "https://www.bitfinex.com/trading/index/ethbtc",
-        "https://www.bitfinex.com/exchange/index/ethbtc",
-        "https://www.bitfinex.com/trading/index/ltcbtc",
-        "https://www.bitfinex.com/exchange/index/ltcbtc"
+        "https://www.bitfinex.com/trading/*",
+        "https://www.bitfinex.com/exchange/*"
       ],
 
       "css": [],
