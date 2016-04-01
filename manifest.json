@@ -3,9 +3,9 @@
 
   "name": "jackBeNimble",
   "description": "Adds order entry hotkeys for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "browser_action": {
-    "default_popup": "src/html/config.html",
+    "default_popup": "dist/html/config.html",
     "default_title": "jackBeNimble"
   },
 
@@ -33,17 +33,10 @@
         "https://www.bitfinex.com/exchange/index/ltcbtc"
       ],
 
-      "css": ["src/css/main.css"],
+      "css": [],
 
       "js": [
-        "src/js/config.js",
-        "src/js/interfaces/interface.bfx.js",
-        "src/js/interfaces/interface.cbex.js",
-        "src/js/controllers/utilities.controller.js",
-        "src/js/controllers/sell.order.controller.js",
-        "src/js/controllers/buy.order.controller.js",
-        "src/js/keyboardHandlers.js",
-        "src/js/jackBeNimble.js"
+        "dist/jackBeNimble.js"
       ],
 
       "run_at": "document_idle"
