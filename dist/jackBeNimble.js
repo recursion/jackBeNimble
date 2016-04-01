@@ -59,9 +59,6 @@
 	/*
 	    HOTKEY SETUP HERE
 
-	window.addEventListener('keydown', plugin.keyboardHandlers.onKeydown, false);
-	window.addEventListener('keypress', plugin.keyboardHandlers.onKeypress, false);
-	window.addEventListener('keyup', plugin.keyboardHandlers.onKeyup, false);
 	*/
 
 	/** ****************************************
@@ -99,8 +96,13 @@
 	*/
 
 	var utils = __webpack_require__(6)(domInterface);
+	var kbc = keyboardHandlers(utils);
 	console.log(utils, domInterface);
 	domInterface.init();
+
+	window.addEventListener('keydown', kbc.onKeydown, false);
+	window.addEventListener('keypress', kbc.onKeypress, false);
+	window.addEventListener('keyup', kbc.onKeyup, false);
 
 /***/ },
 /* 1 */
@@ -115,7 +117,7 @@
 
 	// set to true to turn off live orders
 	// and get a console.log message instead of an order
-	var DEBUG = false;
+	var DEBUG = true;
 
 	// LOT SIZE VALUES
 	var LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
@@ -252,13 +254,13 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var plugin = plugin || {};
+	var config = __webpack_require__(1);
 
-	plugin.keyboardHandlers = function () {
+	module.exports = function (actionsObject) {
 
 	  var public_api = {
 	    onKeydown: onKeydown,
@@ -268,12 +270,12 @@
 
 	  return public_api;
 
-	  /*****************************************
+	  /* **************************************
 	   *            KEYBOARD HANDLERS
 	   * @TODO convert to an engine that can handle more than one key
 	   ****************************************/
 	  function onKeydown(e) {
-	    plugin.config.getSettings(function (settings) {
+	    config.getSettings(function (settings) {
 	      switch (e.keyCode) {
 	        /**************************************
 	         *            TOGGLE KEYS
@@ -281,22 +283,22 @@
 
 	        // LOTSIZE UP
 	        case settings.KEYS.TOGGLE_LOTSIZE_UP:
-	          plugin.toggleLotSize('up');
+	          actionsObject.toggleLotSize('up');
 	          break;
 
 	        // LOTSIZE DOWN
 	        case settings.KEYS.TOGGLE_LOTSIZE_DOWN:
-	          plugin.toggleLotSize('down');
+	          actionsObject.toggleLotSize('down');
 	          break;
 
 	        // OFFSET UP
 	        case settings.KEYS.TOGGLE_OFFSET_UP:
-	          plugin.toggleOffset('up');
+	          actionsObject.toggleOffset('up');
 	          break;
 
 	        // OFFSET DOWN
 	        case settings.KEYS.TOGGLE_OFFSET_DOWN:
-	          plugin.toggleOffset('down');
+	          actionsObject.toggleOffset('down');
 	          break;
 
 	        /********************************
@@ -304,32 +306,32 @@
 	         ********************************/
 	        // place best limit bid order on the market
 	        case settings.KEYS.BID_BETTER:
-	          plugin.bidBetter();
+	          actionsObject.bidBetter();
 	          break;
 
 	        // place bid at current best bid
 	        case settings.KEYS.BID_WITH_BEST_BID:
-	          plugin.bidWithBest();
+	          actionsObject.bidWithBest();
 	          break;
 
 	        // Place bid at (INCR) below the current best bid
 	        case settings.KEYS.BID_BELOW_BEST:
-	          plugin.bidBelowBest();
+	          actionsObject.bidBelowBest();
 	          break;
 
 	        // Place bid at (INCR) below the current best bid
 	        case settings.KEYS.BID_DOUBLE_BELOW_BEST:
-	          plugin.bidDoubleBelowBest();
+	          actionsObject.bidDoubleBelowBest();
 	          break;
 
 	        // place limit order at the current ask price
 	        case settings.KEYS.HIT_THE_OFFER:
-	          plugin.hitTheOffer();
+	          actionsObject.hitTheOffer();
 	          break;
 
 	        // place market buy
 	        case settings.KEYS.MARKET_BUY:
-	          plugin.marketBuy();
+	          actionsObject.marketBuy();
 	          break;
 
 	        /********************************
@@ -337,32 +339,32 @@
 	         ********************************/
 	        // place the best limit sell on the market
 	        case settings.KEYS.OFFER_BETTER:
-	          plugin.offerBetter();
+	          actionsObject.offerBetter();
 	          break;
 
 	        // place offer at current best ask
 	        case settings.KEYS.OFFER_WITH_BEST_ASK:
-	          plugin.offerWithBest();
+	          actionsObject.offerWithBest();
 	          break;
 
 	        // place offer at current best ask
 	        case settings.KEYS.OFFER_ABOVE_BEST:
-	          plugin.offerAboveBest();
+	          actionsObject.offerAboveBest();
 	          break;
 
 	        // place offer at current best ask
 	        case settings.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-	          plugin.offerDoubleAboveBest();
+	          actionsObject.offerDoubleAboveBest();
 	          break;
 
 	        // place limit order at the current bid price
 	        case settings.KEYS.HIT_THE_BID:
-	          plugin.hitTheBid();
+	          actionsObject.hitTheBid();
 	          break;
 
 	        // place market sell
 	        case settings.KEYS.MARKET_SELL:
-	          plugin.marketSell();
+	          actionsObject.marketSell();
 	          break;
 
 	        /********************************
@@ -370,22 +372,22 @@
 	         ********************************/
 	        // cancel all bids
 	        case settings.KEYS.CANCEL_BIDS:
-	          plugin.cancelBids();
+	          actionsObject.cancelBids();
 	          break;
 
 	        // cancel all order
 	        case settings.KEYS.CANCEL_OFFERS:
-	          plugin.cancelOffers();
+	          actionsObject.cancelOffers();
 	          break;
 
 	        // cancel last order
 	        case settings.KEYS.CANCEL_LAST:
-	          plugin.cancelLast();
+	          actionsObject.cancelLast();
 	          break;
 
 	        // cancel all order
 	        case settings.KEYS.CANCEL_ALL:
-	          plugin.cancelAll();
+	          actionsObject.cancelAll();
 	          break;
 
 	        default:
@@ -400,7 +402,7 @@
 	  }
 
 	  function onKeyup(e) {}
-	}();
+	};
 
 /***/ },
 /* 3 */
@@ -747,6 +749,7 @@
 	    init: init,
 
 	    getLotSizeInputElement: getLotSizeInputElement,
+	    setLotSize: setLotSize,
 
 	    marketBuy: marketBuy,
 	    marketSell: marketSell,
@@ -875,7 +878,6 @@
 	 *     @param {Number} v - the offset value to display
 	 */
 	function displayOffset(v) {
-	  console.log('display');
 	  var homeDiv = getOffsetParentElement();
 	  var target = getOffsetElement();
 	  if (!target) {
@@ -892,55 +894,60 @@
 	}
 
 	/**    PLACE A BUY ORDER   */
-	function placeBuyOrder() {
-	  setBuyPrice();
-	  if (!config.DEBUG) {
-	    var switchTarget = getBuyTabButtonElement();
-	    if (switchTarget) {
-	      switchTarget.click();
-	      setTimeout(function () {
-	        var target = getBuyButtonElement();
-	        if (target) {
-	          target.click();
-	        } else {
-	          console.error('Unable to locate buy button');
-	        }
+	function placeBuyOrder(p) {
+	  console.log(p);
+	  var switchTarget = getBuyTabButtonElement();
+	  if (switchTarget) {
+	    switchTarget.click();
+	    setTimeout(function () {
+	      var target = getBuyButtonElement();
+	      if (target) {
+	        setBuyPrice(p);
 	        setTimeout(function () {
 	          config.getSettings(function (settings) {
-	            config.setLotSize(settings.lotsize);
+	            setLotSize(settings.lotsize);
+	            if (!config.DEBUG) {
+	              target.click();
+	            } else {
+	              console.log('DEBUG -> SIMULATING CLICK ON: ', target);
+	            }
 	          });
-	        }, 250);
-	      }, 10);
-	    } else {
-	      console.error('Cannot locate buy button');
-	    }
+	        }, 100);
+	      } else {
+	        console.error('Unable to locate buy button');
+	      }
+	    }, 10);
+	  } else {
+	    console.error('Cannot locate buy button');
 	  }
 	}
 
 	/**   PLACE A SELL ORDER    */
-	function placeSellOrder() {
-	  setSellPrice();
-	  if (!config.DEBUG) {
-	    // switch to sell window
-	    var switchTarget = getSellTabButtonElement();
-	    if (switchTarget) {
-	      switchTarget.click();
-	      setTimeout(function () {
-	        var target = getSellButtonElement();
-	        if (target) {
-	          target.click();
-	        } else {
-	          console.error('Unable to locate sell button');
-	        }
+	function placeSellOrder(p) {
+	  // switch to sell window
+	  var switchTarget = getSellTabButtonElement();
+	  if (switchTarget) {
+	    switchTarget.click();
+	    setTimeout(function () {
+	      var target = getSellButtonElement();
+	      if (target) {
+	        setSellPrice(p);
 	        setTimeout(function () {
 	          config.getSettings(function (settings) {
-	            config.setLotSize(settings.lotsize);
+	            setLotSize(settings.lotsize);
+	            if (!config.DEBUG) {
+	              target.click();
+	            } else {
+	              console.log('DEBUG -> SIMULATING CLICK ON: ', target);
+	            }
 	          });
 	        }, 250);
-	      }, 10);
-	    } else {
-	      console.error('No sell tab button found');
-	    }
+	      } else {
+	        console.error('Unable to locate sell button');
+	      }
+	    }, 10);
+	  } else {
+	    console.error('No sell tab button found');
 	  }
 	}
 

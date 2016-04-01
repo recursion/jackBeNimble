@@ -11,9 +11,6 @@ let domInterface = null
 /*
     HOTKEY SETUP HERE
 
-window.addEventListener('keydown', plugin.keyboardHandlers.onKeydown, false);
-window.addEventListener('keypress', plugin.keyboardHandlers.onKeypress, false);
-window.addEventListener('keyup', plugin.keyboardHandlers.onKeyup, false);
 */
 
 /** ****************************************
@@ -51,6 +48,10 @@ if (!domInterface) {
  */
 
 const utils = require('./utils')(domInterface)
+const kbc = keyboardHandlers(utils)
 console.log(utils, domInterface)
 domInterface.init()
 
+window.addEventListener('keydown', kbc.onKeydown, false);
+window.addEventListener('keypress', kbc.onKeypress, false);
+window.addEventListener('keyup', kbc.onKeyup, false);

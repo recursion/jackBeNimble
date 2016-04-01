@@ -8,6 +8,7 @@ module.exports = () => {
     init: init,
 
     getLotSizeInputElement: getLotSizeInputElement,
+    setLotSize,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -136,7 +137,6 @@ function cancelAll () {
  *     @param {Number} v - the offset value to display
  */
 function displayOffset (v) {
-  console.log('display')
   var homeDiv = getOffsetParentElement()
   var target = getOffsetElement()
   if (!target) {
@@ -153,55 +153,60 @@ function displayOffset (v) {
 }
 
 /**    PLACE A BUY ORDER   */
-function placeBuyOrder () {
-  setBuyPrice()
-  if (!config.DEBUG) {
-    var switchTarget = getBuyTabButtonElement()
-    if (switchTarget) {
-      switchTarget.click()
-      setTimeout(() => {
-        var target = getBuyButtonElement()
-        if (target) {
-          target.click()
-        } else {
-          console.error('Unable to locate buy button')
-        }
+function placeBuyOrder (p) {
+  console.log(p)
+  var switchTarget = getBuyTabButtonElement()
+  if (switchTarget) {
+    switchTarget.click()
+    setTimeout(() => {
+      var target = getBuyButtonElement()
+      if (target) {
+        setBuyPrice(p)
         setTimeout(() => {
           config.getSettings((settings) => {
-            config.setLotSize(settings.lotsize)
+            setLotSize(settings.lotsize)
+            if (!config.DEBUG) {
+              target.click()
+            } else {
+              console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+            }
           })
-        }, 250)
-      }, 10)
-    } else {
-      console.error('Cannot locate buy button')
-    }
+        }, 100)
+      } else {
+        console.error('Unable to locate buy button')
+      }
+    }, 10)
+  } else {
+    console.error('Cannot locate buy button')
   }
 }
 
 /**   PLACE A SELL ORDER    */
-function placeSellOrder () {
-  setSellPrice()
-  if (!config.DEBUG) {
-    // switch to sell window
-    var switchTarget = getSellTabButtonElement()
-    if (switchTarget) {
-      switchTarget.click()
-      setTimeout(() => {
-        var target = getSellButtonElement()
-        if (target) {
-          target.click()
-        } else {
-          console.error('Unable to locate sell button')
-        }
+function placeSellOrder (p) {
+  // switch to sell window
+  var switchTarget = getSellTabButtonElement()
+  if (switchTarget) {
+    switchTarget.click()
+    setTimeout(() => {
+      var target = getSellButtonElement()
+      if (target) {
+        setSellPrice(p)
         setTimeout(() => {
           config.getSettings((settings) => {
-            config.setLotSize(settings.lotsize)
+            setLotSize(settings.lotsize)
+            if (!config.DEBUG) {
+              target.click()
+            } else {
+              console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+            }
           })
         }, 250)
-      }, 10)
-    } else {
-      console.error('No sell tab button found')
-    }
+      } else {
+        console.error('Unable to locate sell button')
+      }
+    }, 10)
+  } else {
+    console.error('No sell tab button found')
   }
 }
 

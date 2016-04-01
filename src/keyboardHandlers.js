@@ -1,21 +1,21 @@
-var plugin = plugin || {};
+const config = require('./config')
 
-plugin.keyboardHandlers = (function(){
+module.exports = function (actionsObject) {
 
   var public_api = {
     onKeydown: onKeydown,
     onKeypress: onKeypress,
     onKeyup: onKeyup
-  };
+  }
 
-  return public_api;
+  return public_api
 
-  /*****************************************
+  /* **************************************
    *            KEYBOARD HANDLERS
    * @TODO convert to an engine that can handle more than one key
    ****************************************/
-  function onKeydown(e){
-    plugin.config.getSettings(function(settings){
+  function onKeydown (e) {
+    config.getSettings((settings) => {
       switch(e.keyCode){
         /**************************************
          *            TOGGLE KEYS
@@ -23,22 +23,22 @@ plugin.keyboardHandlers = (function(){
 
         // LOTSIZE UP
         case settings.KEYS.TOGGLE_LOTSIZE_UP:
-          plugin.toggleLotSize('up');
+          actionsObject.toggleLotSize('up');
           break;
 
         // LOTSIZE DOWN
         case settings.KEYS.TOGGLE_LOTSIZE_DOWN:
-          plugin.toggleLotSize('down');
+          actionsObject.toggleLotSize('down');
           break;
 
           // OFFSET UP
         case settings.KEYS.TOGGLE_OFFSET_UP:
-          plugin.toggleOffset('up');
+          actionsObject.toggleOffset('up');
           break;
 
           // OFFSET DOWN
         case settings.KEYS.TOGGLE_OFFSET_DOWN:
-          plugin.toggleOffset('down');
+          actionsObject.toggleOffset('down');
           break;
 
 
@@ -48,33 +48,33 @@ plugin.keyboardHandlers = (function(){
          ********************************/
         // place best limit bid order on the market
         case settings.KEYS.BID_BETTER:
-          plugin.bidBetter();
+          actionsObject.bidBetter();
           break;
 
         // place bid at current best bid
         case settings.KEYS.BID_WITH_BEST_BID:
-          plugin.bidWithBest();
+          actionsObject.bidWithBest();
           break;
 
         // Place bid at (INCR) below the current best bid
         case settings.KEYS.BID_BELOW_BEST:
-          plugin.bidBelowBest();
+          actionsObject.bidBelowBest();
           break;
 
         // Place bid at (INCR) below the current best bid
         case settings.KEYS.BID_DOUBLE_BELOW_BEST:
-          plugin.bidDoubleBelowBest();
+          actionsObject.bidDoubleBelowBest();
           break;
 
         // place limit order at the current ask price
         case settings.KEYS.HIT_THE_OFFER:
-          plugin.hitTheOffer();
+          actionsObject.hitTheOffer();
           break;
 
 
         // place market buy
         case settings.KEYS.MARKET_BUY:
-          plugin.marketBuy();
+          actionsObject.marketBuy();
           break;
 
 
@@ -84,32 +84,32 @@ plugin.keyboardHandlers = (function(){
          ********************************/
         // place the best limit sell on the market
         case settings.KEYS.OFFER_BETTER:
-          plugin.offerBetter();
+          actionsObject.offerBetter();
           break;
 
         // place offer at current best ask
         case settings.KEYS.OFFER_WITH_BEST_ASK:
-          plugin.offerWithBest();
+          actionsObject.offerWithBest();
           break;
 
         // place offer at current best ask
         case settings.KEYS.OFFER_ABOVE_BEST:
-          plugin.offerAboveBest();
+          actionsObject.offerAboveBest();
           break;
 
         // place offer at current best ask
         case settings.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-          plugin.offerDoubleAboveBest();
+          actionsObject.offerDoubleAboveBest();
           break;
 
         // place limit order at the current bid price
         case settings.KEYS.HIT_THE_BID:
-          plugin.hitTheBid();
+          actionsObject.hitTheBid();
           break;
 
         // place market sell
         case settings.KEYS.MARKET_SELL:
-          plugin.marketSell();
+          actionsObject.marketSell();
           break;
 
 
@@ -118,22 +118,22 @@ plugin.keyboardHandlers = (function(){
          ********************************/
         // cancel all bids
         case settings.KEYS.CANCEL_BIDS:
-          plugin.cancelBids();
+          actionsObject.cancelBids();
           break;
 
         // cancel all order
         case settings.KEYS.CANCEL_OFFERS:
-          plugin.cancelOffers();
+          actionsObject.cancelOffers();
           break;
 
         // cancel last order
         case settings.KEYS.CANCEL_LAST:
-          plugin.cancelLast();
+          actionsObject.cancelLast();
           break;
 
         // cancel all order
         case settings.KEYS.CANCEL_ALL:
-          plugin.cancelAll();
+          actionsObject.cancelAll();
           break;
 
         default:
@@ -150,6 +150,4 @@ plugin.keyboardHandlers = (function(){
   function onKeyup(e){
 
   }
-
-
-})();
+}
