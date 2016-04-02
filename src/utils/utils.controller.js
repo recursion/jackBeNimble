@@ -32,8 +32,6 @@ module.exports = function (domInterface) {
   function toggleOffset (direction) {
     store.get((settings) => {
       let idx = settings.OFFSETS.indexOf(settings.offset)
-      console.log(idx)
-      console.log(settings.OFFSETS.length)
 
       if (direction === 'up') {
         if (++idx >= settings.OFFSETS.length) {

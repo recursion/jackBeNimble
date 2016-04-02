@@ -9,8 +9,6 @@
  * @TODO error checking
  */
 function set (key, value) {
-  console.log('Setting: ', key, ' to ', value)
-
   const obj = {}
   obj[key] = value
 
@@ -18,9 +16,6 @@ function set (key, value) {
     // check for existing value
     chrome.storage.sync.set(obj)
   }
-  chrome.storage.sync.get((all) => {
-    console.log(all)
-  })
 }
 
 function get (keyValue, cb) {

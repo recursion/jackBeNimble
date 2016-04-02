@@ -66,5 +66,10 @@ startingProps.forEach((prop) => {
 // checks to see if a key already exists
 // and adds the default value if it doesnt
 function initSetting (key, value) {
-  store.set(key, value)
+  store.get((settings) => {
+    // only load when the key does not already exist
+    if (!settings[key]) {
+      store.set(key, value)
+    }
+  })
 }

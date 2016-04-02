@@ -1,8 +1,10 @@
-//const store = require('../store')
+// const store = require('../store')
+
+// this should be the exchange name in lower case letters
+// like coinbase, bitfinex, btcc, kraken - etc
 const EXCHANGE_NAME = 'NAME_OF_EXCHANGE_HERE'
 
 module.exports = () => {
-
   // the module MUST expose these functions
   // using their described function signatures
   const public_api = {
@@ -10,9 +12,6 @@ module.exports = () => {
     name: EXCHANGE_NAME,
 
     init: init,
-
-    getLotSizeInputElement: getLotSizeInputElement,
-    displayLotsize,
 
     marketBuy: marketBuy,
     marketSell: marketSell,
@@ -22,12 +21,15 @@ module.exports = () => {
     cancelAll: cancelAll,
     cancelLast: cancelLast,
 
-    displayOffset: displayOffset,
+    getLotSizeInputElement: getLotSizeInputElement,
+    displayOffset,
+    displayLotsize,
 
     placeBuyOrder: placeBuyOrder,
     placeSellOrder: placeSellOrder,
 
     setBuyPrice: setBuyPrice,
+    setSellPrice: setSellPrice,
 
     getBestBid: getBestBid,
     getBestOffer: getBestOffer
@@ -100,6 +102,10 @@ function cancelAll () {
 function displayOffset (v) {
 }
 
+function displayLotsize () {
+
+}
+
 /**    PLACE A BUY ORDER   */
 function placeBuyOrder (p) {
 
@@ -163,10 +169,9 @@ function getBestOffer () {
  */
  // this is the element that contains the lotsize input
  // returns an Input Element
- function getLotSizeElementAccessor() {
+function getLotSizeInputElement () {
   // implement me
- }
-
+}
 
 /*
 YOU CAN USE THESE, BUT BY NO MEANS HAVE TO

@@ -1,5 +1,4 @@
 const keyboardHandlers = require('./keyboardHandlers')
-
 const interfaces = require('./interfaces')
 
 let domInterface = null
@@ -20,7 +19,6 @@ for (let DInterface in interfaces) {
     // if the current window locations contains the string of the interface objects name property
     if (window.location.hostname.indexOf(interfaces[DInterface].name) !== -1) {
       domInterface = interfaces[DInterface]
-      console.log('Set interface to: ', domInterface)
     }
   }
 }
