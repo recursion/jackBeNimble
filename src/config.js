@@ -48,8 +48,8 @@ const DEFAULT_KEYS = {
   MARKET_SELL: 555 // ctrl + h
 }
 const startingProps = [
-  {LOTSIZES: LOTSIZES},
-  {OFFSETS: OFFSETS},
+  {LOTSIZES},
+  {OFFSETS},
   {offset: DEFAULT_OFFSET},
   {lotsize: DEFAULT_LOTSIZE},
   {KEYS: DEFAULT_KEYS}
@@ -57,7 +57,6 @@ const startingProps = [
 
 // do some version checking here
 // clean out the storage area when requested
-
 startingProps.forEach((prop) => {
   const target = Object.keys(prop)[0]
   initSetting(target, prop[target])

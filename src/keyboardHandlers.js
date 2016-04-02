@@ -16,7 +16,6 @@ module.exports = function (actionsObject) {
    ****************************************/
   function onKeydown (e) {
     store.get((settings) => {
-      console.log(settings)
       switch(e.keyCode){
         /**************************************
          *            TOGGLE KEYS
