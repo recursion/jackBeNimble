@@ -1,4 +1,4 @@
-const config = require('../config')
+//const store = require('../store')
 const EXCHANGE_NAME = 'NAME_OF_EXCHANGE_HERE'
 
 module.exports = () => {
@@ -160,8 +160,15 @@ function getBestOffer () {
  *    function getWhateverSelectorName() {
  *      return document.querySelector('#whatever') || document.querySelectory('div.whateverClassName') || null
  *    }
- *
+ */
+ // this is the element that contains the lotsize input
+ // returns an Input Element
+ function getLotSizeElementAccessor() {
+  // implement me
+ }
 
+
+/*
 YOU CAN USE THESE, BUT BY NO MEANS HAVE TO
 
 function getLotSizeInputElement () {

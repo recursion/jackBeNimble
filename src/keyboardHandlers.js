@@ -1,4 +1,4 @@
-const config = require('./config')
+const store = require('./store')
 
 module.exports = function (actionsObject) {
 
@@ -15,7 +15,8 @@ module.exports = function (actionsObject) {
    * @TODO convert to an engine that can handle more than one key
    ****************************************/
   function onKeydown (e) {
-    config.getSettings((settings) => {
+    store.get((settings) => {
+      console.log(settings)
       switch(e.keyCode){
         /**************************************
          *            TOGGLE KEYS

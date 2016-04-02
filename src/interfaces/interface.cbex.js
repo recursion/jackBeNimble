@@ -1,3 +1,4 @@
+const store = require('../store')
 const config = require('../config')
 
 module.exports = () => {
@@ -245,7 +246,7 @@ function getBestOffer () {
 * @param {PluginObject} - plugin - the plugin object
 */
 function initialize (plugin) {
-  config.getSettings((settings) => {
+  store.get((settings) => {
     displayLotsize(settings.lotsize)
     displayOffset(settings.offset)
   })
@@ -284,7 +285,7 @@ function switchToLimitOrder () {
 /* set the lot size on the market order screen */
 function setMarketOrderLotSize () {
   var lotSize = getLotSizeElement()
-  config.getSettings((settings) => {
+  store.get((settings) => {
     lotSize.value = settings.lotsize
   })
 }

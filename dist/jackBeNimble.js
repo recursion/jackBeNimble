@@ -79,7 +79,11 @@
 	}
 
 	// load up the plugins methods
-	var utils = __webpack_require__(6)(domInterface);
+	var utils = __webpack_require__(7)(domInterface);
+
+	// create a keyboard handler
+	// TODO:
+	// change to keyboard commander
 	var kbc = keyboardHandlers(utils);
 
 	/**
@@ -102,7 +106,7 @@
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var store = __webpack_require__(2);
 
 	module.exports = function (actionsObject) {
 
@@ -119,7 +123,8 @@
 	   * @TODO convert to an engine that can handle more than one key
 	   ****************************************/
 	  function onKeydown(e) {
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
+	      console.log(settings);
 	      switch (e.keyCode) {
 	        /**************************************
 	         *            TOGGLE KEYS
@@ -254,147 +259,47 @@
 
 	'use strict';
 
-	/** **************************************
-	 *          SETUP/CONFIG
-	 *** *************************************/
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	/* globals chrome */
-
-	// set to true to turn off live orders
-	// and get a console.log message instead of an order
-	var DEBUG = false;
-
-	// LOT SIZE VALUES
-	var LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
-
-	// OFFSET VALUES
-	var OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5, 2, 2.5, 3, 5, 10];
-
-	loadDefaults();
 
 	/**
 	 * Set a config value
-	 * @param {value} value - An object with the key/value pair to set
+	 * @param {string} key - a name representing the object
+	 * @param {any?} value - An object with the key/value pair to set
+	 * @param {cb} optional callback
+	 * -- the callback returns an object with a message and the created data object
 	 * @TODO error checking
 	 */
-	var set = function set(value) {
+	function set(key, value) {
+	  console.log('Setting: ', key, ' to ', value);
+
+	  var obj = {};
+	  obj[key] = value;
+
 	  if (chrome) {
-	    chrome.storage.sync.set(value);
+	    // check for existing value
+	    chrome.storage.sync.set(obj);
 	  }
-	};
+	  chrome.storage.sync.get(function (all) {
+	    console.log(all);
+	  });
+	}
 
-	// Handle all requests to settings storage
-	// incase the way we do it changes in the future.
-	var getSettings = function getSettings(cb) {
-	  if (chrome) {
-	    chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], cb);
-	  }
-	};
-
-	module.exports = {
-	  DEBUG: DEBUG,
-	  LOTSIZES: LOTSIZES,
-	  OFFSETS: OFFSETS,
-	  set: set,
-	  getSettings: getSettings
-	};
-
-	/** *********************************************
-	*              Load Defaults                    *
-	*   creates default values and loads them into
-	*   google extention storage (if none yet exist)
-	************************************************/
-	function loadDefaults() {
-	  // Set default OFFSET
-	  var DEFAULT_OFFSET = 0.1;
-
-	  // Set default lotsize
-	  var DEFAULT_LOTSIZE = 0.1;
-
-	  var DEFAULT_KEYS = {
-	    CANCEL_ALL: 89, // y
-	    CANCEL_LAST: 84, // t
-	    CANCEL_BIDS: 82, // r
-	    CANCEL_OFFERS: 85, // u
-
-	    TOGGLE_LOTSIZE_UP: 220,
-	    TOGGLE_LOTSIZE_DOWN: 222,
-	    TOGGLE_OFFSET_UP: 189,
-	    TOGGLE_OFFSET_DOWN: 187,
-
-	    BID_BETTER: 70, // f
-	    BID_WITH_BEST_BID: 68, // d
-	    BID_BELOW_BEST: 83, // s
-	    BID_DOUBLE_BELOW_BEST: 65, // a
-
-	    OFFER_BETTER: 74, // j
-	    OFFER_WITH_BEST_ASK: 75, // k
-	    OFFER_ABOVE_BEST: 76, // l
-	    OFFER_DOUBLE_ABOVE_BEST: 186,
-
-	    HIT_THE_BID: 72, // h
-	    HIT_THE_OFFER: 71, // g
-
-	    MARKET_BUY: 444, // ctrl + g
-	    MARKET_SELL: 555 // ctrl + h
-	  };
-
-	  // The alt keys required to activate a hotkey
-	  // [altKeyBOOL, ctrlKeyBool, shiftKeyBool]
-	  var DEFAULT_KEY_REQS = {
-	    CANCEL_ALL: [],
-	    CANCEL_LAST: [],
-	    CANCEL_BIDS: [],
-	    CANCEL_OFFERS: [],
-
-	    TOGGLE_LOTSIZE_UP: [],
-	    TOGGLE_LOTSIZE_DOWN: [],
-	    TOGGLE_OFFSET_UP: [],
-	    TOGGLE_OFFSET_DOWN: [],
-
-	    BID_BETTER: [],
-	    BID_WITH_BEST_BID: [],
-	    BID_BELOW_BEST: [],
-	    BID_DOUBLE_BELOW_BEST: [],
-
-	    OFFER_BETTER: [],
-	    OFFER_WITH_BEST_ASK: [],
-	    OFFER_ABOVE_BEST: [],
-	    OFFER_DOUBLE_ABOVE_BEST: [],
-
-	    HIT_THE_BID: [],
-	    HIT_THE_OFFER: [],
-
-	    MARKET_BUY: [],
-	    MARKET_SELL: []
-	  };
-
-	  /** *********************************************/
-	  /*           ADD DEFAULTS TO CHROME STORAGE     */
-	  /** *********************************************/
-	  if (chrome) {
-	    chrome.storage.sync.get(['offset', 'lotsize', 'KEYS', 'KEY_REQS'], function (settings) {
-	      if (!settings.offset) {
-	        // Default key bindings
-	        chrome.storage.sync.set({ 'offset': DEFAULT_OFFSET });
-	      }
-
-	      if (!settings.lotsize) {
-	        // Default key bindings
-	        chrome.storage.sync.set({ 'lotsize': DEFAULT_LOTSIZE });
-	      }
-
-	      if (!settings.KEYS || Object.keys(settings.KEYS).length === 0) {
-	        // Default key bindings
-	        chrome.storage.sync.set({ 'KEYS': DEFAULT_KEYS });
-	      }
-
-	      if (!settings.KEY_REQS || Object.keys(settings.KEY_REQS).length === 0) {
-	        // Default key bindings
-	        chrome.storage.sync.set({ 'KEY_REQS': DEFAULT_KEY_REQS });
-	      }
-	    });
+	function get(keyValue, cb) {
+	  if (typeof keyValue === 'string') {
+	    chrome.storage.sync.get(keyValue, cb);
+	  } else if (typeof keyValue === 'function') {
+	    chrome.storage.sync.get(null, keyValue);
+	  } else {
+	    console.error('Invalid keyValue type: ', typeof keyValue === 'undefined' ? 'undefined' : _typeof(keyValue));
 	  }
 	}
+
+	module.exports = {
+	  set: set,
+	  get: get
+	};
 
 /***/ },
 /* 3 */
@@ -411,7 +316,7 @@
 	// the obvious solution of using requireDirectory is not
 	// as easy at it might seem here (because of webpack)
 	interfaces.push(__webpack_require__(4)());
-	interfaces.push(__webpack_require__(5)());
+	interfaces.push(__webpack_require__(6)());
 
 	// export the array of interfaces
 	module.exports = interfaces;
@@ -422,7 +327,9 @@
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var config = __webpack_require__(5);
+	var store = __webpack_require__(2);
+
 	module.exports = function () {
 	  var public_api = {
 
@@ -461,7 +368,7 @@
 	 *  get existing settings and apply them
 	 */
 	function init() {
-	  config.getSettings(function (settings) {
+	  store.get(function (settings) {
 	    displayLotsize(settings.lotsize);
 	    displayOffset(settings.offset);
 	  });
@@ -744,7 +651,79 @@
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var store = __webpack_require__(2);
+
+	// set to true to turn off live orders
+	// and get a console.log message instead of an order
+	module.exports = {
+	  DEBUG: false
+	};
+
+	// SETUP SOME SANE DEFAULTS
+
+	// LOT SIZE VALUES
+	var LOTSIZES = [0.01, 0.05, 0.1, 0.2, 0.25, 0.5, 0.75, 1, 2, 2.5, 5, 10];
+
+	// OFFSET VALUES
+	var OFFSETS = [0.01, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5, 0.6, 0.75, 1, 1.5, 2, 2.5, 3, 5, 10];
+
+	// Set default OFFSET
+	var DEFAULT_OFFSET = 0.1;
+
+	// Set default lotsize
+	var DEFAULT_LOTSIZE = 0.1;
+
+	var DEFAULT_KEYS = {
+	  CANCEL_ALL: 89, // y
+	  CANCEL_LAST: 84, // t
+	  CANCEL_BIDS: 82, // r
+	  CANCEL_OFFERS: 85, // u
+
+	  TOGGLE_LOTSIZE_UP: 220,
+	  TOGGLE_LOTSIZE_DOWN: 222,
+	  TOGGLE_OFFSET_UP: 189,
+	  TOGGLE_OFFSET_DOWN: 187,
+
+	  BID_BETTER: 70, // f
+	  BID_WITH_BEST_BID: 68, // d
+	  BID_BELOW_BEST: 83, // s
+	  BID_DOUBLE_BELOW_BEST: 65, // a
+
+	  OFFER_BETTER: 74, // j
+	  OFFER_WITH_BEST_ASK: 75, // k
+	  OFFER_ABOVE_BEST: 76, // l
+	  OFFER_DOUBLE_ABOVE_BEST: 186,
+
+	  HIT_THE_BID: 72, // h
+	  HIT_THE_OFFER: 71, // g
+
+	  MARKET_BUY: 444, // ctrl + g
+	  MARKET_SELL: 555 // ctrl + h
+	};
+	var startingProps = [{ LOTSIZES: LOTSIZES }, { OFFSETS: OFFSETS }, { offset: DEFAULT_OFFSET }, { lotsize: DEFAULT_LOTSIZE }, { KEYS: DEFAULT_KEYS }];
+
+	// do some version checking here
+	// clean out the storage area when requested
+
+	startingProps.forEach(function (prop) {
+	  var target = Object.keys(prop)[0];
+	  initSetting(target, prop[target]);
+	});
+
+	// checks to see if a key already exists
+	// and adds the default value if it doesnt
+	function initSetting(key, value) {
+	  store.set(key, value);
+	}
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var store = __webpack_require__(2);
+	var config = __webpack_require__(5);
 
 	module.exports = function () {
 	  var public_api = {
@@ -991,7 +970,7 @@
 	* @param {PluginObject} - plugin - the plugin object
 	*/
 	function initialize(plugin) {
-	  config.getSettings(function (settings) {
+	  store.get(function (settings) {
 	    displayLotsize(settings.lotsize);
 	    displayOffset(settings.offset);
 	  });
@@ -1030,7 +1009,7 @@
 	/* set the lot size on the market order screen */
 	function setMarketOrderLotSize() {
 	  var lotSize = getLotSizeElement();
-	  config.getSettings(function (settings) {
+	  store.get(function (settings) {
 	    lotSize.value = settings.lotsize;
 	  });
 	}
@@ -1183,15 +1162,15 @@
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var utils = {};
-	var buyOrderController = __webpack_require__(7);
-	var sellOrderController = __webpack_require__(8);
-	var utilsController = __webpack_require__(9);
+	var buyOrderController = __webpack_require__(8);
+	var sellOrderController = __webpack_require__(9);
+	var utilsController = __webpack_require__(10);
 
 	// add the interfaces to our array
 	// TODO: as more dynamic method for this
@@ -1215,12 +1194,12 @@
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var store = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1274,7 +1253,7 @@
 
 	  /* bid 1 offset level below the best bid */
 	  function bidBelowBest() {
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
 	      var bestBid = domInterface.getBestBid();
 	      var newBid = +bestBid - settings.offset;
 	      domInterface.placeBuyOrder(newBid.toFixed(2));
@@ -1283,7 +1262,7 @@
 
 	  /* bid 2 offset levels below best bid */
 	  function bidDoubleBelowBest() {
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
 	      var bestBid = domInterface.getBestBid();
 	      var newBid = +bestBid - settings.offset * 2;
 	      domInterface.placeBuyOrder(newBid.toFixed(2));
@@ -1292,12 +1271,12 @@
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var store = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1358,7 +1337,7 @@
 	  /* Offer 1 offset level above the best offer */
 	  function offerAboveBest() {
 	    var bestOffer = domInterface.getBestOffer();
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
 	      var newOffer = +bestOffer + settings.offset;
 	      domInterface.placeSellOrder(newOffer.toFixed(2));
 	    });
@@ -1367,7 +1346,7 @@
 	  /* Offer 2 offset levels above the best offer */
 	  function offerDoubleAboveBest() {
 	    var bestOffer = domInterface.getBestOffer();
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
 	      var newOffer = +bestOffer + settings.offset * 2;
 	      domInterface.placeSellOrder(newOffer.toFixed(2));
 	    });
@@ -1375,12 +1354,12 @@
 	};
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var config = __webpack_require__(2);
+	var store = __webpack_require__(2);
 
 	module.exports = function (domInterface) {
 	  return {
@@ -1412,23 +1391,25 @@
 	   * determines which way to toggle the offset
 	   */
 	  function toggleOffset(direction) {
-	    config.getSettings(function (settings) {
-	      var idx = config.OFFSETS.indexOf(settings.offset);
+	    store.get(function (settings) {
+	      var idx = settings.OFFSETS.indexOf(settings.offset);
+	      console.log(idx);
+	      console.log(settings.OFFSETS.length);
 
 	      if (direction === 'up') {
-	        if (++idx >= config.OFFSETS.length) {
+	        if (++idx >= settings.OFFSETS.length) {
 	          idx = 0;
 	        }
 	      } else if (direction === 'down') {
 	        if (--idx < 0) {
-	          idx = config.OFFSETS.length - 1;
+	          idx = settings.OFFSETS.length - 1;
 	        }
 	      } else {
 	        console.error('Unknown toggle offset direction: ', direction);
 	      }
 
-	      config.set({ 'offset': config.OFFSETS[idx] });
-	      domInterface.displayOffset(config.OFFSETS[idx]);
+	      store.set('offset', settings.OFFSETS[idx]);
+	      domInterface.displayOffset(settings.OFFSETS[idx]);
 	    });
 	  }
 
@@ -1441,11 +1422,11 @@
 	   *  @param {Number} v - the lotsize value
 	   */
 	  function setLotSize(v) {
-	    config.getSettings(function (settings) {
+	    store.get(function (settings) {
 	      var amount = domInterface.getLotSizeInputElement();
 	      v = v || settings.lotsize;
 	      amount.value = v;
-	      config.set({ 'lotsize': v });
+	      store.set('lotsize', v);
 	      domInterface.displayLotsize(v);
 	    });
 	  }
@@ -1455,21 +1436,21 @@
 	   * @param {String} direction - the direction to toggle our lotsize (up or down)
 	   **/
 	  function toggleLotSize(direction) {
-	    config.getSettings(function (settings) {
-	      var idx = config.LOTSIZES.indexOf(settings.lotsize);
+	    store.get(function (settings) {
+	      var idx = settings.LOTSIZES.indexOf(settings.lotsize);
 
 	      if (direction === 'up') {
-	        if (++idx >= config.LOTSIZES.length) {
+	        if (++idx >= settings.LOTSIZES.length) {
 	          idx = 0;
 	        }
 	      } else if (direction === 'down') {
 	        if (--idx < 0) {
-	          idx = config.LOTSIZES.length - 1;
+	          idx = settings.LOTSIZES.length - 1;
 	        }
 	      } else {
 	        console.error('Unknown lot size direction: ', direction);
 	      }
-	      var lotsize = config.LOTSIZES[idx];
+	      var lotsize = settings.LOTSIZES[idx];
 	      setLotSize(lotsize);
 	    });
 	  }
@@ -1491,17 +1472,6 @@
 
 	  function cancelOffers() {
 	    domInterface.cancelOffers();
-	  }
-
-	  /** ************************************
-	   *      GET BEST BID / BEST OFFER
-	   ***************************************/
-	  function getBestBid() {
-	    return domInterface.getBestBid();
-	  }
-
-	  function getBestOffer() {
-	    return domInterface.getBestOffer();
 	  }
 	};
 

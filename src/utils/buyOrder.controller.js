@@ -1,4 +1,4 @@
-const config = require('../config')
+const store = require('../store')
 
 module.exports = (domInterface) => {
   return {
@@ -52,7 +52,7 @@ module.exports = (domInterface) => {
 
   /* bid 1 offset level below the best bid */
   function bidBelowBest () {
-    config.getSettings(function (settings) {
+    store.get((settings) => {
       var bestBid = domInterface.getBestBid()
       var newBid = +bestBid - settings.offset
       domInterface.placeBuyOrder(newBid.toFixed(2))
@@ -61,7 +61,7 @@ module.exports = (domInterface) => {
 
   /* bid 2 offset levels below best bid */
   function bidDoubleBelowBest () {
-    config.getSettings(function (settings) {
+    store.get((settings) => {
       const bestBid = domInterface.getBestBid()
       const newBid = +bestBid - (settings.offset * 2)
       domInterface.placeBuyOrder(newBid.toFixed(2))

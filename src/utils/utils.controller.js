@@ -1,4 +1,4 @@
-const config = require('../config')
+const store = require('../store')
 
 module.exports = function (domInterface) {
   return {
@@ -30,23 +30,25 @@ module.exports = function (domInterface) {
    * determines which way to toggle the offset
    */
   function toggleOffset (direction) {
-    config.getSettings((settings) => {
-      let idx = config.OFFSETS.indexOf(settings.offset)
+    store.get((settings) => {
+      let idx = settings.OFFSETS.indexOf(settings.offset)
+      console.log(idx)
+      console.log(settings.OFFSETS.length)
 
       if (direction === 'up') {
-        if (++idx >= config.OFFSETS.length) {
+        if (++idx >= settings.OFFSETS.length) {
           idx = 0
         }
       } else if (direction === 'down') {
         if (--idx < 0) {
-          idx = config.OFFSETS.length - 1
+          idx = settings.OFFSETS.length - 1
         }
       } else {
         console.error('Unknown toggle offset direction: ', direction)
       }
 
-      config.set({'offset': config.OFFSETS[idx]})
-      domInterface.displayOffset(config.OFFSETS[idx])
+      store.set('offset', settings.OFFSETS[idx])
+      domInterface.displayOffset(settings.OFFSETS[idx])
     })
   }
 
@@ -59,11 +61,11 @@ module.exports = function (domInterface) {
    *  @param {Number} v - the lotsize value
    */
   function setLotSize (v) {
-    config.getSettings((settings) => {
+    store.get((settings) => {
       const amount = domInterface.getLotSizeInputElement()
       v = v || settings.lotsize
       amount.value = v
-      config.set({'lotsize': v})
+      store.set('lotsize', v)
       domInterface.displayLotsize(v)
     })
   }
@@ -73,21 +75,21 @@ module.exports = function (domInterface) {
    * @param {String} direction - the direction to toggle our lotsize (up or down)
    **/
   function toggleLotSize (direction) {
-    config.getSettings(function (settings) {
-      let idx = config.LOTSIZES.indexOf(settings.lotsize)
+    store.get(function (settings) {
+      let idx = settings.LOTSIZES.indexOf(settings.lotsize)
 
       if (direction === 'up') {
-        if (++idx >= config.LOTSIZES.length) {
+        if (++idx >= settings.LOTSIZES.length) {
           idx = 0
         }
       } else if (direction === 'down') {
         if (--idx < 0) {
-          idx = config.LOTSIZES.length - 1
+          idx = settings.LOTSIZES.length - 1
         }
       } else {
         console.error('Unknown lot size direction: ', direction)
       }
-      var lotsize = config.LOTSIZES[idx]
+      var lotsize = settings.LOTSIZES[idx]
       setLotSize(lotsize)
     })
   }
@@ -109,16 +111,5 @@ module.exports = function (domInterface) {
 
   function cancelOffers () {
     domInterface.cancelOffers()
-  }
-
-  /** ************************************
-   *      GET BEST BID / BEST OFFER
-   ***************************************/
-  function getBestBid (){
-    return domInterface.getBestBid()
-  }
-
-  function getBestOffer (){
-    return domInterface.getBestOffer()
   }
 }

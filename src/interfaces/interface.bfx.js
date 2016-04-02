@@ -1,4 +1,6 @@
 const config = require('../config')
+const store = require('../store')
+
 module.exports = () => {
   const public_api = {
 
@@ -37,7 +39,7 @@ module.exports = () => {
  *  get existing settings and apply them
  */
 function init () {
-  config.getSettings((settings) => {
+  store.get((settings) => {
     displayLotsize(settings.lotsize)
     displayOffset(settings.offset)
   })

@@ -32,6 +32,10 @@ if (!domInterface) {
 
 // load up the plugins methods
 const utils = require('./utils')(domInterface)
+
+// create a keyboard handler
+// TODO:
+// change to keyboard commander
 const kbc = keyboardHandlers(utils)
 
  /**

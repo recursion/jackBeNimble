@@ -1,4 +1,4 @@
-const config = require('../config')
+const store = require('../store')
 
 module.exports = (domInterface) => {
   return {
@@ -59,7 +59,7 @@ module.exports = (domInterface) => {
   /* Offer 1 offset level above the best offer */
   function offerAboveBest () {
     var bestOffer = domInterface.getBestOffer()
-    config.getSettings((settings) => {
+    store.get((settings) => {
       var newOffer = +bestOffer + settings.offset
       domInterface.placeSellOrder(newOffer.toFixed(2))
     })
@@ -68,7 +68,7 @@ module.exports = (domInterface) => {
   /* Offer 2 offset levels above the best offer */
   function offerDoubleAboveBest () {
     var bestOffer = domInterface.getBestOffer()
-    config.getSettings((settings) => {
+    store.get((settings) => {
       var newOffer = +bestOffer + (settings.offset * 2)
       domInterface.placeSellOrder(newOffer.toFixed(2))
     })
