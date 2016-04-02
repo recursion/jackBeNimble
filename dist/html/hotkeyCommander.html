@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotkey Config</title>
+  <link rel="import" id="hotkeyTemplate" href="hotkeyTemplate.html">
+  <link rel="stylesheet" href="hotkey.css">
+</head>
+<body>
+  <div id="hotkeys"></div>
+  <script src="hotkeyCommander.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(evt) {
+      hotkeyCommander.init(document.getElementById('hotkeys'))
+    });
+  </script>
+</body>
+</html>
