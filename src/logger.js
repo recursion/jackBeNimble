@@ -5,6 +5,8 @@ module.exports = {
 }
 
 function log (...args) {
+  const dateString = `[${new Date(Date.now())}] - `
+  args.unshift(dateString)
   console.log.apply(console, args)
 }
 
