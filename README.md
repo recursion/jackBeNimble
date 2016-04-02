@@ -1,16 +1,16 @@
 # jackBeNimble
 
-A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com), [beta.bitfinex.com](http:beta.bitfinex.com), and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. Allowing you to easily place orders of a given size at any offset in relation to the current best bid/offer, using only hotkeys.
+A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com),and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. The extension allows you to easily place orders of a (hotkey adjustable) size at any (hotkey adjustable) offset in relation to the current best bid/offer.
 
 
 This extension adds hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
 - Toggle a price `OFFSET` up and down.
 - Place a bid at current best bid or offer at current best offer.
-- Place an order of `LOTSIZE` at `OFFSET` below best bid/above best offer.
+- Place an order of `LOTSIZE` at `OFFSET` below best bid or above best offer.
 - Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
-On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). Currently it also slightly alters the coinbase page to make the trading column thinner, providing more room to the rest of the page. This may be turned off, or become togglable.
+On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
 
 **Currently this is still being developed and is not polished, production ready, or released as a public chrome extension.**
 
@@ -26,8 +26,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
   - This plugin does not require any access to api keys
   - It does not send/recieve any data outside of whats provided by your exchange to the exchanges trading site page.
   - Does not use any ads, cookies, data collection or tracking of any kind whatsoever.
-  - It does not use _any_ outside libraries.
-  - It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites.
+  - It simply provides a hotkey order entry layer to existing bitcoin exchange trading web sites, allowing you to place and cancel orders with hotkeys only.
 
 ----------------
 
@@ -55,7 +54,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Display current OFFSET value.
 
 #### What doesnt work/exist:
-- Configuration
+- Configuration (in progress)
 - Stacked orders
 
 ---------------------
@@ -99,10 +98,10 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
 
 
-#### Install
+#### Developer Install
 - Clone the repo to your machine.
 - Add plugin to chrome extensions as an unpacked extension. (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
-- Login to your account on exchange.coinbase.com, beta.bitfinix.com (or the regular www.bitfinex.com, however beta is much better thanks to websockets!!)
+- Login to your account on one of the supported exchanges
 
 >Until custom configuration support is added - changing hotkeys has to be hardcoded using keyCodes in `config.js`.
 
