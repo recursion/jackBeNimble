@@ -1,4 +1,5 @@
 const config = require('../config')
+const {log, logError} = require('../logger')
 const store = require('../store')
 
 module.exports = () => {
@@ -108,6 +109,9 @@ function cancelAll () {
 function displayOffset (v) {
   var homeDiv = getOffsetParentElement()
   var target = getOffsetElement()
+  if (!homeDiv) {
+    logError(`Could not access offset's parent element. Got: ${homeDiv}`)
+  }
   if (!target) {
     var span = document.createElement('span')
     span.id = 'BFX_OFFSET_VALUE'
@@ -128,7 +132,7 @@ function placeBuyOrder (p) {
   if (!config.DEBUG) {
     getBuyButtonElement().click()
   } else {
-    console.log('Simulating buy @ ', p)
+    log('Simulating buy @ ', p)
   }
 }
 
@@ -138,7 +142,7 @@ function placeSellOrder (p) {
   if (!config.DEBUG) {
     getSellButtonElement().click()
   } else {
-    console.log('Simulating sell @ ', p)
+    log('Simulating sell @ ', p)
   }
 }
 

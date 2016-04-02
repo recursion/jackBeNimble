@@ -10,11 +10,6 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
   },
-  stats: {
-    colors: true,
-    reasons: true,
-    chunks: false
-  },
   module: {
     loaders: [
       {

@@ -1,4 +1,5 @@
 const store = require('../store')
+const {log, logError} = require('../logger')
 const config = require('../config')
 
 module.exports = () => {
@@ -142,7 +143,7 @@ function displayOffset (v) {
 
 /**    PLACE A BUY ORDER   */
 function placeBuyOrder (p) {
-  console.log(p)
+  log(p)
   var switchTarget = getBuyTabButtonElement()
   if (switchTarget) {
     switchTarget.click()
@@ -154,15 +155,15 @@ function placeBuyOrder (p) {
           if (!config.DEBUG) {
             target.click()
           } else {
-            console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+            log('DEBUG -> SIMULATING CLICK ON: ', target)
           }
         }, 100)
       } else {
-        console.error('Unable to locate buy button')
+        logError('Unable to locate buy button')
       }
     }, 10)
   } else {
-    console.error('Cannot locate buy button')
+    logError('Cannot locate buy button')
   }
 }
 
@@ -180,15 +181,15 @@ function placeSellOrder (p) {
           if (!config.DEBUG) {
             target.click()
           } else {
-            console.log('DEBUG -> SIMULATING CLICK ON: ', target)
+            log('DEBUG -> SIMULATING CLICK ON: ', target)
           }
         }, 250)
       } else {
-        console.error('Unable to locate sell button')
+        logError('Unable to locate sell button')
       }
     }, 10)
   } else {
-    console.error('No sell tab button found')
+    logError('No sell tab button found')
   }
 }
 

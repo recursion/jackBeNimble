@@ -1,4 +1,5 @@
 // const store = require('../store')
+// const {log, logError, toJSON} = require('../logger')
 
 // this should be the exchange name in lower case letters
 // like coinbase, bitfinex, btcc, kraken - etc

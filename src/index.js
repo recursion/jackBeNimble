@@ -1,7 +1,10 @@
 const keyboardHandlers = require('./keyboardHandlers')
+const {log} = require('./logger')
 const interfaces = require('./interfaces')
 
 let domInterface = null
+
+log('Starting jackBeNimble...')
 
 /** ****************************************
  *      SET PLUGIN LOCATION STRATEGY
@@ -49,3 +52,5 @@ domInterface.init()
 window.addEventListener('keydown', kbc.onKeydown, false)
 window.addEventListener('keypress', kbc.onKeypress, false)
 window.addEventListener('keyup', kbc.onKeyup, false)
+
+log('jackBeNimble started.')

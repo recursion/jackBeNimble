@@ -1,3 +1,4 @@
+const {logError} = require('./logger')
 /* globals chrome */
 
 /**
@@ -24,7 +25,7 @@ function get (keyValue, cb) {
   } else if (typeof keyValue === 'function') {
     chrome.storage.sync.get(null, keyValue)
   } else {
-    console.error('Invalid keyValue type: ', typeof keyValue)
+    logError('Invalid keyValue type: ', typeof keyValue)
   }
 }
 
