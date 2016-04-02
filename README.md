@@ -65,8 +65,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 ###### Adding other exchanges.
 - Add support for new exchanges:
   1. Use the `interface.template.js` file to implement the site specific methods.
-  2. Add the new file to manifest.json.
-  3. Add the interface to the setInteface function in `utilities.controller.js`.
+  2. Add a require for the new interface file in interfaces/index.js ( this will eventually be automated as a proper module loader should be. )
 
 
 #### Todo
