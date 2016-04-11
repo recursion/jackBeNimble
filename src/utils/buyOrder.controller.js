@@ -33,38 +33,48 @@ module.exports = (domInterface) => {
   function hitTheOffer () {
     // get offer price
     // place limit buy at offer price
-    var price = domInterface.getBestOffer()
-    domInterface.placeBuyOrder(price)
+    domInterface.getBestOffer()
+      .then((price) => {
+        domInterface.placeBuyOrder(price)
+      })
   }
 
   /* Bid just above the best bid */
   function bidBetter () {
-    var bestBid = domInterface.getBestBid()
-    var newBid = +bestBid + 0.01
-    domInterface.placeBuyOrder(newBid.toFixed(2))
+    domInterface.getBestBid()
+      .then((bestBid) => {
+        const newBid = +bestBid + 0.01
+        domInterface.placeBuyOrder(newBid.toFixed(2))
+      })
   }
 
   /* bid with the best current bid */
   function bidWithBest () {
-    var bestBid = domInterface.getBestBid()
-    domInterface.placeBuyOrder(bestBid)
+    domInterface.getBestBid()
+      .then((bestBid) => {
+        domInterface.placeBuyOrder(bestBid)
+      })
   }
 
   /* bid 1 offset level below the best bid */
   function bidBelowBest () {
     store.get((settings) => {
-      var bestBid = domInterface.getBestBid()
-      var newBid = +bestBid - settings.offset
-      domInterface.placeBuyOrder(newBid.toFixed(2))
+      domInterface.getBestBid()
+        .then((bestBid) => {
+          var newBid = +bestBid - settings.offset
+          domInterface.placeBuyOrder(newBid.toFixed(2))
+        })
     })
   }
 
   /* bid 2 offset levels below best bid */
   function bidDoubleBelowBest () {
     store.get((settings) => {
-      const bestBid = domInterface.getBestBid()
-      const newBid = +bestBid - (settings.offset * 2)
-      domInterface.placeBuyOrder(newBid.toFixed(2))
+      domInterface.getBestBid()
+        .then((bestBid) => {
+          const newBid = +bestBid - (settings.offset * 2)
+          domInterface.placeBuyOrder(newBid.toFixed(2))
+        })
     })
   }
 }

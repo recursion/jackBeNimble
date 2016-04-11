@@ -1,6 +1,9 @@
 const store = require('../store')
 const {log, logError} = require('../logger')
 const config = require('../config')
+// against my best efforts, we now have to get best bid/ask from the api
+// because coinbase has pulled the final FU move against jackBeNimble - they moved all of their bid/ask data into a canvas element. :(
+const API_URL = 'https://api.exchange.coinbase.com'
 
 module.exports = () => {
   const public_api = {
@@ -212,30 +215,37 @@ function setSellPrice (p) {
 /**
  * GET BEST BID
  * @returns {String} - the current best bid
+ * no longer able to use the DOM for bid info since
+ * coinbase has moved it all into a canvas element
  */
 function getBestBid () {
-  var bid = getBestBidElement()
-  var wholeNum = bid.children[0].innerHTML
-  var decimal1 = bid.children[1].innerHTML
-  var decimal2 = bid.children[2].innerHTML
-
-  var bb = wholeNum + '.' + decimal1 + decimal2
-  return bb
+  return new Promise((resolve, reject) => {
+    fetch(API_URL + '/products/BTC-USD/ticker')
+    .then((res) => {
+      return res.json()
+    })
+    .then((res) => {
+      resolve(res.bid)
+    })
+  })
 }
 
 /**
  * GET BEST Offer
  * @returns {String} - the current best offer
+ * no longer able to use the DOM for offer info since
+ * coinbase has moved it all into a canvas element
  */
 function getBestOffer () {
-  var offer = getBestOfferElement()
-
-  var wholeNum = offer.children[0].innerHTML
-  var decimal1 = offer.children[1].innerHTML
-  var decimal2 = offer.children[2].innerHTML
-
-  var bo = wholeNum + '.' + decimal1 + decimal2
-  return bo
+  return new Promise((resolve, reject) => {
+    fetch(API_URL + '/products/BTC-USD/ticker')
+    .then((res) => {
+      return res.json()
+    })
+    .then((res) => {
+      resolve(res.ask)
+    })
+  })
 }
 
 /** ********************************************************/
@@ -379,7 +389,7 @@ function getLastValidCancelButton (orders) {
  **********************************************************/
 
 function getLotSizeInputElement () {
-  return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input')
 }
 
 function getOrderElements () {
@@ -387,23 +397,23 @@ function getOrderElements () {
 }
 
 function getLotSizeElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input')
+  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input')
 }
 
 function getLimitButtonElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)')
+  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)')
 }
 
 function getMarketButtonElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
+  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
 }
 
 function getBestOfferElement () {
-  return document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable')
+  return document.querySelector('section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable')
 }
 
 function getBestBidElement () {
-  return document.querySelector('body > div:nth-child(10) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable') || document.querySelector('body > div:nth-child(9) > section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable')
+  return document.querySelector('section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable')
 }
 
 function getPriceInputElement () {
@@ -411,23 +421,23 @@ function getPriceInputElement () {
 }
 
 function getSellTabButtonElement () {
-  return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell')
 }
 
 function getSellButtonElement () {
-  return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell') || document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell')
+  return document.querySelector('aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell')
 }
 
 function getBuyTabButtonElement () {
-  return document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy')
 }
 
 function getBuyButtonElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy') || document.querySelector('body > div:nth-child(10) > aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy')
+  return document.querySelector('aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy')
 }
 
 function getOffsetParentElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix') || document.querySelector('body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div')
+  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.clearfix')
 }
 
 function getOffsetElement () {
@@ -435,5 +445,5 @@ function getOffsetElement () {
 }
 
 function getCancelAllButtonElement () {
-  return document.querySelector('body > div:nth-child(9) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a') || document.querySelector('body > div:nth-child(10) > section > div:nth-child(3) > header > div > ul.cancel-all > li > a')
+  return document.querySelector('section > div:nth-child(3) > header > div > ul.cancel-all > li > a')
 }

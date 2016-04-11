@@ -167,8 +167,10 @@ function setSellPrice (p) {
  * @returns {String} - the current best bid
  */
 function getBestBid () {
-  var bestBid = getBestBidElement()
-  return bestBid.innerHTML
+  return new Promise((resolve, reject) => {
+    var bestBid = getBestBidElement()
+    resolve(bestBid.innerHTML)
+  })
 }
 
 /**
@@ -176,8 +178,10 @@ function getBestBid () {
  * @returns {String} - the current best offer
  */
 function getBestOffer () {
-  var bestAsk = getBestOfferElement()
-  return bestAsk.innerHTML
+  return new Promise((resolve, reject) => {
+    var bestAsk = getBestOfferElement()
+    resolve(bestAsk.innerHTML)
+  })
 }
 
 /** *******************************/
