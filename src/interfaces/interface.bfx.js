@@ -41,11 +41,17 @@ let currentLocation
 function reRenderOnLocationChanges () {
   let previousLocation = currentLocation
   currentLocation = window.location.pathname
+
+  // if the location changed - lets re-initialize
   if (previousLocation !== currentLocation) {
     setTimeout(() => {
       init()
-    }, 100)
+    }, 500)
   }
+
+  // unfortunatly we have to poll here
+  // because of the single-page-app nature of bitfinex
+  // when a user changes tabs/pages - we need to re-display the offset
   setTimeout(() => {
     // check for location changes
     reRenderOnLocationChanges()
