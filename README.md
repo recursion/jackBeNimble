@@ -6,8 +6,12 @@ A google chrome extension that provides a sophisticated hotkey order entry syste
 This extension adds fully customizable hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
 - Toggle a price `OFFSET` up and down.
-- Place a bid at current best bid or offer at current best offer.
-- Place an order of `LOTSIZE` at `OFFSET` below best bid or above best offer.
+- Place a variety of orders:
+  - Place an order of `LOTSIZE` at `OFFSET` below best bid or above best offer.
+    - This is a simple, yet powerful pattern, that allows placing an order at any interval in relation to current best bid/offer
+  - Place bid with current best bid or offer with current best offer
+  - Hit the bid/offer
+  - Market orders
 - Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
 On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). For nearly all cases the plugin does not need to make any api calls/use extra data, as its all already provided by the exchange page. That said, coinbase exchange recently update the way they display order info, and because it is all displayed from a canvas element, the plugin must request best bid/ask through the public api.
