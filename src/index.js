@@ -1,6 +1,8 @@
-const keyboardHandlers = require('./keyboardHandlers')
+// const keyboardHandlers = require('./keyboardHandlers')
 const {log} = require('./logger')
 const interfaces = require('./interfaces')
+const defaultHotkeys = require('../hotkey.defaults.js')
+const hotkeyCommander = require('hotkey-commander')
 
 let domInterface = null
 
@@ -32,12 +34,19 @@ if (!domInterface) {
 }
 
 // load up the plugins methods
-const utils = require('./utils')(domInterface)
+const actions = require('./utils')(domInterface)
 
 // create a keyboard handler
 // TODO:
 // change to keyboard commander
-const kbc = keyboardHandlers(utils)
+
+// const kbc = keyboardHandlers(utils)
+hotkeyCommander.Commander({hotkeys: defaultHotkeys, listenerEl: window})
+  .then((emitter) => {
+    require('./keyboardHandlers')(emitter, actions)
+    // hand the emitter off to our keyboard event handlers
+    // so it can setup the event handlers
+  })
 
  /**
  * Initialize the interface
@@ -45,12 +54,5 @@ const kbc = keyboardHandlers(utils)
  * - add the default offset value to the display
  */
 domInterface.init()
-
-/** ****************************************
- * - setup keyboard event listeners
- ****************************************/
-window.addEventListener('keydown', kbc.onKeydown, false)
-window.addEventListener('keypress', kbc.onKeypress, false)
-window.addEventListener('keyup', kbc.onKeyup, false)
 
 log('jackBeNimble started.')

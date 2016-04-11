@@ -1,153 +1,101 @@
-const store = require('./store')
+/* **************************************
+ *            KEYBOARD HANDLERS
+ ****************************************/
+module.exports = function (emitter, actionsObject) {
+/**
+ *            TOGGLE KEYS
+ */
 
-module.exports = function (actionsObject) {
+  // LOTSIZE UP
+  emitter.on('TOGGLE_LOTSIZE_UP', () => {
+    console.log('got it!')
+    actionsObject.toggleLotSize('up')
+  })
 
-  var public_api = {
-    onKeydown: onKeydown,
-    onKeypress: onKeypress,
-    onKeyup: onKeyup
-  }
+  emitter.on('TOGGLE_LOTSIZE_DOWN', () => {
+    actionsObject.toggleLotSize('down')
+  })
 
-  return public_api
+  emitter.on('TOGGLE_OFFSET_DOWN', () => {
+    actionsObject.toggleOffset('down')
+  })
 
-  /* **************************************
-   *            KEYBOARD HANDLERS
-   * @TODO convert to an engine that can handle more than one key
-   ****************************************/
-  function onKeydown (e) {
-    store.get((settings) => {
-      switch(e.keyCode){
-        /**************************************
-         *            TOGGLE KEYS
-         *************************************/
+  emitter.on('TOGGLE_OFFSET_UP', () => {
+    actionsObject.toggleOffset('up')
+  })
 
-        // LOTSIZE UP
-        case settings.KEYS.TOGGLE_LOTSIZE_UP:
-          actionsObject.toggleLotSize('up');
-          break;
+/**
+ *          BUY ORDER KEYS
+ */
 
-        // LOTSIZE DOWN
-        case settings.KEYS.TOGGLE_LOTSIZE_DOWN:
-          actionsObject.toggleLotSize('down');
-          break;
+  emitter.on('BID_BETTER', () => {
+    actionsObject.bidBetter()
+  })
 
-          // OFFSET UP
-        case settings.KEYS.TOGGLE_OFFSET_UP:
-          actionsObject.toggleOffset('up');
-          break;
+  emitter.on('BID_WITH_BEST_BID', () => {
+    actionsObject.bidWithBest()
+  })
 
-          // OFFSET DOWN
-        case settings.KEYS.TOGGLE_OFFSET_DOWN:
-          actionsObject.toggleOffset('down');
-          break;
+  emitter.on('BID_BELOW_BEST', () => {
+    actionsObject.bidBelowBest()
+  })
 
+  emitter.on('BID_DOUBLE_BELOW_BEST', () => {
+    actionsObject.bidDoubleBelowBest()
+  })
 
+  emitter.on('HIT_THE_OFFER', () => {
+    actionsObject.hitTheOffer()
+  })
 
-        /********************************
-         *          BUY ORDER KEYS
-         ********************************/
-        // place best limit bid order on the market
-        case settings.KEYS.BID_BETTER:
-          actionsObject.bidBetter();
-          break;
+  emitter.on('MARKET_BUY', () => {
+    actionsObject.marketBuy()
+  })
 
-        // place bid at current best bid
-        case settings.KEYS.BID_WITH_BEST_BID:
-          actionsObject.bidWithBest();
-          break;
+/**
+ *           SELL ORDER KEYS
+ */
+  emitter.on('OFFER_BETTER', () => {
+    actionsObject.offerBetter()
+  })
 
-        // Place bid at (INCR) below the current best bid
-        case settings.KEYS.BID_BELOW_BEST:
-          actionsObject.bidBelowBest();
-          break;
+  emitter.on('OFFER_WITH_BEST_ASK', () => {
+    actionsObject.offerWithBest()
+  })
 
-        // Place bid at (INCR) below the current best bid
-        case settings.KEYS.BID_DOUBLE_BELOW_BEST:
-          actionsObject.bidDoubleBelowBest();
-          break;
+  emitter.on('OFFER_ABOVE_BEST', () => {
+    actionsObject.offerAboveBest()
+  })
 
-        // place limit order at the current ask price
-        case settings.KEYS.HIT_THE_OFFER:
-          actionsObject.hitTheOffer();
-          break;
+  emitter.on('OFFER_DOUBLE_ABOVE_BEST', () => {
+    actionsObject.offerDoubleAboveBest()
+  })
 
+  emitter.on('HIT_THE_BID', () => {
+    actionsObject.hitTheBid()
+  })
 
-        // place market buy
-        case settings.KEYS.MARKET_BUY:
-          actionsObject.marketBuy();
-          break;
+  emitter.on('MARKET_SELL', () => {
+    actionsObject.marketSell()
+  })
 
+/**
+ *      CANCEL ORDER KEYS
+ */
 
+  emitter.on('CANCEL_ALL', () => {
+    actionsObject.cancelBids()
+  })
 
-        /********************************
-         *           SELL ORDER KEYS
-         ********************************/
-        // place the best limit sell on the market
-        case settings.KEYS.OFFER_BETTER:
-          actionsObject.offerBetter();
-          break;
+  emitter.on('CANCEL_OFFERS', () => {
+    actionsObject.cancelOffers()
+  })
 
-        // place offer at current best ask
-        case settings.KEYS.OFFER_WITH_BEST_ASK:
-          actionsObject.offerWithBest();
-          break;
+  emitter.on('CANCEL_LAST', () => {
+    actionsObject.cancelLast()
+  })
 
-        // place offer at current best ask
-        case settings.KEYS.OFFER_ABOVE_BEST:
-          actionsObject.offerAboveBest();
-          break;
-
-        // place offer at current best ask
-        case settings.KEYS.OFFER_DOUBLE_ABOVE_BEST:
-          actionsObject.offerDoubleAboveBest();
-          break;
-
-        // place limit order at the current bid price
-        case settings.KEYS.HIT_THE_BID:
-          actionsObject.hitTheBid();
-          break;
-
-        // place market sell
-        case settings.KEYS.MARKET_SELL:
-          actionsObject.marketSell();
-          break;
-
-
-        /********************************
-         *      CANCEL ORDER KEYS
-         ********************************/
-        // cancel all bids
-        case settings.KEYS.CANCEL_BIDS:
-          actionsObject.cancelBids();
-          break;
-
-        // cancel all order
-        case settings.KEYS.CANCEL_OFFERS:
-          actionsObject.cancelOffers();
-          break;
-
-        // cancel last order
-        case settings.KEYS.CANCEL_LAST:
-          actionsObject.cancelLast();
-          break;
-
-        // cancel all order
-        case settings.KEYS.CANCEL_ALL:
-          actionsObject.cancelAll();
-          break;
-
-        default:
-          console.log('Key: ', e.keyCode);
-          break
-      }
-    });
-  }
-
-  function onKeypress(e){
-    //console.log('Keyup', e);
-  }
-
-  function onKeyup(e){
-
-  }
+  emitter.on('CANCEL_ALL', () => {
+    actionsObject.cancelAll()
+  })
 }

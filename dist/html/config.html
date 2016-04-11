@@ -3,6 +3,7 @@
   <head>
     <title>jackBeNimble</title>
     <link href="../css/config.css" rel="stylesheet">
+    <link href="../css/hotkeyCommander.css" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -20,121 +21,9 @@
         </ol>
       <li>Cancel all orders using designated cancel key.</li>
     </ul>
-    <div class="keybindingsBox">
-      <h5>Buy Keybindings</h5>
-      <table class="keybindingsTable">
-        <colgroup span="2"></colgroup>
-        <tr>
-          <th>Action</th>
-          <th>Key</th>
-        </tr>
-        <tr>
-          <td>Buy at Market</td>
-          <td>g</td>
-        </tr>
-        <tr>
-          <td>Bid 0.01 above best bid</td>
-          <td>f</td>
-        </tr>
-        <tr>
-          <td>Bid with best bid</td>
-          <td>d</td>
-        </tr>
-        <tr>
-          <td>Bid offset below best bid</td>
-          <td>s</td>
-        </tr>
-        <tr>
-          <td>Bid 2x offset below best bid</td>
-          <td>a</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="keybindingsBox">
-      <h5>Sell Keybindings</h5>
-      <table class="keybindingsTable">
-        <colgroup span="2"></colgroup>
-        <tr>
-          <th>Action</th>
-          <th>Key</th>
-        </tr>
-        <tr>
-          <td>Sell at Market</td>
-          <td>h</td>
-        </tr>
-        <tr>
-          <td>Offer 0.01 below best offer</td>
-          <td>j</td>
-        </tr>
-        <tr>
-          <td>Offer with best offer</td>
-          <td>k</td>
-        </tr>
-        <tr>
-          <td>Offer offset above best offer</td>
-          <td>l</td>
-        </tr>
-        <tr>
-          <td>Offer 2x offset best offer</td>
-          <td>;</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="keybindingsBox ">
-      <h5>Cancel Keybindings</h5>
-      <table class="keybindingsTable">
-        <colgroup span="2"></colgroup>
-        <tr>
-          <th>Action</th>
-          <th>Key</th>
-        </tr>
-        <tr>
-          <td>Cancel All</td>
-          <td>y</td>
-        </tr>
-        <tr>
-          <td>Cancel Last</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Cancel Bids</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Cancel Asks</td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="keybindingsBox ">
-      <h5>Toggle Keybindings</h5>
-      <table class="keybindingsTable">
-        <colgroup span="2"></colgroup>
-        <tr>
-          <th>Action</th>
-          <th>Key</th>
-        </tr>
-        <tr>
-          <td>Increase Lotsize</td>
-          <td>\</td>
-        </tr>
-        <tr>
-          <td>Decrease Lotsize</td>
-          <td>'</td>
-        </tr>
-        <tr>
-          <td>Increase Offset</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Decrease Offset</td>
-          <td>=</td>
-        </tr>
-      </table>
-    </div>
-
+    <div id="hotkeyCommander"></div>
+    <script src="../hotkeyCommander.js"></script>
+    <script src="../hotkey.defaults.js"></script>
+    <script src='../hkc_setup.js'></script>
   </body>
 </html>

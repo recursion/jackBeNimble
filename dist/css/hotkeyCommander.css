@@ -1,18 +1,104 @@
-.hotkey-config-block {
+#hotkeyCommander:focus{
+  outline: none;
+}
+/* block level selectors */
+.hotkey-config {
   display: block;
+  max-width: 600px;
   margin: 0 auto;
   padding: 0;
+  border: 1px solid black;
+  align-content: middle;
+  vertical-align: middle;
 }
-
-.recording {
-  background-color: red;
-}
-
-.hotkey-config {
-  display: inline-block;
-  width: 25%;
-  border: solid 1px black;
+.hotkey-category {
+  text-align: center;
+  margin: 0;
   padding: 0;
+  background-color: black;
+  color: oldlace;
+  letter-spacing: 10px;
+  font-weight: 500;
+}
+.config-label {
+  display: inline-block;
+}
+.milky {
+  background-color: rgba(100, 100, 100, 0.88);
 }
 
+.panel {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+}
 
+.alert {
+  transform: translateY(-50%);
+  margin: auto;
+  max-width: 200px;
+  min-width: 100px;
+  max-height: 100px;
+  min-height: 40px;
+  height: 10%;
+  width: 85%;
+
+  padding: 5px;
+
+  border: 3px dotted black;
+  border-radius: 5px;
+
+  text-align: center;
+  font-weight: bold;
+  text-shadow: -1px -1px 1px black, 1px 1px 1px white;
+}
+/* element selectors */
+.alert-message {
+  color: white;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+.key-description {
+  white-space: nowrap;
+  overflow: hidden;
+  color: black;
+  width: 58%;
+  font-size: .7em;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-align: right;
+}
+.key-recorder-btn {
+  width: 40%;
+  box-shadow: -1px -1px 1px white, 1px 1px 1px black;
+  text-shadow: -1px -1px 1px black, 1px 1px 1px white;
+  color: lightgrey;
+  font-weight: lighter;
+  text-align: center;
+}
+/* psuedo selectors and modifier selectors */
+.key-recorder-btn:hover {
+  color: white;
+  font-weight: bold;
+  box-shadow: -1px -1px 1px black, 1px 1px 1px white;
+}
+.key-recorder-btn--idle {
+  background-color: grey;
+}
+.key-recorder-btn--active{
+  background-color: #ff1111;
+}
+.alert--warning {
+  background-color: orangered;
+  box-shadow: 5px 5px 5px black;
+}
+
+/* common modifiers */
+.right {
+  clear: both;
+  float: right;
+}
