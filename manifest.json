@@ -9,9 +9,7 @@
     "default_title": "jackBeNimble"
   },
 
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage"]
 
   "content_scripts": [
     {
@@ -23,8 +21,6 @@
         // Bitfinex URLs
         "https://www.bitfinex.com/*"
       ],
-
-      "css": ["dist/main.css"],
 
       "js": [
         "dist/jackBeNimble.js"

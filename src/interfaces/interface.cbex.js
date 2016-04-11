@@ -137,6 +137,8 @@ function displayOffset (v) {
     var newEl = document.createElement('span')
     newEl.id = 'CBEX_OFFSET_VALUE'
     newEl.innerHTML = 'Offset: ' + v
+    newEl.style.fontSize = '15px'
+    newEl.style.fontWeight = 'bold'
     listItem.appendChild(newEl)
     homeDiv.appendChild(listItem)
   } else {

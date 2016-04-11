@@ -8,7 +8,6 @@ module.exports = function (emitter, actionsObject) {
 
   // LOTSIZE UP
   emitter.on('TOGGLE_LOTSIZE_UP', () => {
-    console.log('got it!')
     actionsObject.toggleLotSize('up')
   })
 

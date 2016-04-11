@@ -1,4 +1,6 @@
 var hotkeys = HKCDefaults
 hotkeyCommander.Configurator({hotkeys: hotkeys, targetEl: document.getElementById('hotkeyCommander')})
 
-console.log(chrome, chrome.storage)
+setTimeout(() => {
+  window.scrollTo(0, 0)
+}, 250)

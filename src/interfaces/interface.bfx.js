@@ -34,16 +34,45 @@ module.exports = () => {
 
   return public_api
 }
+
+// track the URL location and reload the plugin
+// when the local URL changes
+let currentLocation
+function reRenderOnLocationChanges () {
+  let previousLocation = currentLocation
+  currentLocation = window.location.pathname
+  if (previousLocation !== currentLocation) {
+    setTimeout(() => {
+      init()
+    }, 100)
+  }
+  setTimeout(() => {
+    // check for location changes
+    reRenderOnLocationChanges()
+  }, 250)
+}
+
 /**
  *              INIT
  *
  *  get existing settings and apply them
  */
 function init () {
-  store.get((settings) => {
-    displayLotsize(settings.lotsize)
-    displayOffset(settings.offset)
-  })
+  reRenderOnLocationChanges()
+
+  // try to get the correct element
+  if (canGetRootElement()) {
+    // if we get it, intialize
+    store.get((settings) => {
+      displayLotsize(settings.lotsize)
+      displayOffset(settings.offset)
+    })
+  } else {
+    setTimeout(() => {
+      init()
+    }, 250)
+  }
+  // otherwise keep trying until we can
 }
 
 /*  MARKET BUY  */
@@ -116,6 +145,8 @@ function displayOffset (v) {
     var span = document.createElement('span')
     span.id = 'BFX_OFFSET_VALUE'
     span.innerHTML = 'Offset: ' + v
+    span.style.padding = '3px'
+    span.style.border = '1px solid black'
     homeDiv.appendChild(span)
   } else {
     target.innerHTML = 'Offset: ' + v
@@ -187,6 +218,18 @@ function getBestOffer () {
 /** *******************************/
 /*        Private functions       */
 /** *******************************/
+
+function canGetRootElement () {
+  // check for the element we mount offset data to
+  const test = getOffsetParentElement()
+  // if it exists, return true
+  if (test) {
+    return true
+  } else {
+    return false
+  }
+  // otherwise return false
+}
 
 /**
 *  Gets all orders currently on the page
@@ -277,7 +320,7 @@ function isSellOrder (order) {
  **********************************************************/
 
 function getOffsetParentElement () {
-  return document.querySelector('#orders > div > ul > li > div.collapsible-header') || document.querySelector('#positions > div > ul > li > div.collapsible-header')
+  return document.querySelector('#order-form > div.col.options > div > div')
 }
 
 function getOffsetElement () {
