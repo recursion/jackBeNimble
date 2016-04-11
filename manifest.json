@@ -24,9 +24,12 @@
         "https://www.bitfinex.com/*"
       ],
 
-
       "js": [
         "dist/jackBeNimble.js"
+      ],
+
+      "css": [
+        "dist/css/main.css"
       ],
 
       "run_at": "document_idle"

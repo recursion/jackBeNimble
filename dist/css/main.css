@@ -11,16 +11,11 @@
 /*             COINBASE STYLING          */
 /*****************************************/
 /* OFFSET */
-#CBEX_OFFSET_VALUE{
-  font-size: 1.5em;
+#CBEX_OFFSET_VALUE {
+  color: red !important;
+  font-size: 3.5em;
   font-weight: bold;
   text-shadow: 1px 1px 1px black;
-  text-align: center;
+  text-align: center:w;
   margin: 0 auto;
-}
-
-/* LOTSIZE LABEL */
-body > div:nth-child(10) > aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > span > li:nth-child(1) > div > ul > li {
-  position: relative !important;
-  top: 15px !important;
 }
