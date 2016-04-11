@@ -3,21 +3,17 @@
 A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com),and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. The extension allows you to easily place orders of a (hotkey adjustable) size at any (hotkey adjustable) offset in relation to the current best bid/offer.
 
 
-This extension adds hotkeys that allow you to:
+This extension adds fully customizable hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
 - Toggle a price `OFFSET` up and down.
 - Place a bid at current best bid or offer at current best offer.
 - Place an order of `LOTSIZE` at `OFFSET` below best bid or above best offer.
 - Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
-On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size).
-
-**Currently this is still being developed and is not polished, production ready, or released as a public chrome extension.**
-
-**It is however, highly usable.**
+On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). For nearly all cases the plugin does not need to make any api calls/use extra data, as its all already provided by the exchange page. That said, coinbase exchange recently update the way they display order info, and because it is all displayed from a canvas element, the plugin must request best bid/ask through the public api.
 
 ----------
-##### If you use this and like it, feel free to send some satoshi love my way!
+##### If you use this and like it send me some satoshi's, or dont... it's all good!!
 `37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9`
 
 -----------------------
@@ -37,9 +33,9 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 ###### *Jack be nimble, jack be quick. Jack jumped over the candle stick!*
 ---------------
 
-
 #### What works:
 - Support for bitfinex and coinbase exchange.
+- Full hotkey configuration.
 - Hotkey order entry.
   - Bid/Offer with current best bid/offer
   - Bid/Offer below/above the market by `OFFSET`
@@ -52,10 +48,6 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Cancel all bids
 - Cancel all offers
 - Display current OFFSET value.
-
-#### What doesnt work/exist:
-- Configuration (in progress)
-- Stacked orders
 
 ---------------------
 
@@ -71,21 +63,7 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 #### Todo
 ##### Features
 - Help/Tutoral (general work/polish on any front-end stuff).
-- Easy key assignment config through key recording.
-  - Ctrl/Alt-key support.
 - On/off switch (and hotkey?).
-- Stack Orders
-  - Stack bid order.
-    - This will place a pyramid of bids (i.e. 1 lot @ 300, 3 lots at 295, 5 lots @ 290)
-  - Stack sell order.
-    - This will place a pyramid of offers (i.e. 1 lot @ 300, 3 lots at 305, 5 lots @ 310)
-  - Move stack orders up.
-    - Adjust a stack of buy orders up to the current market levels.
-  - Move stack orders down.
-    - Adjust a stack of sell orders to the current market levels.
-- More refactoring. I fear this thing is way too much of a blob object, as it started from a very simple proof of concept - and just kept growing in silly hackfest fashion! Some refactoring has begun, but Im not satisfied with its current implementation. More seperation of concerns is needed for proper growth/maintenance.
-  - Start using dependency injection where applicable instead of just global blob object.
-- Coinbase page elements change depending on the size of the display. Currently coinbase elemtns are being accessed through childNode indexing, which only works in a given display size. We need to either make the selectors more specific so that they work in all display sizes, or construct selectors for a variety of display ranges.
 
 -----------------
 
@@ -102,39 +80,4 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 - Add plugin to chrome extensions as an unpacked extension. (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
 - Login to your account on one of the supported exchanges
 
->Until custom configuration support is added - changing hotkeys has to be hardcoded using keyCodes in `config.js`.
-
----------
-##### Things to know:
-1. Currently hotkeys are hardwired, but custom configuration is planned.
-2. The keys may seem strange, but its based on using your keyboards home keys, bidding with left hand, offering with right.
-3. Lot size can be increased up and down.
-4. There is an `<OFFSET>` value which is displayed on the page in the 'Margin' table header. `<OFFSET>` is the value at which orders are place above/below current market ask/bid.
-
-## Keymap
-| Function | Key |
-| --------|----------|
-|    |
-| **Controls** |
-| Increase Lot size: | - |
-| Decrease Lot size: | = |
-| Increase `<OFFSET>`: | \ |
-| Decrease `<OFFSET>`: | ' |
-| Cancel all orders: | y |
-| Cancel last order: | t |
-|    |
-| **Buy Orders** |
-| Market buy: | g |
-| Bid 0.01 above best bid: | f |
-| Bid at best bid: | d |
-| Bid `<OFFSET>` below market: | s |
-| Bid `<OFFSET * 2>` below market | a |
-|    |
-| **Sell Orders** |
-| Market sell: | h |
-| Offer 0.01 below best ask: | j |
-| Offer at best ask: | k |
-| Offer `<OFFSET>` above best offer: | l |
-| Offer `<OFFSET * 2>` above best offer| ; |
-
-
+- Currently the integration with hotkey commander has not been optimized, and so there are a few files (hotkeyCommander.js and hotkey.defaults.js) currently kept in 2 places - root dir and dist/. This will be improved upon soon.
