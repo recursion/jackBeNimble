@@ -14,7 +14,7 @@ This extension adds fully customizable hotkeys that allow you to:
   - Market orders
 - Cancel all orders / Cancel last order / Cancel all bids / Cancel all offers.
 
-On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing bids and offers, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). For nearly all cases the plugin does not need to make any api calls/use extra data, as its all already provided by the exchange page. That said, coinbase exchange recently update the way they display order info, and because it is all displayed from a canvas element, the plugin must request best bid/ask through the public api.
+On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing and canceling orders, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). For nearly all cases the plugin does not need to make any api calls/use extra data, as its all already provided by the exchange page. That said, coinbase exchange recently update the way they display order info, and because it is all displayed from a canvas element, the plugin must request best bid/ask through the public api.
 
 ----------
 ##### If you use this and like it send me some satoshi's, or dont... it's all good!!
@@ -30,14 +30,21 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 
 ----------------
 
-<small>*Disclaimer: Investing and/or trading are risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not do it. If you do, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog,  at any time, for any reason.*</small>
+<small>*Disclaimer: Investing and/or trading are risky and can have very negative effects on all sorts of things including your mind and bank account. You probably should just not do it. If you do, you are doing so at your own risk, and you should be a capable, conscientious, and competent risk manager. Neither I nor this software is in anyway responsible for anything that happens to you, your bank account, your computer, anyone you know, or even your dog, at any time, for any reason.*</small>
 
 
 ----------------------
 ###### *Jack be nimble, jack be quick. Jack jumped over the candle stick!*
 ---------------
 
-#### What works:
+## Usage
+
+- The concept is that you have lot size, and an `OFFSET` for placing orders.
+- `OFFSET` is the value used to determine how far from the best bid or best offer you want your order to be.
+- Use hotkeys to change lot size and `OFFSET` value.
+- Use the home row keys (or your preffered keys) on your keyboard to place (ord cancel) orders at various intervals from the best bid or best offer.
+
+#### Features:
 - Support for bitfinex and coinbase exchange.
 - Full hotkey configuration.
 - Hotkey order entry.
@@ -71,12 +78,6 @@ On a slightly more technical side, this plugin simply adds keyboard event listen
 
 -----------------
 
-## Usage
-
-- The concept is that you have lot size, and an `OFFSET` for placing orders.
-- `OFFSET` is the value used to determine how far from the best bid or best off you want your order to be.
-- Use hotkeys to change lot size and `OFFSET` value.
-- Use the home row keys on your keyboard to place orders at various intervals from the best bid or best offer.
 
 
 #### Developer Install

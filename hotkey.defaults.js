@@ -6,39 +6,6 @@
 // Define hotkeyCodes here
 module.exports = [
   {
-    category: 'CANCEL_KEYS',
-    actions: [
-      {
-        name: 'CANCEL_ALL',
-        keyCode: 89,
-        ctrlKey: false,
-        shiftKey: false,
-        altKey: false
-      },
-      {
-        name: 'CANCEL_LAST',
-        keyCode: 84,
-        ctrlKey: false,
-        shiftKey: false,
-        altKey: false
-      },
-      {
-        name: 'CANCEL_BIDS',
-        keyCode: 82,
-        ctrlKey: false,
-        shiftKey: false,
-        altKey: false
-      },
-      {
-        name: 'CANCEL_OFFERS',
-        keyCode: 85,
-        ctrlKey: false,
-        shiftKey: false,
-        altKey: false
-      }
-    ]
-  },
-  {
     category: 'TOGGLE_KEYS',
     actions: [
       {
@@ -65,6 +32,39 @@ module.exports = [
       {
         name: 'TOGGLE_OFFSET_DOWN',
         keyCode: 187,
+        ctrlKey: false,
+        shiftKey: false,
+        altKey: false
+      }
+    ]
+  },
+  {
+    category: 'CANCEL_KEYS',
+    actions: [
+      {
+        name: 'CANCEL_ALL',
+        keyCode: 89,
+        ctrlKey: false,
+        shiftKey: false,
+        altKey: false
+      },
+      {
+        name: 'CANCEL_LAST',
+        keyCode: 84,
+        ctrlKey: false,
+        shiftKey: false,
+        altKey: false
+      },
+      {
+        name: 'CANCEL_BIDS',
+        keyCode: 82,
+        ctrlKey: false,
+        shiftKey: false,
+        altKey: false
+      },
+      {
+        name: 'CANCEL_OFFERS',
+        keyCode: 85,
         ctrlKey: false,
         shiftKey: false,
         altKey: false

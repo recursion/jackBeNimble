@@ -152,8 +152,13 @@ function displayOffset (v) {
     var span = document.createElement('span')
     span.id = 'BFX_OFFSET_VALUE'
     span.innerHTML = 'Offset: ' + v
+
+    // styling it here cause I couldnt get silly chrome extension to load css anymore
+    // (it worked at one point..... )
     span.style.padding = '3px'
+    span.style.backgroundColor = 'white'
     span.style.border = '1px solid black'
+
     homeDiv.appendChild(span)
   } else {
     target.innerHTML = 'Offset: ' + v

@@ -8,6 +8,8 @@ let domInterface = null
 
 log('Starting jackBeNimble...')
 
+require('./utils/loadSettings')()
+
 /** ****************************************
  *      SET PLUGIN LOCATION STRATEGY
  ********************************************/
