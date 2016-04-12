@@ -1,6 +1,6 @@
-const store = require('../store')
-const {log, logError} = require('../logger')
-const config = require('../config')
+const store = require('../utils/store')
+const {log, logError} = require('../utils/logger')
+
 // against my best efforts, we now have to get best bid/ask from the api
 // because coinbase has pulled the final FU move against jackBeNimble - they moved all of their bid/ask data into a canvas element. :(
 const API_URL = 'https://api.exchange.coinbase.com'
@@ -157,11 +157,7 @@ function placeBuyOrder (p) {
       if (target) {
         setBuyPrice(p)
         setTimeout(() => {
-          if (!config.DEBUG) {
-            target.click()
-          } else {
-            log('DEBUG -> SIMULATING CLICK ON: ', target)
-          }
+          target.click()
         }, 100)
       } else {
         logError('Unable to locate buy button')
@@ -183,11 +179,7 @@ function placeSellOrder (p) {
       if (target) {
         setSellPrice(p)
         setTimeout(() => {
-          if (!config.DEBUG) {
-            target.click()
-          } else {
-            log('DEBUG -> SIMULATING CLICK ON: ', target)
-          }
+          target.click()
         }, 250)
       } else {
         logError('Unable to locate sell button')

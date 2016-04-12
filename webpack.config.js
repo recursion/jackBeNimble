@@ -2,10 +2,13 @@ const path = require('path')
 
 module.exports = {
   context: __dirname,
-  entry: './src/index.js',
+  entry: {
+    jackBeNimble: './src/jackBeNimble.js',
+    config: './src/config.js'
+  },
   output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'jackBeNimble.js'
+    path: path.join(__dirname, '/dist/js'),
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']

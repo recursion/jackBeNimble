@@ -2,7 +2,7 @@
   "name": "jack-be-nimble",
   "version": "0.0.6",
   "description": "A google chrome extension that provides easy hotkey order entry for some bitcoin exchange trading sites.",
-  "main": "index.js",
+  "main": "dist/js/jackBeNimble.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",

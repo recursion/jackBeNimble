@@ -1,4 +1,4 @@
-const utils = {}
+const controller = {}
 const buyOrderController = require('./buyOrder.controller.js')
 const sellOrderController = require('./sellOrder.controller.js')
 const utilsController = require('./utils.controller.js')
@@ -14,12 +14,12 @@ const utilsController = require('./utils.controller.js')
 // the active domInterface obect must be passed in
 module.exports = (domInterface) => {
   // Assign each part of our utils package on to one object
-  Object.assign(utils, buyOrderController(domInterface))
+  Object.assign(controller, buyOrderController(domInterface))
 
-  Object.assign(utils, sellOrderController(domInterface))
+  Object.assign(controller, sellOrderController(domInterface))
 
-  Object.assign(utils, utilsController(domInterface))
+  Object.assign(controller, utilsController(domInterface))
 
   // return that object
-  return utils
+  return controller
 }

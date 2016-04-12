@@ -1,5 +1,5 @@
 body {
-  width: 300px;
+  width: 275px;
   margin: auto;
 }
 
@@ -9,38 +9,22 @@ h1, h3, h5 {
   text-align: center;
 }
 
-.keybindingsTable {
-  margin: 0 auto;
-  font-size: .85em;
-}
-
-.keybindingsBox {
-  display: block;
-  margin: 0 auto;
-  width: 75%;
-  background-color: grey;
-  border: 1px solid black;
-  box-shadow: 1px 1px 1px green;
-}
-.right {
-  float: right;
-}
-
-.left {
-  float: left;
-}
-
 body > header > h5{
   letter-spacing: 0.5em;
+}
+
+header > h3 {
+  letter-spacing: 0.4em;
+  text-shadow: 1px 1px 1px grey, -1px -1px 1px white;
 }
 
 header {
   padding: 0;
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 1px;
   background: grey;
   border: 1px solid black;
-  font-size: 2em;
+  font-size: 1.25em;
   text-align: center;
   letter-spacing: 0.1em;
 }
@@ -48,14 +32,5 @@ header {
 header > h5 {
   background-color: black;
   color: white;
-  font-size: .25em;
+  font-size: .15em;
 }
-
-td{
-  padding: 2px;
-  text-align: center;
-  border: 1px solid black;
-}
-
-tr:nth-child(even) {background: #CCC}
-tr:nth-child(odd) {background: #FFF}

@@ -82,7 +82,7 @@ module.exports = function (emitter, actionsObject) {
  *      CANCEL ORDER KEYS
  */
 
-  emitter.on('CANCEL_ALL', () => {
+  emitter.on('CANCEL_BIDS', () => {
     actionsObject.cancelBids()
   })
 

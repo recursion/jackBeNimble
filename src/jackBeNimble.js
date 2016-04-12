@@ -1,8 +1,8 @@
 // const keyboardHandlers = require('./keyboardHandlers')
-const {log} = require('./logger')
+const hotkeyCommander = require('hotkey-commander')
+const {log} = require('./utils/logger')
 const interfaces = require('./interfaces')
 const defaultHotkeys = require('../hotkey.defaults.js')
-const hotkeyCommander = require('hotkey-commander')
 
 let domInterface = null
 
@@ -33,26 +33,17 @@ if (!domInterface) {
   throw new Error('Unable to set domInterface')
 }
 
-// load up the plugins methods
-const actions = require('./utils')(domInterface)
+// the controller holds all the methods that can be called on an interface (which is what iteracts with an exchanges trading page)
+const controller = require('./controller')(domInterface)
 
-// create a keyboard handler
-// TODO:
-// change to keyboard commander
-
-// const kbc = keyboardHandlers(utils)
+// hotkey commander maps all of our hotkey actions to the users hotkey settings
+// and allows the user to change those settings
 hotkeyCommander.Commander({hotkeys: defaultHotkeys, listenerEl: window})
   .then((emitter) => {
-    require('./keyboardHandlers')(emitter, actions)
-    // hand the emitter off to our keyboard event handlers
-    // so it can setup the event handlers
+    // pass commanders emitter and the controller objects to our keyboardHandlers
+    require('./utils/keyboardHandlers')(emitter, controller)
   })
 
- /**
- * Initialize the interface
- * - sets default lotsize
- * - add the default offset value to the display
- */
 domInterface.init()
 
 log('jackBeNimble started.')

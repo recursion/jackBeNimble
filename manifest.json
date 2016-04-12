@@ -5,11 +5,11 @@
   "description": "Adds order entry hotkeys for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
   "version": "0.0.5",
   "browser_action": {
-    "default_popup": "dist/html/config.html",
+    "default_popup": "dist/config.html",
     "default_title": "jackBeNimble"
   },
 
-  "permissions": ["storage"]
+  "permissions": ["storage"],
 
   "content_scripts": [
     {
@@ -23,7 +23,7 @@
       ],
 
       "js": [
-        "dist/jackBeNimble.js"
+        "dist/js/jackBeNimble.js"
       ],
 
       "run_at": "document_idle"

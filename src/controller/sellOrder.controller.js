@@ -1,4 +1,4 @@
-const store = require('../store')
+const store = require('../utils/store')
 
 module.exports = (domInterface) => {
   return {

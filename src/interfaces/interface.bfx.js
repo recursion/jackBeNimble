@@ -1,6 +1,5 @@
-const config = require('../config')
-const {log, logError} = require('../logger')
-const store = require('../store')
+const {logError} = require('../utils/logger')
+const store = require('../utils/store')
 
 module.exports = () => {
   const public_api = {
@@ -84,7 +83,7 @@ function init () {
 /*  MARKET BUY  */
 function marketBuy () {
   getBuyOrderTypeElement().value = 'MARKET'
-  config.placeBuyOrder()
+  placeBuyOrder()
   getBuyOrderTypeElement().value = 'LIMIT'
 }
 
@@ -97,8 +96,10 @@ function marketSell () {
 
 /* CANCEL BIDS */
 function cancelBids () {
+  console.log('Yay')
   var orders = getOrders()
   orders.forEach((order) => {
+    console.log(order)
     if (order.side === 'buy') {
       setTimeout(() => {
         order.cancelButton.click()
@@ -166,21 +167,13 @@ function displayLotsize (v) {
 /**    PLACE A BUY ORDER   */
 function placeBuyOrder (p) {
   setBuyPrice(p)
-  if (!config.DEBUG) {
-    getBuyButtonElement().click()
-  } else {
-    log('Simulating buy @ ', p)
-  }
+  getBuyButtonElement().click()
 }
 
 /**    PLACE A SELL ORDER   */
 function placeSellOrder (p) {
   setSellPrice(p)
-  if (!config.DEBUG) {
-    getSellButtonElement().click()
-  } else {
-    log('Simulating sell @ ', p)
-  }
+  getSellButtonElement().click()
 }
 
 /**
