@@ -5,4 +5,4 @@ hotkeyCommander.Configurator({hotkeys: hotkeys, targetEl: document.getElementByI
 
 setTimeout(() => {
   window.scrollTo(0, 0)
-}, 250)
+}, 150)
