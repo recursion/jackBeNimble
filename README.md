@@ -16,10 +16,6 @@ This extension adds fully customizable hotkeys that allow you to:
 
 On a slightly more technical side, this plugin simply adds keyboard event listeners to the exchange's trading page that allows placing and canceling orders, adjusting lot size, and bid/offer offset modifier all with hotkeys. It also adds a visible page element that displays the current `OFFSET` setting, which is also adjustable via hotkeys (as is lot size). For nearly all cases the plugin does not need to make any api calls/use extra data, as its all already provided by the exchange page. That said, coinbase exchange recently update the way they display order info, and because it is all displayed from a canvas element, the plugin must request best bid/ask through the public api.
 
-----------
-##### If you use this and like it send me some satoshi's, or dont... it's all good!!
-`37Us4CTnd1Bdf1qMzyBgNLVCwBMdV8LUR9`
-
 -----------------------
 
 - **Privacy First!**
