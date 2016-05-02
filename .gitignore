@@ -1,3 +1,4 @@
 node_modules/
 dist/js/jackBeNimble.js
 dist/js/config.js
+.DS_Store

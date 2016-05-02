@@ -2,12 +2,14 @@
   "manifest_version": 2,
 
   "name": "jackBeNimble",
+  "author": "Michael Symmes",
   "description": "A powerful, easily configurable, order entry hotkey system for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
   "version": "0.5.0",
   "browser_action": {
     "default_popup": "dist/config.html",
     "default_title": "jackBeNimble"
   },
+  "icons": {"128": "jbk-icon.png" },
   "permissions": ["storage"],
   "content_scripts": [
     {
