@@ -4,7 +4,7 @@
   "name": "jackBeNimble",
   "short_name": "jbk",
   "author": "Michael Symmes",
-  "description": "A powerful, easily configurable, order entry hotkey system for the bitfinex.com and exchange.coinbase.com.",
+  "description": "A powerful, configurable, hotkey order entry system for multiple bitcoin exchanges.",
   "version": "0.5.0",
   "browser_action": {
     "default_popup": "dist/config.html",
