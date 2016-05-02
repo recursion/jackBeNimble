@@ -2,30 +2,24 @@
   "manifest_version": 2,
 
   "name": "jackBeNimble",
-  "description": "Adds order entry hotkeys for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
+  "description": "A powerful, easily configurable, order entry hotkey system for the bitfinex.com and exchange.coinbase.com bitcoin exchange trading pages.",
   "version": "0.5.0",
   "browser_action": {
     "default_popup": "dist/config.html",
     "default_title": "jackBeNimble"
   },
-
   "permissions": ["storage"],
-
   "content_scripts": [
     {
-
       "matches": [
         // Coinbase URLs
         "https://exchange.coinbase.com/*",
-
         // Bitfinex URLs
         "https://www.bitfinex.com/*"
       ],
-
       "js": [
         "dist/js/jackBeNimble.js"
       ],
-
       "run_at": "document_idle"
     }
   ]
