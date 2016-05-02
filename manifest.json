@@ -14,9 +14,7 @@
   "content_scripts": [
     {
       "matches": [
-        // Coinbase URLs
         "https://exchange.coinbase.com/*",
-        // Bitfinex URLs
         "https://www.bitfinex.com/*"
       ],
       "js": [
