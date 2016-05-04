@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/recursion/jackBeNimble#readme",
   "dependencies": {
-    "hotkey-commander": "^0.5.1"
+    "hotkey-commander": "^0.7.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
