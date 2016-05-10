@@ -402,16 +402,8 @@ function getMarketButtonElement () {
   return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
 }
 
-function getBestOfferElement () {
-  return document.querySelector('section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > div > ul > li:nth-child(50) > div.market-price.clickable')
-}
-
-function getBestBidElement () {
-  return document.querySelector('section > div.ledder-view.clearfix > div.order-view.visible > div.order-view-container > div > div > div.order-view-content.visible > ul.table-buy > li:nth-child(1) > div.market-price.clickable')
-}
-
 function getPriceInputElement () {
-  return document.getElementById('inputusd')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
 }
 
 function getSellTabButtonElement () {
