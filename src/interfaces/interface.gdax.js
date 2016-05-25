@@ -3,12 +3,12 @@ const {log, logError} = require('../utils/logger')
 
 // against my best efforts, we now have to get best bid/ask from the api
 // because coinbase has pulled the final FU move against jackBeNimble - they moved all of their bid/ask data into a canvas element. :(
-const API_URL = 'https://api.exchange.coinbase.com'
+const API_URL = 'https://api.gdax.com'
 
 module.exports = () => {
   const public_api = {
 
-    name: 'coinbase',
+    name: 'gdax',
 
     init: init,
 

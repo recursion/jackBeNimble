@@ -7,7 +7,7 @@ const interfaces = []
 // the obvious solution of using requireDirectory is not
 // as easy at it might seem here (because of webpack)
 interfaces.push(require('./interface.bfx.js')())
-interfaces.push(require('./interface.cbex.js')())
+interfaces.push(require('./interface.gdax.js')())
 
 // export the array of interfaces
 module.exports = interfaces
