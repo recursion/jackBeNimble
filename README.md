@@ -1,10 +1,9 @@
 # jackBeNimble
-
-A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com),and [exchange.coinbase.com](http://exchange.coinbase.com) bitcoin exchange trading sites. The extension allows you to easily place orders of a (hotkey adjustable) size at any (hotkey adjustable) offset in relation to the current best bid/offer.
-
 ----------------------
 ###### *Jack be nimble, jack be quick. Jack jumped over the candle stick!*
 ---------------
+
+A google chrome extension that provides a sophisticated hotkey order entry system for the [bitfinex.com](http:www.bitfinex.com), and [~~~exchange.coinbase.com~~~ www.gdax.com](http://exchange.coinbase.com) exchange trading sites. The extension allows you to easily place orders of a (hotkey adjustable) size at any (hotkey adjustable) offset in relation to the current best bid/offer.
 
 This extension adds fully customizable hotkeys that allow you to:
 - Toggle your `LOTSIZE` up and down.
