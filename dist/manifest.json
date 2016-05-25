@@ -7,7 +7,7 @@
   "description": "A powerful, configurable, hotkey order entry system for multiple bitcoin exchanges.",
   "version": "0.5.4",
   "browser_action": {
-    "default_popup": "dist/config.html",
+    "default_popup": "config.html",
     "default_title": "jackBeNimble"
   },
   "icons": {"128": "jbk-icon.png" },
@@ -19,7 +19,7 @@
         "https://www.bitfinex.com/*"
       ],
       "js": [
-        "dist/js/jackBeNimble.js"
+        "js/jackBeNimble.js"
       ],
       "run_at": "document_idle"
     }
