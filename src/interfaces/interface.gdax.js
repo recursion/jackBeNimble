@@ -158,6 +158,11 @@ function placeBuyOrder (p) {
         setBuyPrice(p)
         setTimeout(() => {
           target.click()
+          setTimeout(() => {
+            store.get((settings) => {
+              displayLotsize(settings.lotsize)
+            })
+          }, 100)
         }, 100)
       } else {
         logError('Unable to locate buy button')
@@ -180,6 +185,11 @@ function placeSellOrder (p) {
         setSellPrice(p)
         setTimeout(() => {
           target.click()
+          setTimeout(() => {
+            store.get((settings) => {
+              displayLotsize(settings.lotsize)
+            })
+          }, 100)
         }, 250)
       } else {
         logError('Unable to locate sell button')
