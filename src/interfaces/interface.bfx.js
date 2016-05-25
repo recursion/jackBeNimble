@@ -96,7 +96,6 @@ function marketSell () {
 
 /* CANCEL BIDS */
 function cancelBids () {
-  console.log('Yay')
   var orders = getOrders()
   orders.forEach((order) => {
     console.log(order)
@@ -263,28 +262,26 @@ function getOrders () {
 function filterOrders (nodeList) {
   var orders = []
 
-  for (var i = 0; i < nodeList.length; i++) {
-    // 0th element of this list is text - so we dont use it
-    if (i !== 0) {
-      // the string is full of whitespace - so strip it
-      var thisOrderElement = nodeList[i]
-      var orderData = thisOrderElement.textContent.split(' ')
-      var cancelButton = thisOrderElement.childNodes[18].childNodes[0]
+  // 0th element of this list is text - so we dont use it
+  for (var i = 1; i < nodeList.length; i++) {
+    // the string is full of whitespace - so strip it
+    var thisOrderElement = nodeList[i]
+    var orderData = thisOrderElement.textContent.split(' ')
+    var cancelButton = thisOrderElement.childNodes[16].childNodes[0]
 
-      // create a new array with the order data we want
-      var newOrderData = []
-      for (var idx = 0; idx < orderData.length; idx++) {
-        if (orderData[idx] !== '') {
-          newOrderData.push(orderData[idx])
-        }
+    // create a new array with the order data we want
+    var newOrderData = []
+    for (var idx = 0; idx < orderData.length; idx++) {
+      if (orderData[idx] !== '') {
+        newOrderData.push(orderData[idx])
       }
-
-      newOrderData.push(cancelButton)
-
-      // Use that order data array to create an order object and push
-      // it onto our array of orders.
-      orders.push(new Order(newOrderData))
     }
+
+    newOrderData.push(cancelButton)
+
+    // Use that order data array to create an order object and push
+    // it onto our array of orders.
+    orders.push(new Order(newOrderData))
   }
   return orders
 }
