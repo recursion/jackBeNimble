@@ -15,7 +15,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://exchange.coinbase.com/*",
+        "https://www.gdax.com/*",
         "https://www.bitfinex.com/*"
       ],
       "js": [
