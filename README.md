@@ -57,5 +57,5 @@ Use standard for linting.
 
 #### Developer Install
 - Clone the repo to your machine.
-- Add plugin to chrome extensions as an unpacked extension. (until its submitted you can only do this in developer mode - so if you are a dev, you know what to do)
-- Login to your account on one of the supported exchanges
+- Add plugin to chrome extensions as an unpacked extension.
+- Devel
