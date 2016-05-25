@@ -138,7 +138,9 @@ function setSellPrice (p) {
  * ex: '19.94'
  */
 function getBestBid () {
+  return new Promise((resolve, reject) => {
 
+  })
 }
 
 /**
@@ -147,6 +149,9 @@ function getBestBid () {
  * ex: '19.94'
  */
 function getBestOffer () {
+  return new Promise((resolve, reject) => {
+
+  })
 }
 
 /** ********************************************************/
