@@ -6,28 +6,28 @@ module.exports = () => {
 
     name: 'bitfinex',
 
-    init: init,
+    init,
 
-    getLotSizeInputElement: getLotSizeInputElement,
+    getLotSizeInputElement,
     displayLotsize,
 
-    marketBuy: marketBuy,
-    marketSell: marketSell,
+    marketBuy,
+    marketSell,
 
-    cancelBids: cancelBids,
-    cancelOffers: cancelOffers,
-    cancelAll: cancelAll,
-    cancelLast: cancelLast,
+    cancelBids,
+    cancelOffers,
+    cancelAll,
+    cancelLast,
 
-    displayOffset: displayOffset,
+    displayOffset,
 
-    placeBuyOrder: placeBuyOrder,
-    placeSellOrder: placeSellOrder,
+    placeBuyOrder,
+    placeSellOrder,
 
-    setBuyPrice: setBuyPrice,
+    setBuyPrice,
 
-    getBestBid: getBestBid,
-    getBestOffer: getBestOffer
+    getBestBid,
+    getBestOffer
 
   }
 
@@ -98,7 +98,6 @@ function marketSell () {
 function cancelBids () {
   var orders = getOrders()
   orders.forEach((order) => {
-    console.log(order)
     if (order.side === 'buy') {
       setTimeout(() => {
         order.cancelButton.click()
@@ -142,7 +141,6 @@ function cancelAll () {
  * @param {Number} v - the offset value to display
  */
 function displayOffset (v) {
-  console.log('DP called with: ', v, typeof v)
   var homeDiv = getOffsetParentElement()
   var target = getOffsetElement()
   if (!homeDiv) {
