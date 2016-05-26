@@ -133,16 +133,32 @@ function displayOffset (v) {
   var target = getOffsetElement()
   if (!target) {
     var listItem = document.createElement('li')
-    listItem.style.textAlign = 'center'
-    var newEl = document.createElement('span')
-    newEl.id = 'CBEX_OFFSET_VALUE'
-    newEl.innerHTML = 'Offset: ' + v
-    newEl.style.fontSize = '15px'
-    newEl.style.fontWeight = 'bold'
-    listItem.appendChild(newEl)
-    homeDiv.appendChild(listItem)
+    listItem.className = "size-per clearfix"
+    // add a border around the offset control so its more visible
+    //listItem.style.border = "1px solid lightgrey"
+    //listItem.style.padding = "5px"
+
+    var container = document.createElement('div')
+    container.className = "control-input"
+
+    var newElLabel = document.createElement('span')
+    newElLabel.className = "currency stop-loss"
+    newElLabel.style.fontSize = "1.25em"
+    newElLabel.innerHTML = "Offset"
+
+    var newElValue = document.createElement('input')
+    newElValue.className = "form-control numeric"
+    newElValue.id = 'CBEX_OFFSET_VALUE'
+    newElValue.name = "Offset"
+    newElValue.value = '' + v
+    newElValue.readOnly = true
+
+    listItem.appendChild(container)
+    container.appendChild(newElLabel)
+    container.appendChild(newElValue)
+    homeDiv.insertBefore(listItem, homeDiv.childNodes[1])
   } else {
-    target.innerHTML = 'Offset: ' + v
+    target.value = '' + v
   }
 }
 
@@ -268,7 +284,8 @@ function initialize (plugin) {
 }
 
 function displayLotsize (value) {
-  getLotSizeInputElement().value = value
+  var t = getLotSizeInputElement()
+  t.value = value
 }
 
 /**
@@ -393,15 +410,11 @@ function getLastValidCancelButton (orders) {
  **********************************************************/
 
 function getLotSizeInputElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input')
+  return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
 }
 
 function getOrderElements () {
   return document.querySelector('#orders-list > ul').children
-}
-
-function getLotSizeElement () {
-  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.clearfix > span.visible > li > div > input')
 }
 
 function getLimitButtonElement () {
@@ -433,7 +446,7 @@ function getBuyButtonElement () {
 }
 
 function getOffsetParentElement () {
-  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.clearfix')
+  return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span')
 }
 
 function getOffsetElement () {
