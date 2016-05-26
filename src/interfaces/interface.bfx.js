@@ -8,7 +8,6 @@ module.exports = () => {
 
     init,
 
-    getLotSizeInputElement,
     displayLotsize,
 
     marketBuy,
@@ -147,35 +146,64 @@ function displayOffset (v) {
     logError(`Could not access offset's parent element. Got: ${homeDiv}`)
   }
   if (!target) {
-    var container = document.createElement('div')
-
-    // setup some styling on the lotsize element
-    var lotsizeInputElement = getLotSizeInputElement()
-    lotsizeInputElement.style.width = "30%"
-    lotsizeInputElement.style.marginLeft = "10px"
-
-    var label = document.createElement('label')
-    label.className = 'active'
-    label.innerHTML = 'Offset'
-
-    var input = document.createElement('input')
-    input.style.width = "30%"
-    input.style.marginLeft = "44px"
-    input.readOnly = true
-    input.id = 'BFX_OFFSET_VALUE'
-    input.value = '' + v
-
-    container.appendChild(label)
-    container.appendChild(input)
-
-    homeDiv.insertBefore(container, homeDiv.childNodes[1])
+    // create and insert lotsize and offset container elements to the page
+    homeDiv.insertBefore(buildLotsizeElement(), homeDiv.childNodes[1])
+    homeDiv.insertBefore(buildOffsetElement(v), homeDiv.childNodes[1])
   } else {
+    // if its already built
+    // just update the value
     target.value = '' + v
   }
 }
+function buildLotsizeElement () {
+  var lotsizeContainer = document.createElement('div')
+  lotsizeContainer.style.width = "100%"
+
+  // setup some styling on the existing lotsize element
+  var lotsizeLabelElement = getLotsizeLabelElement()
+  console.log(lotsizeLabelElement)
+  lotsizeLabelElement.remove()
+  lotsizeContainer.appendChild(lotsizeLabelElement)
+  lotsizeContainer.style.float = 'left'
+
+  var lotsizeInputElement = getLotsizeInputElement()
+  lotsizeInputElement.remove()
+  lotsizeContainer.appendChild(lotsizeInputElement)
+  lotsizeInputElement.style.width = "30%"
+  lotsizeInputElement.style.float = "right"
+
+  return lotsizeContainer
+}
+
+function buildOffsetElement (v) {
+  var offsetContainer = document.createElement('div')
+  offsetContainer.style.width = "100%"
+
+  // create and append offset label element
+  var offsetLabelElement = document.createElement('label')
+  offsetLabelElement.className = 'active'
+  offsetLabelElement.innerHTML = 'Offset'
+  offsetLabelElement.float = 'left'
+
+  offsetContainer.appendChild(offsetLabelElement)
+
+  // create and append offset input element
+  var offsetInputElement = document.createElement('input')
+  offsetInputElement.readOnly = true
+  offsetInputElement.id = 'BFX_OFFSET_VALUE'
+
+  offsetInputElement.style.width = "30%"
+  offsetInputElement.style.float = "right"
+
+  offsetInputElement.value = '' + v
+
+  offsetContainer.appendChild(offsetInputElement)
+
+  return offsetContainer
+}
 
 function displayLotsize (v) {
-  getLotSizeInputElement().value = v
+  getLotsizeInputElement().value = v
 }
 
 /**    PLACE A BUY ORDER   */
@@ -335,7 +363,11 @@ function getOffsetParentElement () {
 }
 
 function getLotsizeLabelElement() {
-  return document.querySelector('#order-form > div.col.options > div > div > label:nth-child(3)')
+  return document.querySelector('#order-form > div.col.options > div > div > label')
+}
+
+function getLotsizeInputElement () {
+  return document.getElementById('amount')
 }
 
 function getOffsetElement () {
@@ -368,10 +400,6 @@ function getSellPriceElement () {
 
 function getBuyPriceElement () {
   return document.getElementById('buy_price')
-}
-
-function getLotSizeInputElement () {
-  return document.getElementById('amount')
 }
 
 function getBuyOrderTypeElement () {
