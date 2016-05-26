@@ -142,6 +142,7 @@ function cancelAll () {
  * @param {Number} v - the offset value to display
  */
 function displayOffset (v) {
+  console.log('DP called with: ', v, typeof v)
   var homeDiv = getOffsetParentElement()
   var target = getOffsetElement()
   if (!homeDiv) {

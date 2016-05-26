@@ -1,6 +1,20 @@
 const store = require('../utils/store')
 
 module.exports = function (domInterface) {
+  // setup listeners for offset / lotsize changes
+  // this allows us to update changes from other accounts
+  // a better idea is going to be to store these by site - rather than globally
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    let value
+    if (Object.keys(changes).indexOf('offset') !== -1) {
+      value = changes['offset']
+      domInterface.displayOffset(value.newValue)
+    } else if (Object.keys(changes).indexOf('lotsize') !== -1) {
+      value = changes['lotsize']
+      domInterface.displayLotsize(value.newValue)
+    }
+  })
+
   return {
     displayOffset,
     toggleOffset,
