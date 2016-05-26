@@ -1,8 +1,8 @@
 const store = require('../utils/store')
 const {log, logError} = require('../utils/logger')
 
-// against my best efforts, we now have to get best bid/ask from the api
-// because coinbase has pulled the final FU move against jackBeNimble - they moved all of their bid/ask data into a canvas element. :(
+// because 'GDAX' (coinbase) now uses canvas to display their books
+// JBK must use HTTP fetch and the REST API to get market data
 const API_URL = 'https://api.gdax.com'
 
 module.exports = () => {
@@ -10,28 +10,28 @@ module.exports = () => {
 
     name: 'gdax',
 
-    init: init,
+    init,
 
-    getLotSizeInputElement: getLotSizeInputElement,
+    getLotSizeInputElement,
     displayLotsize,
 
-    marketBuy: marketBuy,
-    marketSell: marketSell,
+    marketBuy,
+    marketSell,
 
-    cancelBids: cancelBids,
-    cancelOffers: cancelOffers,
-    cancelAll: cancelAll,
-    cancelLast: cancelLast,
+    cancelBids,
+    cancelOffers,
+    cancelAll,
+    cancelLast,
 
-    displayOffset: displayOffset,
+    displayOffset,
 
-    placeBuyOrder: placeBuyOrder,
-    placeSellOrder: placeSellOrder,
+    placeBuyOrder,
+    placeSellOrder,
 
-    setBuyPrice: setBuyPrice,
+    setBuyPrice,
 
-    getBestBid: getBestBid,
-    getBestOffer: getBestOffer
+    getBestBid,
+    getBestOffer
   }
 
   return public_api
@@ -162,7 +162,9 @@ function displayOffset (v) {
   }
 }
 
-/**    PLACE A BUY ORDER   */
+/**    PLACE A BUY ORDER
+ * @param {Number} p - price to sell at
+ **/
 function placeBuyOrder (p) {
   log(p)
   var switchTarget = getBuyTabButtonElement()
@@ -175,21 +177,21 @@ function placeBuyOrder (p) {
         setTimeout(() => {
           target.click()
           setTimeout(() => {
-            store.get((settings) => {
-              displayLotsize(settings.lotsize)
-            })
-          }, 100)
+            initialize()
+          }, 500)
         }, 100)
       } else {
         logError('Unable to locate buy button')
       }
-    }, 10)
+    }, 100)
   } else {
     logError('Cannot locate buy button')
   }
 }
 
-/**   PLACE A SELL ORDER    */
+/**   PLACE A SELL ORDER
+ * @param {Number} p - price to sell at
+**/
 function placeSellOrder (p) {
   // switch to sell window
   var switchTarget = getSellTabButtonElement()
@@ -202,15 +204,13 @@ function placeSellOrder (p) {
         setTimeout(() => {
           target.click()
           setTimeout(() => {
-            store.get((settings) => {
-              displayLotsize(settings.lotsize)
-            })
-          }, 100)
-        }, 250)
+            initialize()
+          }, 500)
+        }, 100)
       } else {
         logError('Unable to locate sell button')
       }
-    }, 10)
+    }, 100)
   } else {
     logError('No sell tab button found')
   }
@@ -221,7 +221,7 @@ function placeSellOrder (p) {
  * @param {Number} p - the price to set
  */
 function setBuyPrice (p) {
-  getPriceInputElement().value = p
+  getPriceInputElement().value = +p
 }
 
 /**
@@ -229,7 +229,7 @@ function setBuyPrice (p) {
  * @param {Number} p - the price to set
  */
 function setSellPrice (p) {
-  getPriceInputElement().value = p
+  getPriceInputElement().value = +p
 }
 
 /**
@@ -239,8 +239,10 @@ function setSellPrice (p) {
  * coinbase has moved it all into a canvas element
  */
 function getBestBid () {
+  let symbol = window.location.pathname.split('/')[2]
+  let request = API_URL + '/products/' + symbol + '/ticker'
   return new Promise((resolve, reject) => {
-    fetch(API_URL + '/products/BTC-USD/ticker')
+    fetch(request)
     .then((res) => {
       return res.json()
     })
@@ -257,8 +259,10 @@ function getBestBid () {
  * coinbase has moved it all into a canvas element
  */
 function getBestOffer () {
+  let symbol = window.location.pathname.split('/')[2]
+  let request = API_URL + '/products/' + symbol + '/ticker'
   return new Promise((resolve, reject) => {
-    fetch(API_URL + '/products/BTC-USD/ticker')
+    fetch(request)
     .then((res) => {
       return res.json()
     })
@@ -278,14 +282,14 @@ function getBestOffer () {
 */
 function initialize (plugin) {
   store.get((settings) => {
-    displayLotsize(settings.lotsize)
     displayOffset(settings.offset)
+    displayLotsize(settings.lotsize)
   })
 }
 
 function displayLotsize (value) {
   var t = getLotSizeInputElement()
-  t.value = value
+  t.value = +value
 }
 
 /**
@@ -410,7 +414,7 @@ function getLastValidCancelButton (orders) {
  **********************************************************/
 
 function getLotSizeInputElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
 }
 
 function getOrderElements () {
@@ -426,7 +430,7 @@ function getMarketButtonElement () {
 }
 
 function getPriceInputElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(4) > div > input')
 }
 
 function getSellTabButtonElement () {
@@ -446,7 +450,7 @@ function getBuyButtonElement () {
 }
 
 function getOffsetParentElement () {
-  return document.querySelector('body > div:nth-child(9) > aside > div > div > form > article > div > ul.clearfix > span.visible > span')
+  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span')
 }
 
 function getOffsetElement () {
