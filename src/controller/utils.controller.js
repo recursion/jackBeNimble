@@ -74,9 +74,7 @@ module.exports = function (domInterface) {
    */
   function setLotSize (v) {
     store.get((settings) => {
-      const amount = domInterface.getLotSizeInputElement()
       v = v || settings.lotsize
-      amount.value = v
       store.set('lotsize', v)
       domInterface.displayLotsize(v)
     })

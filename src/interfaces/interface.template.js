@@ -22,7 +22,6 @@ module.exports = () => {
     cancelAll: cancelAll,
     cancelLast: cancelLast,
 
-    getLotSizeInputElement: getLotSizeInputElement,
     displayOffset,
     displayLotsize,
 

@@ -12,7 +12,6 @@ module.exports = () => {
 
     init,
 
-    getLotSizeInputElement,
     displayLotsize,
 
     marketBuy,
@@ -288,7 +287,7 @@ function initialize (plugin) {
 }
 
 function displayLotsize (value) {
-  var t = getLotSizeInputElement()
+  var t = getLotsizeInputElement()
   t.value = +value
 }
 
@@ -413,7 +412,7 @@ function getLastValidCancelButton (orders) {
  *     any changes to a sites css/html can be addressed here
  **********************************************************/
 
-function getLotSizeInputElement () {
+function getLotsizeInputElement () {
   return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
 }
 
