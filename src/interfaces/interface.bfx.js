@@ -148,19 +148,30 @@ function displayOffset (v) {
     logError(`Could not access offset's parent element. Got: ${homeDiv}`)
   }
   if (!target) {
-    var span = document.createElement('span')
-    span.id = 'BFX_OFFSET_VALUE'
-    span.innerHTML = 'Offset: ' + v
+    var container = document.createElement('div')
 
-    // styling it here cause I couldnt get silly chrome extension to load css anymore
-    // (it worked at one point..... )
-    span.style.padding = '3px'
-    span.style.backgroundColor = 'white'
-    span.style.border = '1px solid black'
+    // setup some styling on the lotsize element
+    var lotsizeInputElement = getLotSizeInputElement()
+    lotsizeInputElement.style.width = "30%"
+    lotsizeInputElement.style.marginLeft = "10px"
 
-    homeDiv.appendChild(span)
+    var label = document.createElement('label')
+    label.className = 'active'
+    label.innerHTML = 'Offset'
+
+    var input = document.createElement('input')
+    input.style.width = "30%"
+    input.style.marginLeft = "44px"
+    input.readOnly = true
+    input.id = 'BFX_OFFSET_VALUE'
+    input.value = '' + v
+
+    container.appendChild(label)
+    container.appendChild(input)
+
+    homeDiv.insertBefore(container, homeDiv.childNodes[1])
   } else {
-    target.innerHTML = 'Offset: ' + v
+    target.value = '' + v
   }
 }
 
@@ -322,6 +333,10 @@ function isSellOrder (order) {
 
 function getOffsetParentElement () {
   return document.querySelector('#order-form > div.col.options > div > div')
+}
+
+function getLotsizeLabelElement() {
+  return document.querySelector('#order-form > div.col.options > div > div > label:nth-child(3)')
 }
 
 function getOffsetElement () {
