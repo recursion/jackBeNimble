@@ -50,7 +50,7 @@ module.exports = (domInterface) => {
     domInterface.getBestOffer()
       .then((bestOffer) => {
         var newOffer = +bestOffer - 0.01
-        domInterface.placeSellOrder(newOffer.toFixed(2))
+        domInterface.placeSellOrder(fixDecimals(newOffer))
       })
   }
 
@@ -68,7 +68,7 @@ module.exports = (domInterface) => {
       domInterface.getBestOffer()
         .then((bestOffer) => {
           var newOffer = +bestOffer + settings.offset
-          domInterface.placeSellOrder(newOffer.toFixed(2))
+          domInterface.placeSellOrder(fixDecimals(newOffer))
         })
     })
   }
@@ -79,8 +79,19 @@ module.exports = (domInterface) => {
       domInterface.getBestOffer()
         .then((bestOffer) => {
           var newOffer = +bestOffer + (settings.offset * 2)
-          domInterface.placeSellOrder(newOffer.toFixed(2))
+          domInterface.placeSellOrder(fixDecimals(newOffer))
         })
     })
+  }
+
+  function fixDecimals(p) {
+    // if we are using USD - then format to two decimals
+    // add support for other fiats
+    if (window.location.pathname.toLowerCase().indexOf('usd') !== -1) {
+      return p.toFixed(2)
+    } else {
+      // otherwise its coin-coin and we want more decimals
+      return p.toFixed(5)
+    }
   }
 }

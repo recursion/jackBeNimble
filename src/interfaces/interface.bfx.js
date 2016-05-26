@@ -30,6 +30,10 @@ module.exports = () => {
 
   }
 
+  // poll for location changes
+  // and redraw offset and location elements when they happen
+  reRenderOnLocationChanges()
+
   return public_api
 }
 
@@ -62,8 +66,6 @@ function reRenderOnLocationChanges () {
  *  get existing settings and apply them
  */
 function init () {
-  reRenderOnLocationChanges()
-
   // try to get the correct element
   if (canGetRootElement()) {
     // if we get it, intialize
@@ -155,13 +157,16 @@ function displayOffset (v) {
     target.value = '' + v
   }
 }
+
+// creates a container element for displaying the lotsize info
+// add existing 'amount' label and inputs to this container
+// returns the container
 function buildLotsizeElement () {
   var lotsizeContainer = document.createElement('div')
   lotsizeContainer.style.width = "100%"
 
   // setup some styling on the existing lotsize element
   var lotsizeLabelElement = getLotsizeLabelElement()
-  console.log(lotsizeLabelElement)
   lotsizeLabelElement.remove()
   lotsizeContainer.appendChild(lotsizeLabelElement)
   lotsizeContainer.style.float = 'left'
@@ -175,6 +180,9 @@ function buildLotsizeElement () {
   return lotsizeContainer
 }
 
+// creates a container element for displaying offset info
+// creates an offset label and input element
+// returns the container
 function buildOffsetElement (v) {
   var offsetContainer = document.createElement('div')
   offsetContainer.style.width = "100%"
