@@ -6,8 +6,7 @@ const {log, logError} = require('../utils/logger')
 const API_URL = 'https://api.gdax.com'
 
 module.exports = () => {
-  const public_api = {
-
+  return {
     name: 'gdax',
 
     init,
@@ -32,8 +31,6 @@ module.exports = () => {
     getBestBid,
     getBestOffer
   }
-
-  return public_api
 }
 
 /**
@@ -61,14 +58,17 @@ function init () {
 
 /*  MARKET BUY  */
 function marketBuy () {
-  switchToMarketOrder()
-  setTimeout(() => {
-    setMarketOrderLotSize()
-    placeBuyOrder()
-  }, 100)
-  setTimeout(() => {
-    switchToLimitOrder()
-  }, 200)
+  if (switchToMarketOrder()) {
+    setTimeout(() => {
+      setMarketOrderLotSize()
+      placeBuyOrder()
+    }, 100)
+    setTimeout(() => {
+      switchToLimitOrder()
+    }, 200)
+  } else {
+    console.error('Unable to switch to market order.')
+  }
 }
 
 /*  MARKET SELL */
@@ -311,6 +311,7 @@ function switchToLimitOrder () {
   var limitButtonElement = getLimitButtonElement()
   if (limitButtonElement) {
     limitButtonElement.click()
+    console.log("YO BITCH")
     return true
   } else {
     return false
@@ -319,7 +320,7 @@ function switchToLimitOrder () {
 
 /* set the lot size on the market order screen */
 function setMarketOrderLotSize () {
-  var lotSize = getLotSizeElement()
+  var lotSize = getLotsizeInputElement()
   store.get((settings) => {
     lotSize.value = settings.lotsize
   })
@@ -347,14 +348,14 @@ function filterOrders (orders) {
     var size = order[0].innerText
     var filled = order[1].innerText
     var price = order[2].innerText
-    var side = (order[0].className.split(' ').indexOf('order-buy') !== -1) ? 'buy' : 'sell'
+    var side = (order[0].nextElementSibling.className.split(' ').indexOf('order-buy') !== -1) ? 'buy' : 'sell'
 
     /**
      * @TODO The actual numbering here can change depenging on the size of the display
      * so we need to do some work to make this smarter and detect the proper field
      * based on something other than numbers....
      */
-    var cancelButton = order[7].childNodes[1].childNodes[0]
+    var cancelButton = order[15].childNodes[3].children[0]
 
     var thisOrderData = [size, side, filled, price, cancelButton]
     orderList.push(new Order(thisOrderData))
@@ -388,18 +389,18 @@ function Order (orderData) {
 * @returns a usable cancel button or null
 */
 function getLastValidCancelButton (orders) {
-  var index = 0
+  var index = orders.length - 1
   var button
   var classes
 
-  while (index < orders.length) {
+  while (index >= 0) {
     button = orders[index].cancelButton
     classes = button.className.split(' ')
 
     if (classes.indexOf('visible') !== -1) {
       return button
     } else {
-      index++
+      index--
     }
   }
 
@@ -411,45 +412,42 @@ function getLastValidCancelButton (orders) {
  *     these functions are used to get html elements
  *     any changes to a sites css/html can be addressed here
  **********************************************************/
-
 function getLotsizeInputElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(2) > div > input')
 }
-
 function getOrderElements () {
-  return document.querySelector('#orders-list > ul').children
+  return document.querySelector('#page_content > div > section > div:nth-child(3) > div.user-pending-content.visible > div.table-wrapper > div.scrollable.absolute-max > ul').children
 }
 
 function getLimitButtonElement () {
-  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(2)')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.trade-type-tab-list > li:nth-child(2)')
 }
 
 function getMarketButtonElement () {
-  return document.querySelector('aside > div > div.article-wrap.visible > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.trade-type-tab-list > li.trade-type-tab-item.active')
 }
 
 function getPriceInputElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(4) > div > input')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.clearfix > span.visible > span > li:nth-child(3) > div > input')
 }
 
 function getSellTabButtonElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.sell')
 }
 
 function getSellButtonElement () {
-  return document.querySelector('aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell')
 }
 
 function getBuyTabButtonElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.clearfix > span.visible > span > ul > li.switch-tab-item.buy')
 }
 
 function getBuyButtonElement () {
-  return document.querySelector('aside > div > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy')
 }
-
 function getOffsetParentElement () {
-  return document.querySelector('aside > div > div > form > article > div > ul.clearfix > span.visible > span')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.clearfix')
 }
 
 function getOffsetElement () {
@@ -457,5 +455,5 @@ function getOffsetElement () {
 }
 
 function getCancelAllButtonElement () {
-  return document.querySelector('section > div:nth-child(3) > header > div > ul.cancel-all > li > a')
+  return document.querySelector('#page_content > div > section > div:nth-child(3) > header > div > ul.cancel-all > li > a')
 }

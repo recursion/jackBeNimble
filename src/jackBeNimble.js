@@ -19,7 +19,6 @@ require('./utils/loadSettings')()
  * determines the interface module we use for interfacing
  * with the webpage DOM.
  */
-
 // iterate through our interfaces list
 for (let DInterface in interfaces) {
   if (interfaces.hasOwnProperty(DInterface)) {

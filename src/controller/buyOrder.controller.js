@@ -7,7 +7,8 @@ module.exports = (domInterface) => {
     bidBetter,
     bidWithBest,
     bidBelowBest,
-    bidDoubleBelowBest
+    bidDoubleBelowBest,
+    marketBuy: domInterface.marketBuy
   }
 
   /** ***************************************
