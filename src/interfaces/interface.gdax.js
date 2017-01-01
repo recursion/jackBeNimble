@@ -61,11 +61,11 @@ function marketBuy () {
   if (switchToMarketOrder()) {
     setTimeout(() => {
       setMarketOrderLotSize()
-      placeBuyOrder()
-    }, 100)
+      getMarketBuyButton().click()
+    }, 250)
     setTimeout(() => {
       switchToLimitOrder()
-    }, 200)
+    }, 500)
   } else {
     console.error('Unable to switch to market order.')
   }
@@ -73,14 +73,15 @@ function marketBuy () {
 
 /*  MARKET SELL */
 function marketSell () {
-  switchToMarketOrder()
-  setTimeout(() => {
-    setMarketOrderLotSize()
-    placeSellOrder()
-  }, 100)
-  setTimeout(() => {
-    switchToLimitOrder()
-  }, 200)
+  if (switchToMarketOrder()) {
+    setTimeout(() => {
+      setMarketOrderLotSize()
+      getMarketSellButton().click()
+    }, 100)
+    setTimeout(() => {
+      switchToLimitOrder()
+    }, 1000)
+  }
 }
 
 /* CANCEL ALL BIDS */
@@ -311,7 +312,6 @@ function switchToLimitOrder () {
   var limitButtonElement = getLimitButtonElement()
   if (limitButtonElement) {
     limitButtonElement.click()
-    console.log("YO BITCH")
     return true
   } else {
     return false
@@ -424,7 +424,7 @@ function getLimitButtonElement () {
 }
 
 function getMarketButtonElement () {
-  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.trade-type-tab-list > li.trade-type-tab-item.active')
+  return document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > ul.trade-type-tab-list > li:nth-child(1)')
 }
 
 function getPriceInputElement () {
@@ -456,4 +456,12 @@ function getOffsetElement () {
 
 function getCancelAllButtonElement () {
   return document.querySelector('#page_content > div > section > div:nth-child(3) > header > div > ul.cancel-all > li > a')
+}
+
+function getMarketBuyButton () {
+  document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > div > button.limit-order.market-order.balance-ok.buy')
+}
+
+function getMarketSellButton () {
+  document.querySelector('#page_content > div > aside > div > div > article:nth-child(2) > div > form > article > div > div > button.limit-order.market-order.balance-ok.sell')
 }

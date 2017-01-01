@@ -159,8 +159,8 @@ module.exports = [
       {
         name: 'MARKET_SELL',
         keyCode: 72,
-        ctrlKey: true,
-        shiftKey: false,
+        ctrlKey: false,
+        shiftKey: true,
         altKey: false
       }
     ]
