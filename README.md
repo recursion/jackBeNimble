@@ -1,7 +1,7 @@
 # jackBeNimble
 
 
-### This project is no longer being updated and most likely will not work without changes to the <exchange>.interface.js code. For excellent hotkey options that work with a variety of crypto exchanges see [sierracharts.com](https://sierracharts.com).
+### This project is no longer being updated and most likely will not work without changes to the <exchange>.interface.js code. For excellent hotkey options that work with a variety of crypto exchanges see [sierrachart.com](https://sierrachart.com).
 
 A google chrome extension that provides a fast and poweful hotkey order-entry system for the [bitfinex.com](http:www.bitfinex.com), and [~~~exchange.coinbase.com~~~ www.gdax.com](http://exchange.coinbase.com) exchange trading sites. The extension allows you to easily place orders of a (hotkey adjustable) size at any (hotkey adjustable) offset in relation to the current best bid/offer. To configure your own hotkey preferences, there is an easy-to-use hotkey 'recording' interface.
 
